@@ -645,7 +645,7 @@ function makequests()
     end end end end end
 end
 
-local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.RightShift}
+local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.RightControl}
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 local hometab = Window:CreateTab("home")
 local farmtab = Window:CreateTab("collect")
