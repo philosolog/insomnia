@@ -655,18 +655,12 @@ local wayptab = Window:CreateTab("tp")
 local misctab = Window:CreateTab("misc.")
 local setttab = Window:CreateTab("settings")
 local information = hometab:CreateSection("info")
-local 1_1_2 = hometab:CreateSection("ui")
 local gainedhoneylabel = information:CreateLabel("honey gains: 0")
 
 information:CreateLabel("place version: "..game.PlaceVersion)
 information:CreateLabel("⚠️ = unsafe to use")
 information:CreateLabel("⚙ = configurable (in settings)")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
-local gui_killer = 1_1_2:CreateToggle("kill gui", function() 
-	Window:Destroy()
-end) 
-
-gui_killer:CreateKeybind("RightControl", function(Key)end)
 
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
