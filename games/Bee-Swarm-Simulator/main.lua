@@ -647,7 +647,6 @@ end
 
 local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.RightShift}
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
-
 local hometab = Window:CreateTab("home")
 local farmtab = Window:CreateTab("collect")
 local combtab = Window:CreateTab("battle")
@@ -655,12 +654,15 @@ local wayptab = Window:CreateTab("tp")
 local misctab = Window:CreateTab("misc.")
 local setttab = Window:CreateTab("settings")
 local information = hometab:CreateSection("info")
+local uisection = hometab:CreateSection("ui")
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
-
+local gui_killer = uisection:CreateButton("kill gui", function()
+	Window:Destroy()
+end)
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
