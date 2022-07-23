@@ -664,7 +664,8 @@ information:CreateButton("discord server", function() setclipboard("https://disc
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
-local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("T", function(Key) end)
+local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("T", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+farmo:CreateToggle("quests ⚙", nil, function(State) sleepy.toggles.autodoquest = State end) -- TODO: Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
 farmo:CreateToggle("dig", nil, function(State) sleepy.toggles.autodig = State end)
 farmo:CreateToggle("sprinkler", nil, function(State) sleepy.toggles.autosprinkler = State end)
 farmo:CreateToggle("planters", nil, function(State) sleepy.toggles.autoplanters = State end):AddToolTip("Will re-plant your planters after converting, if they hit 100%")
@@ -691,8 +692,7 @@ farmt:CreateToggle("sprouts", nil, function(State) sleepy.toggles.farmsprouts = 
 farmt:CreateToggle("puffshrooms", nil, function(State) sleepy.toggles.farmpuffshrooms = State end)
 --farmt:CreateToggle("snowflakes ⚠️", nil, function(State) sleepy.toggles.farmsnowflakes = State end)
 farmt:CreateToggle("tp to rare tokens ⚠️", nil, function(State) sleepy.toggles.farmrares = State end)
-farmt:CreateToggle("accept/confirm quests ⚙", nil, function(State) sleepy.toggles.autoquest = State end)
-farmt:CreateToggle("complete quests ⚙", nil, function(State) sleepy.toggles.autodoquest = State end) -- TODO: Add compatibility to other non-field quests. (kill mobs, use items)
+-- farmt:CreateToggle("skip dialogue ⚙", nil, function(State) sleepy.toggles.autoquest = State end) -- TODO: Make a skip dialogue button; enable it on auto-quests. 
 farmt:CreateToggle("honeystorm", nil, function(State) sleepy.toggles.honeystorm = State end)
 farmt:CreateToggle("coconuts/meteors", nil, function(State) sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
 
@@ -702,7 +702,6 @@ mobkill:CreateToggle("Stump Snail", nil, function(State) fd = game.Workspace.Flo
 mobkill:CreateToggle("Mondo Chick", nil, function(State) sleepy.toggles.killmondo = State end)
 mobkill:CreateToggle("Vicious Bee", nil, function(State) sleepy.toggles.killvicious = State end)
 mobkill:CreateToggle("Windy Bee", nil, function(State) sleepy.toggles.killwindy = State end)
-mobkill:CreateToggle("avoid mobs", nil, function(State) sleepy.toggles.avoidmobs = State end)
 -- TODO: mobkill:CreateToggle("Auto Ant", nil, function(State) sleepy.toggles.autoant = State end):AddToolTip("You Need Spark Stuff 😋; Goes to Ant Challenge after pollen converting")
 -- TODO: Add a Commando Chick autofarm.
 
