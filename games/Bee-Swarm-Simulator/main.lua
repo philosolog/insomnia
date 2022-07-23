@@ -659,10 +659,8 @@ local gainedhoneylabel = information:CreateLabel("🍯: 0")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
-information:CreateButton("discord server", function() 
-	-- setclipboard("https://discord.gg/aVgrSFCHpu")
-	(syn and syn.request or http_request)({ Url = "http://127.0.0.1:6463/rpc?v=1",Method = "POST",Headers = {["Content-Type"] = "application/json",["Origin"] = "https://discord.com"},Body = game:GetService("HttpService"):JSONEncode({cmd = "INVITE_BROWSER",args = {code = "aVgrSFCHpu"},nonce = game:GetService("HttpService"):GenerateGUID(false)})})
-end)
+information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
