@@ -655,11 +655,11 @@ local wayptab = Window:CreateTab("tp")
 local misctab = Window:CreateTab("misc.")
 local setttab = Window:CreateTab("settings")
 local information = hometab:CreateSection("info")
-local gainedhoneylabel = information:CreateLabel("🍯: 0")
+local gainedhoneylabel = information:CreateLabel("honey gains: 0")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
-information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end) -- TODO: Add the ability to open one's Discord.
+information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
