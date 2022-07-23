@@ -246,7 +246,7 @@ local sleepy = {
         godmode = false,
     },
     vars = {
-        field = "Mountain Top Field",
+        field = "Ant Field",
         convertat = 100,
         farmspeed = 60,
         prefer = "Tokens",
@@ -659,13 +659,13 @@ local information = hometab:CreateSection("Information")
 local gainedhoneylabel = information:CreateLabel("Gained Honey: 0")
 
 information:CreateLabel("Place version: "..game.PlaceVersion)
-information:CreateLabel("⚠️ - Not Safe Function")
-information:CreateLabel("⚙ - Configurable Function")
+information:CreateLabel("⚠️ - unsafe")
+information:CreateLabel("⚙ - configurable")
 information:CreateButton("Discord Invite", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 
 
 local farmo = farmtab:CreateSection("Farming")
-local fielddropdown = farmo:CreateDropdown("Field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[1])
+local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("Convert At", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
 local autofarmtoggle = farmo:CreateToggle("Autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("U", function(Key) end)
 farmo:CreateToggle("Autodig", nil, function(State) sleepy.toggles.autodig = State end)
