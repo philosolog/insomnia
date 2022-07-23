@@ -645,7 +645,7 @@ function makequests()
     end end end end end
 end
 
-local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.RightControl}
+local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.KeypadOne}
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 local hometab = Window:CreateTab("home")
 local farmtab = Window:CreateTab("collect")
@@ -667,7 +667,7 @@ end)
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
-local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("RightShift", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
 farmo:CreateToggle("quests ⚙", nil, function(State) sleepy.toggles.autodoquest = State end) -- TODO: Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
 farmo:CreateToggle("dig", nil, function(State) sleepy.toggles.autodig = State end)
 farmo:CreateToggle("sprinkler", nil, function(State) sleepy.toggles.autosprinkler = State end)
