@@ -666,7 +666,7 @@ information:CreateButton("discord server", function() setclipboard("https://disc
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
-local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind(Enum.KeyCode.Tab, function(Key) end)
+local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("U", function(Key) end) -- TODO: Add KeyCode.Tab compatibility; add listener for keybind inputs.
 farmo:CreateToggle("dig", nil, function(State) sleepy.toggles.autodig = State end)
 farmo:CreateToggle("sprinkler", nil, function(State) sleepy.toggles.autosprinkler = State end)
 farmo:CreateToggle("planters", nil, function(State) sleepy.toggles.autoplanters = State end):AddToolTip("Will re-plant your planters after converting, if they hit 100%")
