@@ -1138,7 +1138,7 @@ task.spawn(function() while task.wait(1) do
     end
     if sleepy.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
     if sleepy.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
-    gainedhoneylabel:UpdateText("honey gains: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
+    gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
 end end)
 
 game:GetService('RunService').Heartbeat:connect(function() 
