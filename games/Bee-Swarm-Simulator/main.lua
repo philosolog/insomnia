@@ -1,4 +1,4 @@
--- API CALLS
+-- TODO: Simplify ":GetService()" calls.
 local sleepyapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/sleepyapi.lua"))()
 local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/bracketv3.lua")
 local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/games/Bee-Swarm-Simulator/bssapi.lua")
@@ -661,7 +661,7 @@ information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 local gui_killer = uisection:CreateButton("kill gui", function()
-	Window:Destroy()
+	game:GetService("CoreGui"):FindFirstChild(_G.windowname):Destroy()
 end)
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])

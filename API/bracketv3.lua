@@ -4,7 +4,7 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
-_G.windowname = HttpService:GenerateGUID(false)
+_G.windowname = HttpService:GenerateGUID(false) -- TODO: Account for multiple windows.
 
 local function MakeDraggable(ClickObject, Object)
 	local Dragging = nil
@@ -50,7 +50,7 @@ function Library:CreateWindow(Config, Parent)
 	local TContainer = Holder.TContainer
 	local TBContainer = Holder.TBContainer.Holder
 	--[[
-	-- idk probably fix for exploits that dont have this function
+	-- TODO: Fix for exploits that dont have syn.protect_gui().
 	if syn and syn.protect_gui then
 		syn.protect_gui(Screen)
 	end
