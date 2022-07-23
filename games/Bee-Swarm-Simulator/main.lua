@@ -666,7 +666,7 @@ local gui_killer = 1_1_2:CreateButton("kill gui", function()
 	Window:Destroy()
 end) 
 
-gui_killer:CreateKeybind("RightControl", function(Key)end)
+--gui_killer:CreateKeybind("RightControl", function(Key)end)
 
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
