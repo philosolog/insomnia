@@ -99,7 +99,7 @@ local temptable = {
     crosshair = false,
     coconut = false,
     act = 0,
-    ['touchedfunction'] = function(v)
+    ['touchedfunction'] = function(v) -- TODO
         if lasttouched ~= v then
             if v.Parent.Name == "FlowerZones" then
                 if v:FindFirstChild("ColorGroup") then
@@ -663,7 +663,7 @@ information:CreateLabel("⚠️ = unsafe to use")
 information:CreateLabel("⚙ = configurable (in settings)")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 local gui_killer = 1_1_2:CreateToggle("kill gui", function() 
-	Window:Destroy()
+	--Window:Destroy()
 end) 
 
 gui_killer:CreateKeybind("RightControl", function(Key)end)
