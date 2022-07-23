@@ -1,0 +1,10 @@
+{
+	"robloxLsp.diagnostics.globals": [
+		"syn",
+		"Krnl",
+		"http",
+		"http_request",
+		"httprequest",
+		"request"
+	]
+}
