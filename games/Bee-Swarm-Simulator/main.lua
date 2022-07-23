@@ -660,7 +660,7 @@ local gainedhoneylabel = information:CreateLabel("🍯: 0")
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() 
-	setclipboard("https://discord.gg/aVgrSFCHpu");
+	-- setclipboard("https://discord.gg/aVgrSFCHpu")
 	(syn and syn.request or http_request)({ Url = "http://127.0.0.1:6463/rpc?v=1",Method = "POST",Headers = {["Content-Type"] = "application/json",["Origin"] = "https://discord.com"},Body = game:GetService("HttpService"):JSONEncode({cmd = "INVITE_BROWSER",args = {code = "aVgrSFCHpu"},nonce = game:GetService("HttpService"):GenerateGUID(false)})})
 end)
 local farmo = farmtab:CreateSection("farm")
