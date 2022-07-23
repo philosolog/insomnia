@@ -154,7 +154,7 @@ function fixchar(Character)
         end
     end
 end
-fixchar(Players.LocalPlayer.game:GetService("Players").LocalPlayer.Character)
+fixchar(game:GetService("Players").LocalPlayer.Character)
 Players.LocalPlayer.CharacterAppearanceLoaded:Connect(fixchar)
 Players.LocalPlayer.CharacterAdded:Connect(fixchar)
 if deep_scan then
