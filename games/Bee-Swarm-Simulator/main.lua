@@ -659,7 +659,7 @@ local gainedhoneylabel = information:CreateLabel("🍯: 0")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
-information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end) -- TODO: Add the ability to open one's Discord.
 
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
