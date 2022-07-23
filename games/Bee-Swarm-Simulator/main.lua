@@ -655,7 +655,7 @@ local wayptab = Window:CreateTab("tp")
 local misctab = Window:CreateTab("misc.")
 local setttab = Window:CreateTab("settings")
 local information = hometab:CreateSection("info")
-local gainedhoneylabel = information:CreateLabel("honey gains: 0")
+local gainedhoneylabel = information:CreateLabel("🍯: 0")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
