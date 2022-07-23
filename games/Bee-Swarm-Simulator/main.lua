@@ -99,7 +99,7 @@ local temptable = {
     crosshair = false,
     coconut = false,
     act = 0,
-    ['touchedfunction'] = function(v) -- TODO
+    ['touchedfunction'] = function(v)
         if lasttouched ~= v then
             if v.Parent.Name == "FlowerZones" then
                 if v:FindFirstChild("ColorGroup") then
@@ -662,11 +662,11 @@ information:CreateLabel("place version: "..game.PlaceVersion)
 information:CreateLabel("⚠️ = unsafe to use")
 information:CreateLabel("⚙ = configurable (in settings)")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
-local gui_killer = 1_1_2:CreateButton("kill gui", function() 
-	--Window:Destroy()
+local gui_killer = 1_1_2:CreateToggle("kill gui", function() 
+	Window:Destroy()
 end) 
 
-gui_killer:CreateKeybind("X", function(Key)end)
+gui_killer:CreateKeybind("RightControl", function(Key)end)
 
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
