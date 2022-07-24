@@ -959,7 +959,7 @@ task.spawn(function()
             temptable.started.vicious = false
 		end
 	end
-end
+end)
 task.spawn(function() while task.wait() do
     if sleepy.toggles.killwindy and temptable.detected.windy and not temptable.converting and not temptable.started.vicious and not temptable.started.mondo and not temptable.started.monsters then
         temptable.started.windy = true
