@@ -8,6 +8,7 @@
 
 -- coroutine.wrap(TDAH_fake_script)()
 local Player = game.Players.LocalPlayer
+
 repeat
 	task.wait()
 until Player.Character
