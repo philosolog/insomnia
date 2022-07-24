@@ -5,8 +5,6 @@ local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolo
 
 if not isfolder("sleepy") then makefolder("sleepy") end
 
-
--- Script temporary variables
 local playerstatsevent = game:GetService("ReplicatedStorage").Events.RetrievePlayerStats
 local statstable = playerstatsevent:InvokeServer()
 local monsterspawners = game:GetService("Workspace").MonsterSpawners
@@ -16,9 +14,6 @@ function maskequip(mask) local ohString1 = "Equip" local ohTable2 = { ["Mute"] =
 local lasttouched = nil
 local done = true
 local hi = false
-
--- Script tables
-
 local temptable = {
     version = "1",
     blackfield = "Ant Field",
@@ -127,9 +122,8 @@ local planterst = {
     planterid = {}
 }
 
-for i,v in next, temptable.blacklist do if v == sleepyapi.nickname then game.Players.LocalPlayer:Kick("You're blacklisted! Get clapped!") end end
+for i,v in next, temptable.blacklist do if v == sleepyapi.nickname then game.Players.LocalPlayer:Kick("") end end -- TODO: Add a blacklist-kick message.
 if temptable.honeystart == 0 then temptable.honeystart = statstable.Totals.Honey end
-
 
 for i,v in next, game:GetService("Workspace").MonsterSpawners:GetDescendants() do if v.Name == "TimerAttachment" then v.Name = "Attachment" end end
 for i,v in next, game:GetService("Workspace").MonsterSpawners:GetChildren() do if v.Name == "RoseBush" then v.Name = "ScorpionBush" elseif v.Name == "RoseBush2" then v.Name = "ScorpionBush2" end end
@@ -149,6 +143,7 @@ for _,v in next, game:GetService("Workspace").MonsterSpawners:GetChildren() do t
 local accesoriestable = {}
 for _,v in next, game:GetService("ReplicatedStorage").Accessories:GetChildren() do if v.Name ~= "UpdateMeter" then table.insert(accesoriestable, v.Name) end end
 for i,v in pairs(getupvalues(require(game:GetService("ReplicatedStorage").PlanterTypes).GetTypes)) do for e,z in pairs(v) do table.insert(temptable.allplanters, e) end end
+
 table.sort(fieldstable)
 table.sort(accesoriestable)
 table.sort(toystable)
@@ -157,15 +152,11 @@ table.sort(masktable)
 table.sort(temptable.allplanters)
 table.sort(collectorstable)
 
--- float pad
-
 local floatpad = Instance.new("Part", game:GetService("Workspace"))
 floatpad.CanCollide = false
 floatpad.Anchored = true
 floatpad.Transparency = 1
 floatpad.Name = "FloatPad"
-
--- cococrab
 
 local cocopad = Instance.new("Part", game:GetService("Workspace"))
 cocopad.Name = "Coconut Part"
@@ -174,8 +165,6 @@ cocopad.Transparency = 1
 cocopad.Size = Vector3.new(10, 1, 10)
 cocopad.Position = Vector3.new(-307.52117919922, 105.91863250732, 467.86791992188)
 
--- antfarm
-
 local antpart = Instance.new("Part", workspace)
 antpart.Name = "Ant Autofarm Part"
 antpart.Position = Vector3.new(96, 47, 553)
@@ -183,8 +172,6 @@ antpart.Anchored = true
 antpart.Size = Vector3.new(128, 1, 50)
 antpart.Transparency = 1
 antpart.CanCollide = false
-
--- config
 
 local sleepy = {
     rares = {},
@@ -268,10 +255,7 @@ local sleepy = {
         blue = false
     }
 }
-
 local defaultsleepy = sleepy
-
--- functions
 
 function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
 function farm(trying)
@@ -279,7 +263,6 @@ function farm(trying)
     sleepyapi.humanoid():MoveTo(trying.Position) 
     repeat task.wait() until (trying.Position-sleepyapi.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying) or not temptable.running
 end
-
 function disableall()
     if sleepy.toggles.autofarm and not temptable.converting then
         temptable.cache.autofarm = true
@@ -298,7 +281,6 @@ function disableall()
         temptable.cache.windy = true
     end
 end
-
 function enableall()
     if temptable.cache.autofarm then
         sleepy.toggles.autofarm = true
@@ -317,7 +299,6 @@ function enableall()
         temptable.cache.windy = false
     end
 end
-
 function gettoken(v3)
     if not v3 then
         v3 = fieldposition
@@ -329,7 +310,6 @@ function gettoken(v3)
         end
     end
 end
-
 function makesprinklers()
     sprinkler = rtsg().EquippedSprinkler
     e = 1
@@ -349,7 +329,6 @@ function makesprinklers()
         if e ~= 1 then sleepyapi.humanoid().JumpPower = k task.wait(1) end
     end
 end
-
 function killmobs()
     for i,v in pairs(game:GetService("Workspace").MonsterSpawners:GetChildren()) do
         if v:FindFirstChild("Territory") then
@@ -368,7 +347,6 @@ function killmobs()
         end
     end
 end
-
 function IsToken(token)
     if not token then
         return false
@@ -393,7 +371,6 @@ function IsToken(token)
         return false
     end
 end
-
 function check(ok)
     if not ok then
         return false
@@ -401,7 +378,6 @@ function check(ok)
     if not ok.Parent then return false end
     return true
 end
-
 function getplanters()
     table.clear(planterst.plantername)
     table.clear(planterst.planterid)
@@ -412,7 +388,6 @@ function getplanters()
         end
     end
 end
-
 function farmant()
     antpart.CanCollide = true
     temptable.started.ant = true
@@ -448,7 +423,6 @@ function farmant()
     temptable.started.ant = false
     antpart.CanCollide = false
 end
-
 function collectplanters()
     getplanters()
     for i,v in pairs(planterst.plantername) do
@@ -463,7 +437,6 @@ function collectplanters()
         end
     end
 end
-
 function getprioritytokens()
     task.wait()
     if temptable.running == false then
@@ -479,7 +452,6 @@ function getprioritytokens()
         end
     end
 end
-
 function gethiveballoon()
     task.wait()
     result = false
@@ -501,7 +473,6 @@ function gethiveballoon()
     end
     return result
 end
-
 function converthoney()
     task.wait(0)
     if temptable.converting then
@@ -513,7 +484,6 @@ function converthoney()
         end
     end
 end
-
 function closestleaf()
     for i,v in next, game.Workspace.Flowers:GetChildren() do
         if temptable.running == false and tonumber((v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
@@ -522,7 +492,6 @@ function closestleaf()
         end
     end
 end
-
 function getbubble()
     for i,v in next, game.workspace.Particles:GetChildren() do
         if string.find(v.Name, "Bubble") and temptable.running == false and tonumber((v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
@@ -531,7 +500,6 @@ function getbubble()
         end
     end
 end
-
 function getballoons()
     for i,v in next, game:GetService("Workspace").Balloons.FieldBalloons:GetChildren() do
         if v:FindFirstChild("BalloonRoot") and v:FindFirstChild("PlayerName") then
@@ -543,7 +511,6 @@ function getballoons()
         end
     end
 end
-
 function getflower()
     flowerrrr = flowertable[math.random(#flowertable)]
     if tonumber((flowerrrr-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) <= temptable.magnitude/1.4 and tonumber((flowerrrr-fieldposition).magnitude) <= temptable.magnitude/1.4 then 
@@ -555,7 +522,6 @@ function getflower()
         end 
     end
 end
-
 function getcloud()
     for i,v in next, game:GetService("Workspace").Clouds:GetChildren() do
         e = v:FindFirstChild("Plane")
@@ -564,7 +530,6 @@ function getcloud()
         end
     end
 end
-
 function getcoco(v)
     if temptable.coconut then repeat task.wait() until not temptable.coconut end
     temptable.coconut = true
@@ -574,7 +539,6 @@ function getcoco(v)
     temptable.coconut = false
     table.remove(temptable.coconuts, table.find(temptable.coconuts, v))
 end
-
 function getfuzzy()
     pcall(function()
         for i,v in next, game.workspace.Particles:GetChildren() do
@@ -587,7 +551,6 @@ function getfuzzy()
         end
     end)
 end
-
 function getflame()
     for i,v in next, game:GetService("Workspace").PlayerFlames:GetChildren() do
         if tonumber((v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
@@ -596,7 +559,6 @@ function getflame()
         end
     end
 end
-
 function avoidmob()
     for i,v in next, game:GetService("Workspace").Monsters:GetChildren() do
         if v:FindFirstChild("Head") then
@@ -606,7 +568,6 @@ function avoidmob()
         end
     end
 end
-
 function getcrosshairs(v)
     if v.BrickColor ~= BrickColor.new("Lime green") and v.BrickColor ~= BrickColor.new("Flint") then
     if temptable.crosshair then repeat task.wait() until not temptable.crosshair end
@@ -620,7 +581,6 @@ function getcrosshairs(v)
         table.remove(temptable.crosshairs, table.find(temptable.crosshairs, v))
     end
 end
-
 function makequests()
     for i,v in next, game:GetService("Workspace").NPCs:GetChildren() do
         if v.Name ~= "Ant Challenge Info" and v.Name ~= "Bubble Bee Man 2" and v.Name ~= "Wind Shrine" and v.Name ~= "Gummy Bear" then if v:FindFirstChild("Platform") then if v.Platform:FindFirstChild("AlertPos") then if v.Platform.AlertPos:FindFirstChild("AlertGui") then if v.Platform.AlertPos.AlertGui:FindFirstChild("ImageLabel") then
@@ -645,29 +605,25 @@ function makequests()
     end end end end end
 end
 
+-- *: sleepy
 local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.KeypadOne}
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
-local hometab = Window:CreateTab("home")
-local farmtab = Window:CreateTab("collect")
-local combtab = Window:CreateTab("battle")
-local wayptab = Window:CreateTab("tp")
-local misctab = Window:CreateTab("misc.")
-local setttab = Window:CreateTab("settings")
-local information = hometab:CreateSection("info")
-local uisection = hometab:CreateSection("ui")
-local gainedhoneylabel = information:CreateLabel("🍯: 0")
 
-information:CreateLabel("⚠️ = unsafe/experimental")
-information:CreateLabel("⚙ = configurable")
-information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+-- *: home
+local hometab = Window:CreateTab("home")
+local information = hometab:CreateSection("info")
+local gainedhoneylabel = information:CreateLabel("🍯: 0")
+local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil. -- Add keybinding to kill the GUI.
 end)
 
+local farmtab = Window:CreateTab("collect")
 local farmo = farmtab:CreateSection("farm")
 local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
-convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
 local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+
+convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) sleepy.vars.convertat = Value end)
 farmo:CreateToggle("quests ⚙", nil, function(State) sleepy.toggles.autodoquest = State end) -- TODO: Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
 farmo:CreateToggle("dig", nil, function(State) sleepy.toggles.autodig = State end)
 farmo:CreateToggle("sprinkler", nil, function(State) sleepy.toggles.autosprinkler = State end)
@@ -698,6 +654,26 @@ farmt:CreateToggle("tp to rare tokens ⚠️", nil, function(State) sleepy.toggl
 -- farmt:CreateToggle("skip dialogue ⚙", nil, function(State) sleepy.toggles.autoquest = State end) -- TODO: Make a skip dialogue button; enable it on auto-quests. 
 farmt:CreateToggle("honeystorm", nil, function(State) sleepy.toggles.honeystorm = State end)
 farmt:CreateToggle("coconuts/meteors", nil, function(State) sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
+
+local combtab = Window:CreateTab("battle")
+
+
+local wayptab = Window:CreateTab("tp")
+
+
+local misctab = Window:CreateTab("misc.")
+
+
+local setttab = Window:CreateTab("settings")
+
+
+
+
+
+information:CreateLabel("⚠️ = unsafe/experimental")
+information:CreateLabel("⚙ = configurable")
+information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+
 
 local mobkill = combtab:CreateSection("bosses") -- TODO: Add boss rotation autofarming capabilities.
 mobkill:CreateToggle("Coconut Crab", nil, function(State) if State then sleepyapi.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 107.91863250732, 467.86791992188) end end)

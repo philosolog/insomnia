@@ -1,9 +1,9 @@
 -- TODO: Hide display name as well?
-local new_name = "e_IoI" -- TODO: Append randomly generated names.
-local new_id = 1035940651 -- Set other ^_^
+local new_name = "skeletonbre" -- TODO: Append randomly generated names.
+local new_id = 2463702692 -- Set other ^_^
 local clear_avatar = true -- So no one can reverse search by your outfit
 local flush_body_colors = true -- So no one can reverse search by your bodycolors
-local rename_instances = false -- Rename any instances that holds your name. (Not recomended unless you can see your name above your character)
+local rename_instances = false -- Rename any instances that holds your name. (Not recomended unless you can see your name above your character) -- TODO: Fix BSS notifications showing username. (festive gifts)
 local change_id = true -- Change your player ID (not visually)
 local deep_scan = true -- Can get a bit laggy if there is a mass wave of new instances
 local filter_httpget = { -- Didn't seem like this would be helpful, but requested.
