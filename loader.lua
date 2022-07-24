@@ -8,7 +8,9 @@
 
 -- coroutine.wrap(TDAH_fake_script)()
 local Player = game.Players.LocalPlayer
-local Character = Player.Character or Player.CharacterAdded:Wait()
+repeat
+	task.wait()
+until Player.Character
 
 print("sleepy has loaded for "..Player.Name) -- TODO: Add sleepy version #.
 
