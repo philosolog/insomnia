@@ -1,4 +1,3 @@
---ples rename the file to fpsBoost or fpsboost something lik taht
 if sleepy.vars.fpsBoost == true then return end sleepy.vars.fpsBoost = true
 local lighting = game:GetService("Lighting")
 

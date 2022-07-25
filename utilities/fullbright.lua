@@ -1,5 +1,3 @@
--- TODO
-
 local lighting = game:GetService("Lighting")
 sleepy.lightingData = {}
 
