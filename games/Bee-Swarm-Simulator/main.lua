@@ -636,6 +636,7 @@ convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, func
 farmo:CreateToggle("quests ⚙", nil, function(State) getgenv().sleepy.toggles.autodoquest = State end) -- TODO: Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
 farmo:CreateToggle("dig", nil, function(State) getgenv().sleepy.toggles.autodig = State end)
 farmo:CreateToggle("sprinkler", nil, function(State) getgenv().sleepy.toggles.autosprinkler = State end)
+farmt:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
 farmo:CreateToggle("bubbles", nil, function(State) getgenv().sleepy.toggles.farmbubbles = State end)
 farmo:CreateToggle("flames", nil, function(State) getgenv().sleepy.toggles.farmflame = State end)
 farmo:CreateToggle("precise crosshairs", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
@@ -657,8 +658,7 @@ farmt:CreateToggle("planters", nil, function(State) getgenv().sleepy.toggles.aut
 farmt:CreateToggle("sprouts", nil, function(State) getgenv().sleepy.toggles.farmsprouts = State end)
 farmt:CreateToggle("puffshrooms", nil, function(State) getgenv().sleepy.toggles.farmpuffshrooms = State end)
 --farmt:CreateToggle("snowflakes ⚠️", nil, function(State) getgenv().sleepy.toggles.farmsnowflakes = State end)
-farmt:CreateToggle("tp to rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end)
--- farmt:CreateToggle("skip dialogue ⚙", nil, function(State) getgenv().sleepy.toggles.autoquest = State end) -- TODO: Make a skip dialogue button; enable it on auto-quests. 
+farmt:CreateToggle("skip dialogue ⚙", nil, function(State) getgenv().sleepy.toggles.autoquest = State end) -- TODO: Make a skip dialogue button; enable it on auto-quests. 
 farmt:CreateToggle("honeystorm", nil, function(State) getgenv().sleepy.toggles.honeystorm = State end)
 farmt:CreateToggle("coconuts/meteors", nil, function(State) getgenv().sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
 
@@ -703,7 +703,7 @@ misco:CreateDropdown("Equip Collectors", collectorstable, function(Option) local
 misco:CreateDropdown("Generate Amulet", {"Supreme Star Amulet", "Diamond Star Amulet", "Gold Star Amulet","Silver Star Amulet","Bronze Star Amulet","Moon Amulet"}, function(Option) local A_1 = Option.." Generator" local Event = game:GetService("ReplicatedStorage").Events.ToyEvent Event:FireServer(A_1) end)
 misco:CreateButton("Export Stats Table", function() local StatCache = require(game.ReplicatedStorage.ClientStatCache)writefile("Stats_"..sleepyapi.nickname..".json", StatCache:Encode()) end)
 extras:CreateButton("fullbright", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fullbright.lua"))()end)
-extras:CreateButton("unlock fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fps-unlocker.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
+extras:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
 extras:CreateTextBox("glider speed", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Speed = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 extras:CreateTextBox("glider float", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Float = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 extras:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end)
