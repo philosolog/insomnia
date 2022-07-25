@@ -11,9 +11,10 @@ lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
     lighting.FogEnd = 10e6
 end)
 
-setmetatable(_G.sleepy.toggles.fullbright, {
-    __newindex = function()
+-- ?:
+-- setmetatable(_G.sleepy.toggles.fullbright, {
+--     __newindex = function()
         
-        return
-    end
-})
+--         return
+--     end
+-- })

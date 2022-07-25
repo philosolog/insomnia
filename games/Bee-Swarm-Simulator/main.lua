@@ -624,7 +624,6 @@ information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 
-print(_G.sleepy.vars)
 -- *: collect
 local farmtab = Window:CreateTab("collect")
 local farmo = farmtab:CreateSection("farm")
