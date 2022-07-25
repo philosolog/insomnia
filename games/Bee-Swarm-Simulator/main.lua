@@ -613,7 +613,7 @@ local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 -- *: home
 local hometab = Window:CreateTab("home")
 local information = hometab:CreateSection("info")
-local descriptionLabel = information:CreateLabel("made to play for you")
+local descriptionLabel = information:CreateLabel("made by philosolog and defin for overnight autofarming")
 local elapsedtime = information:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 local uisection = hometab:CreateSection("ui")
@@ -1119,7 +1119,7 @@ task.spawn(function() while task.wait(1) do
     -- TODO: Format the time into days, etc...
 	local deltatime = math.floor(tick() - getgenv().start_time)
 
-	elapsedtime:UpdateText("🕑: "..math.floor(deltatime/(60*60)).."h, "..math.floor(deltatime/60)-math.floor(deltatime/(60*60))*(60).."m, "..deltatime-math.floor(deltatime/60)*(60).."s")
+	elapsedtime:UpdateText("⌛: "..math.floor(deltatime/(60*60)).."h, "..math.floor(deltatime/60)-math.floor(deltatime/(60*60))*(60).."m, "..deltatime-math.floor(deltatime/60)*(60).."s")
 	gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
 end end)
 game:GetService('RunService').Heartbeat:connect(function() 
