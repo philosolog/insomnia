@@ -1116,7 +1116,7 @@ task.spawn(function() while task.wait(1) do
     if getgenv().sleepy.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
     if getgenv().sleepy.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
     -- TODO: Format the time into days, etc...
-	local deltatime = math.floor(os.time() - getgenv().start_time)
+	local deltatime = math.floor(tick() - getgenv().start_time)
 
 	elapsedtime:UpdateText("🕑: "..math.floor(deltatime/(60*60)).."h, "..math.floor(deltatime/60)-math.floor(deltatime/(60*60))*(60).."m, "..deltatime-math.floor(deltatime/60)*(60).."s")
 	gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
