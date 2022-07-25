@@ -1,5 +1,5 @@
 local lighting = game:GetService("Lighting")
-_G.sleepy.lightingData = {}
+getgenv().sleepy.lightingData = {}
 
 lighting:GetPropertyChangedSignal("ClockTime"):Connect(function()
     lighting.ClockTime = 13
@@ -12,7 +12,7 @@ lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
 end)
 
 -- ?:
--- setmetatable(_G.sleepy.toggles.fullbright, {
+-- setmetatable(getgenv().sleepy.toggles.fullbright, {
 --     __newindex = function()
         
 --         return
