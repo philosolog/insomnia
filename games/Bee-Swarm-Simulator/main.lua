@@ -5,6 +5,7 @@ local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolo
 
 if not isfolder("sleepy") then makefolder("sleepy") end
 
+local GuiService = game:GetService("GuiService")
 local playerstatsevent = game:GetService("ReplicatedStorage").Events.RetrievePlayerStats
 local statstable = playerstatsevent:InvokeServer()
 local monsterspawners = game:GetService("Workspace").MonsterSpawners
@@ -623,6 +624,7 @@ information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 
+print(_G.sleepy.vars)
 -- *: collect
 local farmtab = Window:CreateTab("collect")
 local farmo = farmtab:CreateSection("farm")
