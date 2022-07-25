@@ -220,7 +220,7 @@ getgenv().sleepy = {
         collectcrosshairs = false,
         farmpuffshrooms = false,
         tptonpc = false,
-        donotfarmtokens = false,
+        donotcollectTab_otherSectionokens = false,
         convertballoons = false,
         autostockings = false,
         autosamovar = false,
@@ -241,7 +241,7 @@ getgenv().sleepy = {
         walkspeed = 70,
         jumppower = 70,
         npcprefer = "All Quests",
-        farmtype = "Walk",
+        collectTab_otherSectionype = "Walk",
         monstertimer = 3
     },
     dispensesettings = {
@@ -619,47 +619,69 @@ local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
 local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
+local homeWindow_configSection = hometab:CreateSection("config")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
 information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+-- TODO: Add auto-loading of configs.
+homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
+homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
+homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
+homeWindow_configSection:CreateButton("reset", function() getgenv().sleepy = defaultsleepy end)
 
 -- *: collect
-local farmtab = Window:CreateTab("collect")
-local farmo = farmtab:CreateSection("farm")
-local fielddropdown = farmo:CreateDropdown("field", fieldstable, function(String) getgenv().sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
-local autofarmtoggle = farmo:CreateToggle("autofarm ⚙", nil, function(State) getgenv().sleepy.toggles.autofarm = State end) autofarmtoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
-local farmt = farmtab:CreateSection("misc.")
+local collectTab = Window:CreateTab("collect")
+local collectTab_farmSection = collectTab:CreateSection("farm")
+local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
+local autocollectTab_otherSectionoggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().sleepy.toggles.autofarm = State end) autocollectTab_otherSectionoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local collectTab_itemsSection = collectTab:CreateSection("items")
+local collectTab_puffshroomsSection = collectTab:CreateSection("puffshrooms")
+local collectTab_plantersSection = collectTab:CreateSection("planters")
+local collectTab_sproutsSection = collectTab:CreateSection("sprouts")
+local collectTab_boostersSection = collectTab:CreateSection("boosters")
+local collectTab_dispensersSection = collectTab:CreateSection("dispensers")
+local collectTab_otherSection = collectTab:CreateSection("other")
 
-convertatslider = farmo:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().sleepy.vars.convertat = Value end)
-
--- farmo:CreateToggle("quests ⚙", nil, function(State) getgenv().sleepy.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
-farmo:CreateToggle("dig", nil, function(State) getgenv().sleepy.toggles.autodig = State end)
-farmo:CreateToggle("sprinkler", nil, function(State) getgenv().sleepy.toggles.autosprinkler = State end)
-farmo:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
-farmo:CreateToggle("bubbles", nil, function(State) getgenv().sleepy.toggles.farmbubbles = State end)
-farmo:CreateToggle("flames", nil, function(State) getgenv().sleepy.toggles.farmflame = State end)
-farmo:CreateToggle("precise crosshairs", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
-farmo:CreateToggle("fuzzy bombs", nil, function(State) getgenv().sleepy.toggles.farmfuzzy = State end)
-farmo:CreateToggle("balloons", nil, function(State) getgenv().sleepy.toggles.farmunderballoons = State end)
-farmo:CreateToggle("clouds", nil, function(State) getgenv().sleepy.toggles.farmclouds = State end)
-farmo:CreateToggle("leaves", nil, function(State) getgenv().sleepy.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
-farmt:CreateToggle("dispensers ⚙", nil, function(State) getgenv().sleepy.toggles.autodispense = State end)
-farmt:CreateToggle("field boosters ⚙", nil, function(State) getgenv().sleepy.toggles.autoboosters = State end)
-farmt:CreateToggle("weath clock", nil, function(State) getgenv().sleepy.toggles.clock = State end)
---farmt:CreateToggle("Auto Gingerbread Bears", nil, function(State) getgenv().sleepy.toggles.collectgingerbreads = State end)
---farmt:CreateToggle("Auto Samovar", nil, function(State) getgenv().sleepy.toggles.autosamovar = State end)
---farmt:CreateToggle("Auto Stockings", nil, function(State) getgenv().sleepy.toggles.autostockings = State end)
---farmt:CreateToggle("Auto Honey Candles", nil, function(State) getgenv().sleepy.toggles.autocandles = State end)
---farmt:CreateToggle("Auto Beesmas Feast", nil, function(State) getgenv().sleepy.toggles.autofeast = State end)
---farmt:CreateToggle("Auto Onett's Lid Art", nil, function(State) getgenv().sleepy.toggles.autoonettart = State end)
-farmt:CreateToggle("ant passes", nil, function(State) getgenv().sleepy.toggles.freeantpass = State end)
-farmt:CreateToggle("planters", nil, function(State) getgenv().sleepy.toggles.autoplanters = State end):AddToolTip("Will re-plant your planters after converting, if they hit 100%")
-farmt:CreateToggle("sprouts", nil, function(State) getgenv().sleepy.toggles.farmsprouts = State end)
-farmt:CreateToggle("puffshrooms", nil, function(State) getgenv().sleepy.toggles.farmpuffshrooms = State end)
---farmt:CreateToggle("snowflakes ⚠️", nil, function(State) getgenv().sleepy.toggles.farmsnowflakes = State end)
-farmt:CreateToggle("honeystorm", nil, function(State) getgenv().sleepy.toggles.honeystorm = State end)
-farmt:CreateToggle("coconuts/meteors", nil, function(State) getgenv().sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
+collectTab_farmSection:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().sleepy.vars.convertat = Value end)
+-- collectTab_farmSection:CreateToggle("quests ⚙", nil, function(State) getgenv().sleepy.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
+collectTab_farmSection:CreateToggle("dig", nil, function(State) getgenv().sleepy.toggles.autodig = State end)
+collectTab_farmSection:CreateToggle("sprinkler", nil, function(State) getgenv().sleepy.toggles.autosprinkler = State end)
+collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) getgenv().sleepy.toggles.donotcollectTab_otherSectionokens = State end) -- TODO: Make this customizable.
+collectTab_farmSection:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
+collectTab_farmSection:CreateToggle("bubbles", nil, function(State) getgenv().sleepy.toggles.farmbubbles = State end)
+collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().sleepy.toggles.farmflame = State end)
+collectTab_farmSection:CreateToggle("precise crosshairs", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
+collectTab_farmSection:CreateToggle("fuzzy bombs", nil, function(State) getgenv().sleepy.toggles.farmfuzzy = State end)
+collectTab_farmSection:CreateToggle("balloons", nil, function(State) getgenv().sleepy.toggles.farmunderballoons = State end)
+collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) getgenv().sleepy.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
+collectTab_farmSection:CreateToggle("clouds", nil, function(State) getgenv().sleepy.toggles.farmclouds = State end)
+collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
+collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().sleepy.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
+collectTab_itemsSection:CreateToggle("weath clock", nil, function(State) getgenv().sleepy.toggles.clock = State end)
+collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().sleepy.toggles.freeantpass = State end)
+collectTab_puffshroomsSection:CreateToggle("puffshrooms", nil, function(State) getgenv().sleepy.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
+collectTab_plantersSection:CreateToggle("planters", nil, function(State) getgenv().sleepy.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
+collectTab_sproutsSection:CreateToggle("sprouts", nil, function(State) getgenv().sleepy.toggles.farmsprouts = State end)
+collectTab_boostersSection:CreateToggle("active", nil, function(State) getgenv().sleepy.toggles.autoboosters = State end) -- TODO: Add keybinding.
+collectTab_boostersSection:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().sleepy.dispensesettings.white = not getgenv().sleepy.dispensesettings.white end)
+collectTab_boostersSection:CreateToggle("Blue Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.blue = not getgenv().sleepy.dispensesettings.blue end)
+collectTab_boostersSection:CreateToggle("Red Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.red = not getgenv().sleepy.dispensesettings.red end)
+collectTab_dispensersSection:CreateToggle("active", nil, function(State) getgenv().sleepy.toggles.autodispense = State end) -- TODO: Allow list-adding of dispensers and keybinding.
+collectTab_dispensersSection:CreateToggle("Royal Jelly Dispenser", nil, function(State) getgenv().sleepy.dispensesettings.rj = not getgenv().sleepy.dispensesettings.rj end)
+collectTab_dispensersSection:CreateToggle("Blueberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.blub = not getgenv().sleepy.dispensesettings.blub end)
+collectTab_dispensersSection:CreateToggle("Strawberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.straw = not getgenv().sleepy.dispensesettings.straw end)
+collectTab_dispensersSection:CreateToggle("Treat Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.treat = not getgenv().sleepy.dispensesettings.treat end)
+collectTab_dispensersSection:CreateToggle("Coconut Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.coconut = not getgenv().sleepy.dispensesettings.coconut end)
+collectTab_dispensersSection:CreateToggle("Glue Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.glue = not getgenv().sleepy.dispensesettings.glue end)
+collectTab_otherSection:CreateToggle("honeystorm", nil, function(State) getgenv().sleepy.toggles.honeystorm = State end)
+--collectTab_otherSection:CreateToggle("Auto Gingerbread Bears", nil, function(State) getgenv().sleepy.toggles.collectgingerbreads = State end)
+--collectTab_otherSection:CreateToggle("Auto Samovar", nil, function(State) getgenv().sleepy.toggles.autosamovar = State end)
+--collectTab_otherSection:CreateToggle("Auto Stockings", nil, function(State) getgenv().sleepy.toggles.autostockings = State end)
+--collectTab_otherSection:CreateToggle("Auto Honey Candles", nil, function(State) getgenv().sleepy.toggles.autocandles = State end)
+--collectTab_otherSection:CreateToggle("Auto Beesmas Feast", nil, function(State) getgenv().sleepy.toggles.autofeast = State end)
+--collectTab_otherSection:CreateToggle("Auto Onett's Lid Art", nil, function(State) getgenv().sleepy.toggles.autoonettart = State end)
+--collectTab_otherSection:CreateToggle("snowflakes ⚠️", nil, function(State) getgenv().sleepy.toggles.farmsnowflakes = State end)
 
 -- * battle
 local combtab = Window:CreateTab("battle")
@@ -720,63 +742,46 @@ misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.
 -- misco:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end) -- ?: Does this even work?
 
 
--- *: settings
-local setttab = Window:CreateTab("settings")
-local farmsettings = setttab:CreateSection("Autofarm Settings")
-local raresettings = setttab:CreateSection("Tokens Settings")
-local dispsettings = setttab:CreateSection("Auto Dispenser & Auto Boosters Settings")
-local guisettings = setttab:CreateSection("GUI Settings")
-local uitoggle = guisettings:CreateToggle("UI Toggle", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
-local themes = guisettings:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral"}, function(Name) if Name == "Default" then Window:SetBackground("2151741365") elseif Name == "Hearts" then Window:SetBackground("6073763717") elseif Name == "Abstract" then Window:SetBackground("6073743871") elseif Name == "Hexagon" then Window:SetBackground("6073628839") elseif Name == "Circles" then Window:SetBackground("6071579801") elseif Name == "Lace With Flowers" then Window:SetBackground("6071575925") elseif Name == "Floral" then Window:SetBackground("5553946656") end end)themes:SetOption("Default")
-local sleepys = setttab:CreateSection("Configs")
-local fieldsettings = setttab:CreateSection("Fields Settings")
-local aqs = setttab:CreateSection("Auto Quest Settings")
-local pts = setttab:CreateSection("Autofarm Priority Tokens")
+-- -- *: settings
+-- local setttab = Window:CreateTab("settings")
+-- local farmsettings = setttab:CreateSection("collect")
+-- local raresettings = setttab:CreateSection("tokens") -- TODO: Work on TP/walking toggles for token types.
+-- local guisettings = setttab:CreateSection("UI")
+-- local uitoggle = guisettings:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
+-- local themes = guisettings:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral"}, function(Name) if Name == "Default" then Window:SetBackground("2151741365") elseif Name == "Hearts" then Window:SetBackground("6073763717") elseif Name == "Abstract" then Window:SetBackground("6073743871") elseif Name == "Hexagon" then Window:SetBackground("6073628839") elseif Name == "Circles" then Window:SetBackground("6071579801") elseif Name == "Lace With Flowers" then Window:SetBackground("6071575925") elseif Name == "Floral" then Window:SetBackground("5553946656") end end)themes:SetOption("Default")
+-- local sleepys = setttab:CreateSection("configurations")
+-- local fieldsettings = setttab:CreateSection("Fields Settings")
+-- local aqs = setttab:CreateSection("Auto Quest Settings") -- TODO: Fix this feature.
+-- local pts = setttab:CreateSection("Autofarm Priority Tokens") -- TODO: Create an ordered-list/dropdown for selecting token priority?
 
-farmsettings:CreateTextBox("Autofarming Walkspeed", "Default Value = 60", true, function(Value) getgenv().sleepy.vars.farmspeed = Value end)
-farmsettings:CreateToggle("^ Loop Speed On Autofarming",nil, function(State) getgenv().sleepy.toggles.loopfarmspeed = State end)
-farmsettings:CreateToggle("Don't Walk In Field",nil, function(State) getgenv().sleepy.toggles.farmflower = State end)
-farmsettings:CreateToggle("Convert Hive Balloon",nil, function(State) getgenv().sleepy.toggles.convertballoons = State end)
-farmsettings:CreateToggle("Don't Farm Tokens",nil, function(State) getgenv().sleepy.toggles.donotfarmtokens = State end)
-raresettings:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
-raresettings:CreateButton("Add Token To Rares List", function()
-    table.insert(getgenv().sleepy.rares, rarename)
-    game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
-    raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
-end)
-raresettings:CreateButton("Remove Token From Rares List", function()
-    table.remove(getgenv().sleepy.rares, sleepyapi.tablefind(getgenv().sleepy.rares, rarename))
-    game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
-    raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
-end)
-raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
-dispsettings:CreateToggle("Royal Jelly Dispenser", nil, function(State) getgenv().sleepy.dispensesettings.rj = not getgenv().sleepy.dispensesettings.rj end)
-dispsettings:CreateToggle("Blueberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.blub = not getgenv().sleepy.dispensesettings.blub end)
-dispsettings:CreateToggle("Strawberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.straw = not getgenv().sleepy.dispensesettings.straw end)
-dispsettings:CreateToggle("Treat Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.treat = not getgenv().sleepy.dispensesettings.treat end)
-dispsettings:CreateToggle("Coconut Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.coconut = not getgenv().sleepy.dispensesettings.coconut end)
-dispsettings:CreateToggle("Glue Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.glue = not getgenv().sleepy.dispensesettings.glue end)
-dispsettings:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().sleepy.dispensesettings.white = not getgenv().sleepy.dispensesettings.white end)
-dispsettings:CreateToggle("Blue Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.blue = not getgenv().sleepy.dispensesettings.blue end)
-dispsettings:CreateToggle("Red Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.red = not getgenv().sleepy.dispensesettings.red end)
-guisettings:CreateColorpicker("UI Color", function(Color) Window:ChangeColor(Color) end)
-sleepys:CreateTextBox("Config Name", 'ex: stumpconfig', false, function(Value) temptable.configname = Value end)
-sleepys:CreateButton("Load Config", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
-sleepys:CreateButton("Save Config", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
-sleepys:CreateButton("Reset Config", function() getgenv().sleepy = defaultsleepy end)
-fieldsettings:CreateDropdown("Best White Field", temptable.whitefields, function(Option) getgenv().sleepy.bestfields.white = Option end)
-fieldsettings:CreateDropdown("Best Red Field", temptable.redfields, function(Option) getgenv().sleepy.bestfields.red = Option end)
-fieldsettings:CreateDropdown("Best Blue Field", temptable.bluefields, function(Option) getgenv().sleepy.bestfields.blue = Option end)
-fieldsettings:CreateDropdown("Field", fieldstable, function(Option) temptable.blackfield = Option end)
-fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().sleepy.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
-fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().sleepy.blacklistedfields, sleepyapi.tablefind(getgenv().sleepy.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
-fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end)
-aqs:CreateDropdown("Do NPC Quests", {'All Quests', 'Bucko Bee', 'Brown Bear', 'Riley Bee', 'Polar Bear'}, function(Option) getgenv().sleepy.vars.npcprefer = Option end)
-aqs:CreateToggle("Teleport To NPC", nil, function(State) getgenv().sleepy.toggles.tptonpc = State end)
-pts:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
-pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().sleepy.priority, rarename) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
-pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().sleepy.priority, sleepyapi.tablefind(getgenv().sleepy.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
-pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end)
+-- farmsettings:CreateTextBox("Autofarming Walkspeed", "Default Value = 60", true, function(Value) getgenv().sleepy.vars.farmspeed = Value end)
+-- farmsettings:CreateToggle("^ Loop Speed On Autofarming",nil, function(State) getgenv().sleepy.toggles.loopfarmspeed = State end)
+-- farmsettings:CreateToggle("Don't Walk In Field",nil, function(State) getgenv().sleepy.toggles.farmflower = State end) -- ?: What does this do?
+-- raresettings:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
+-- raresettings:CreateButton("Add Token To Rares List", function()
+--     table.insert(getgenv().sleepy.rares, rarename)
+--     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
+--     raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
+-- end)
+-- raresettings:CreateButton("Remove Token From Rares List", function()
+--     table.remove(getgenv().sleepy.rares, sleepyapi.tablefind(getgenv().sleepy.rares, rarename))
+--     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
+--     raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
+-- end)
+-- raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
+-- fieldsettings:CreateDropdown("Best White Field", temptable.whitefields, function(Option) getgenv().sleepy.bestfields.white = Option end)
+-- fieldsettings:CreateDropdown("Best Red Field", temptable.redfields, function(Option) getgenv().sleepy.bestfields.red = Option end)
+-- fieldsettings:CreateDropdown("Best Blue Field", temptable.bluefields, function(Option) getgenv().sleepy.bestfields.blue = Option end)
+-- fieldsettings:CreateDropdown("Field", fieldstable, function(Option) temptable.blackfield = Option end)
+-- fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().sleepy.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().sleepy.blacklistedfields, sleepyapi.tablefind(getgenv().sleepy.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end)
+-- aqs:CreateDropdown("Do NPC Quests", {'All Quests', 'Bucko Bee', 'Brown Bear', 'Riley Bee', 'Polar Bear'}, function(Option) getgenv().sleepy.vars.npcprefer = Option end)
+-- aqs:CreateToggle("Teleport To NPC", nil, function(State) getgenv().sleepy.toggles.tptonpc = State end)
+-- pts:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
+-- pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().sleepy.priority, rarename) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
+-- pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().sleepy.priority, sleepyapi.tablefind(getgenv().sleepy.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
+-- pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end)
 
 -- TODO: Move listeners into modules.
 task.spawn(function() while task.wait() do
@@ -907,7 +912,7 @@ task.spawn(function() while task.wait() do
                 if getgenv().sleepy.toggles.farmbubbles then getbubble() end
                 if getgenv().sleepy.toggles.farmclouds then getcloud() end
                 if getgenv().sleepy.toggles.farmunderballoons then getballoons() end
-                if not getgenv().sleepy.toggles.donotfarmtokens and done then gettoken() end
+                if not getgenv().sleepy.toggles.donotcollectTab_otherSectionokens and done then gettoken() end
                 if not getgenv().sleepy.toggles.farmflower then getflower() end
             end
         elseif tonumber(pollenpercentage) >= tonumber(getgenv().sleepy.vars.convertat) then
@@ -1146,7 +1151,7 @@ game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
             temptable.dead = true
             getgenv().sleepy.toggles.autofarm = false
             temptable.converting = false
-            temptable.farmtoken = false
+            temptable.collectTab_otherSectionoken = false
         end
         if temptable.dead then
             task.wait(25)
