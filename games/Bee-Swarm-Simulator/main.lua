@@ -660,7 +660,7 @@ collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) 
 collectTab_farmSection:CreateToggle("clouds", nil, function(State) getgenv().sleepy.toggles.farmclouds = State end)
 collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
 collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().sleepy.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
-collectTab_itemsSection:CreateToggle("weath clock", nil, function(State) getgenv().sleepy.toggles.clock = State end)
+collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgenv().sleepy.toggles.clock = State end)
 collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().sleepy.toggles.freeantpass = State end)
 collectTab_puffshroomsSection:CreateToggle("puffshrooms", nil, function(State) getgenv().sleepy.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
 collectTab_plantersSection:CreateToggle("planters", nil, function(State) getgenv().sleepy.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
