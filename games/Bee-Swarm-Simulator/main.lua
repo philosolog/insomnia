@@ -621,6 +621,7 @@ local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
 local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
+local uitoggle = uisection:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
 local homeWindow_configSection = hometab:CreateSection("config")
 
 information:CreateLabel("⚠️ = experimental")
@@ -748,7 +749,6 @@ misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.
 -- local farmsettings = setttab:CreateSection("collect")
 -- local raresettings = setttab:CreateSection("tokens") -- TODO: Work on TP/walking toggles for token types.
 -- local guisettings = setttab:CreateSection("UI")
--- local uitoggle = guisettings:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
 -- local themes = guisettings:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral"}, function(Name) if Name == "Default" then Window:SetBackground("2151741365") elseif Name == "Hearts" then Window:SetBackground("6073763717") elseif Name == "Abstract" then Window:SetBackground("6073743871") elseif Name == "Hexagon" then Window:SetBackground("6073628839") elseif Name == "Circles" then Window:SetBackground("6071579801") elseif Name == "Lace With Flowers" then Window:SetBackground("6071575925") elseif Name == "Floral" then Window:SetBackground("5553946656") end end)themes:SetOption("Default")
 -- local sleepys = setttab:CreateSection("configurations")
 -- local fieldsettings = setttab:CreateSection("Fields Settings")
