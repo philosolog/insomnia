@@ -1,7 +1,7 @@
 -- TODO: Simplify ":GetService()" calls.
-local sleepyapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy/main/API/sleepyapi.lua"))()
-local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy/main/API/bracketv3.lua")
-local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy/main/games/Bee-Swarm-Simulator/bssapi.lua")
+local sleepyapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/sleepyapi.lua"))()
+local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/bracketv3.lua")
+local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/games/Bee-Swarm-Simulator/bssapi.lua")
 
 if not isfolder("sleepy") then makefolder("sleepy") end
 
@@ -620,7 +620,7 @@ local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
-local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
+local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
 local uitoggle = uisection:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
 local homeWindow_configSection = hometab:CreateSection("config")
 
@@ -628,8 +628,8 @@ information:CreateLabel("⚠️ = experimental")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
-homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
-homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
+homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy-pbe/BSS_"..temptable.configname..".json")) end)
+homeWindow_configSection:CreateButton("save", function() writefile("sleepy-pbe/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
 homeWindow_configSection:CreateButton("reset", function() getgenv().sleepy = defaultsleepy end)
 
 -- *: collect
@@ -739,8 +739,8 @@ miscc:CreateToggle("float", nil, function(State) temptable.float = State end)
 miscc:CreateToggle("godmode", nil, function(State) getgenv().sleepy.toggles.godmode = State if State then bssapi:Godmode(true) else bssapi:Godmode(false) end end)
 miscc:CreateToggle("skip dialogue", nil, function(State) getgenv().sleepy.toggles.autoquest = State end) -- TODO: Also enable it on auto-quests. 
 misco:CreateButton("export stats", function() local StatCache = require(game.ReplicatedStorage.ClientStatCache)writefile("Stats_"..sleepyapi.nickname..".json", StatCache:Encode()) end)
-misco:CreateButton("fullbright", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy/main/utilities/fullbright.lua"))()end)
-misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy/main/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
+misco:CreateButton("fullbright", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fullbright.lua"))()end)
+misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
 -- misco:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end) -- ?: Does this even work?
 
 
@@ -1185,7 +1185,7 @@ end end)
 
 hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) end end
 
-if _G.autoload then if isfile("sleepy/BSS_".._G.autoload..".json") then getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_".._G.autoload..".json")) end end
+if _G.autoload then if isfile("sleepy-pbe/BSS_".._G.autoload..".json") then getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy-pbe/BSS_".._G.autoload..".json")) end end
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
 for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
