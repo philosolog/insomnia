@@ -628,8 +628,8 @@ information:CreateLabel("⚠️ = experimental")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
-homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy-pbe/BSS_"..temptable.configname..".json")) end)
-homeWindow_configSection:CreateButton("save", function() writefile("sleepy-pbe/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
+homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
+homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
 homeWindow_configSection:CreateButton("reset", function() getgenv().sleepy = defaultsleepy end)
 
 -- *: collect
@@ -1185,7 +1185,7 @@ end end)
 
 hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) end end
 
-if _G.autoload then if isfile("sleepy-pbe/BSS_".._G.autoload..".json") then getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy-pbe/BSS_".._G.autoload..".json")) end end
+if _G.autoload then if isfile("sleepy/BSS_".._G.autoload..".json") then getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_".._G.autoload..".json")) end end
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
 for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
