@@ -613,7 +613,7 @@ local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 -- *: home
 local hometab = Window:CreateTab("home")
 local information = hometab:CreateSection("info")
-local descriptionLabel = information:CreateLabel("made by philosolog and defin for overnight autofarming")
+local descriptionLabel = information:CreateLabel("by philosolog and defin")
 local elapsedtime = information:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 local uisection = hometab:CreateSection("ui")
