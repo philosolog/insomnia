@@ -613,8 +613,9 @@ local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 -- *: home
 local hometab = Window:CreateTab("home")
 local information = hometab:CreateSection("info")
+local descriptionLabel = information:CreateLabel("made to play for you")
+local elapsedtime = information:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
-local elapsedtime = information:CreateLabel("🕑: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
@@ -622,7 +623,7 @@ end) -- TODO: Add keybind compatibility.
 local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
 local homeWindow_configSection = hometab:CreateSection("config")
 
-information:CreateLabel("⚠️ = unsafe/experimental")
+information:CreateLabel("⚠️ = experimental")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
