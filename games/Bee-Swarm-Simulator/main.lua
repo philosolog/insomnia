@@ -613,8 +613,8 @@ local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 -- *: home
 local hometab = Window:CreateTab("home")
 local information = hometab:CreateSection("info")
-local elapsedtime = information:CreateLabel("🕑: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
+local elapsedtime = information:CreateLabel("🕑: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
@@ -1116,7 +1116,7 @@ task.spawn(function() while task.wait(1) do
     if getgenv().sleepy.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
     if getgenv().sleepy.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
     -- TODO: Format the time into days, etc...
-	local deltatime = math.round(os.time() - getgenv().start_time)
+	local deltatime = math.floor(os.time() - getgenv().start_time)
 
 	elapsedtime:UpdateText("🕑: "..math.floor(deltatime/(60*60)).."h, "..math.floor(deltatime/60)-math.floor(deltatime/(60*60))*(60).."m, "..deltatime-math.floor(deltatime/60)*(60).."s")
 	gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
