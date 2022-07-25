@@ -653,7 +653,7 @@ collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) 
 collectTab_farmSection:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
 collectTab_farmSection:CreateToggle("bubbles", nil, function(State) getgenv().sleepy.toggles.farmbubbles = State end)
 collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().sleepy.toggles.farmflame = State end)
-collectTab_farmSection:CreateToggle("precise crosshairs", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
+collectTab_farmSection:CreateToggle("precise targets", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
 collectTab_farmSection:CreateToggle("fuzzy bombs", nil, function(State) getgenv().sleepy.toggles.farmfuzzy = State end)
 collectTab_farmSection:CreateToggle("balloons", nil, function(State) getgenv().sleepy.toggles.farmunderballoons = State end)
 collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) getgenv().sleepy.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
