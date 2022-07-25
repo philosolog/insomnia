@@ -1,4 +1,4 @@
-if sleepy.vars.fpsBoost == true then return end sleepy.vars.fpsBoost = true
+if _G.sleepy.vars.fpsBoost == true then return end _G.sleepy.vars.fpsBoost = true
 local lighting = game:GetService("Lighting")
 
 if sethiddenproperty then sethiddenproperty(game:GetService("Lighting"), "Technology", Enum.Technology.Compatibility) end
