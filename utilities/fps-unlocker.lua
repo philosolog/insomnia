@@ -17,7 +17,7 @@ local function destroyIf(Parent, destroyPartTab, waitTime)
 end
 
 local function tokens(token)
-    token.CanCollide = false
+    -- token.CanCollide = false -- TODO: Fix this line turning CanCollide false for the floor.
     destroyIf(token, {"Sparkles", "Sound"})
 end
 
