@@ -613,6 +613,7 @@ local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
 -- *: home
 local hometab = Window:CreateTab("home")
 local information = hometab:CreateSection("info")
+local elapsedtime = information:CreateLabel("🕑: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
@@ -622,7 +623,6 @@ local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(gam
 local homeWindow_configSection = hometab:CreateSection("config")
 
 information:CreateLabel("⚠️ = unsafe/experimental")
-information:CreateLabel("⚙ = configurable")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
@@ -725,7 +725,7 @@ local miscc = misctab:CreateSection("character")
 local misco = misctab:CreateSection("other")
 
 miscc:CreateButton("Ant Challenge semi-godmode ⚠️", function() sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(1) game.ReplicatedStorage.Events.ToyEvent:FireServer("Ant Challenge") game.Players.LocalPlayer.Character.HumanoidRootPart.Position = Vector3.new(93.4228, 42.3983, 553.128) task.wait(2) game.Players.LocalPlayer.Character.Humanoid.Name = 1 local l = game.Players.LocalPlayer.Character["1"]:Clone() l.Parent = game.Players.LocalPlayer.Character l.Name = "Humanoid" task.wait() game.Players.LocalPlayer.Character["1"]:Destroy() sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(8) sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) end)
--- TODO: For GSs, add a preset valu in the textbox. (find BSS default values)
+-- TODO: For GSs, add a preset value in the textbox. (find BSS default values)
 miscc:CreateTextBox("glider speed", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Speed = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 miscc:CreateTextBox("glider slope", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Float = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 -- TODO: Make WS and JP keybindable.
@@ -1115,7 +1115,11 @@ task.spawn(function() while task.wait(1) do
     end
     if getgenv().sleepy.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
     if getgenv().sleepy.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
-    gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
+    -- TODO: Format the time into days, etc...
+	local deltatime = tick() - getgenv().start_time
+
+	elapsedtime:UpdateText("🕑: "..math.floor(deltatime/(60*60)).."h, "..math.floor(deltatime/60)-math.floor(deltatime/(60*60))*(60).."m, "..deltatime-math.floor(deltatime/60)*(60).."s")
+	gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
 end end)
 game:GetService('RunService').Heartbeat:connect(function() 
     if getgenv().sleepy.toggles.autoquest then firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.NPC.ButtonOverlay.MouseButton1Click) end
