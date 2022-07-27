@@ -284,8 +284,9 @@ local sleepy = {
         path:ComputeAsync(Root.Position, target)
         local waypoints = path:GetWaypoints()
         for i, waypoint in ipairs(waypoints) do
-            game:GetService("Players").LocalPlayer.Character.Humanoid:MoveTo(waypoint.Position)
-            game:GetService("Players").LocalPlayer.Character.Humanoid.MoveToFinished:wait()
+            game:GetService("Players").LocalPlayer.Character.Humanoid:walkTo(waypoint.Position) -- !
+			task.wait()
+            --game:GetService("Players").LocalPlayer.Character.Humanoid.MoveToFinished:wait()
             if waypoint.Action == Enum.PathWaypointAction.Jump then
                 Humanoid.Jump = true
             end
