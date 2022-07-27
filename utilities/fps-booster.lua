@@ -6,7 +6,7 @@ lighting.ShadowSoftness = 0 --not useful when the lighting technology already is
 lighting.GlobalShadows = false
 
 local beesFolder = workspace:WaitForChild("Bees")
-local coinsFolder = workspace:WaitForChild("Collectibles")
+--local coinsFolder = workspace:WaitForChild("Collectibles")
 local function destroyIf(Parent, destroyPartTab, waitTime)
     for i = 1, #destroyPartTab do
         coroutine.wrap(function()
@@ -16,11 +16,11 @@ local function destroyIf(Parent, destroyPartTab, waitTime)
     end
 end
 
+--[[
 local function tokens(token)
-    -- token.CanCollide = false -- TODO: Fix this line turning CanCollide false for the floor.
     destroyIf(token, {"Sparkles", "Sound"})
 end
-
+]]
 local function bees(bee)
     destroyIf(bee, {
         "TopTexture",
@@ -48,8 +48,12 @@ local function performanceObj(obj)
 
     if obj.Parent == beesFolder then 
         bees(obj)
+    --[[ causes erors caus onett wants ur computr to die
+         below variables are also commented
+
     elseif obj.Parent ~= coinsFolder then
         tokens(obj)
+    ]]
     end
 end
 
