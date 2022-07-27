@@ -663,6 +663,7 @@ collectTab_convertSection:CreateToggle("use ant passes", nil, function(State) en
 collectTab_convertSection:CreateToggle("use tickets", nil, function(State) end) -- TODO
 collectTab_convertSection:CreateToggle("hive balloon",nil, function(State) getgenv().Player.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
 collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().Player.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
+collectTab_itemsSection:CreateToggle("tickets", nil, function(State) getgenv().Player.toggles.freeantpass = State end)
 collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgenv().Player.toggles.clock = State end)
 collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().Player.toggles.freeantpass = State end)
 collectTab_puffshroomsSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
@@ -743,6 +744,7 @@ miscc:CreateToggle("float", nil, function(State) temptable.float = State end)
 miscc:CreateToggle("godmode", nil, function(State) getgenv().Player.toggles.godmode = State if State then bssapi:Godmode(true) else bssapi:Godmode(false) end end)
 miscc:CreateToggle("skip dialogue", nil, function(State) getgenv().Player.toggles.autoquest = State end) -- TODO: Also enable it on auto-quests. 
 misco:CreateButton("export stats", function() local StatCache = require(game.ReplicatedStorage.ClientStatCache)writefile("Stats_"..sleepyapi.nickname..".json", StatCache:Encode()) end)
+misco:CreateButton("collect treasures", function() end)
 misco:CreateButton("fullbright", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fullbright.lua"))()end)
 misco:CreateButton("boost fps", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
 -- misco:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end) -- ?: Does this even work?
