@@ -17,8 +17,7 @@ local sleepy = {
         game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {CFrame = pos}):Play() task.wait(time)
     end,
     ["walkTo"] = function(v3) -- walk to position (not pathfinding) -- TODO: Rework this; it used to be ":MoveTo()"
-        print("e")
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(v3) + Vector3.new(0, 2, 0))
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(v3))
     end,
     ["isExist"] = function(obj) -- check for object, if it is exist then returnes true
         if obj ~= nil then
