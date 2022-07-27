@@ -1,7 +1,7 @@
 -- TODO: Simplify ":GetService()" calls.
 local sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
-local library = sleepyapi.returncode(getgenv().sleepy.repository.."/API/bracketv3.lua")
-local bssapi = sleepyapi.returncode(getgenv().sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
+local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/bracketv3.lua")
+local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/games/Bee-Swarm-Simulator/bssapi.lua")
 
 if not isfolder("sleepy") then makefolder("sleepy") end
 
@@ -618,9 +618,9 @@ local elapsedtime = information:CreateLabel("⌛: 0") -- TODO: Create labels for
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
-	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
+	game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
-local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
+local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
 local uitoggle = uisection:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
 local homeWindow_configSection = hometab:CreateSection("config")
 
@@ -636,7 +636,7 @@ homeWindow_configSection:CreateButton("reset", function() getgenv().Player = def
 local collectTab = Window:CreateTab("collect")
 local collectTab_farmSection = collectTab:CreateSection("farm")
 local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().Player.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
-local autocollectTab_otherSectionoggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local autocollectTab_otherSectionToggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionToggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
 local collectTab_itemsSection = collectTab:CreateSection("items")
 local collectTab_puffshroomsSection = collectTab:CreateSection("puffshrooms")
 local collectTab_plantersSection = collectTab:CreateSection("planters")
@@ -739,8 +739,8 @@ miscc:CreateToggle("float", nil, function(State) temptable.float = State end)
 miscc:CreateToggle("godmode", nil, function(State) getgenv().Player.toggles.godmode = State if State then bssapi:Godmode(true) else bssapi:Godmode(false) end end)
 miscc:CreateToggle("skip dialogue", nil, function(State) getgenv().Player.toggles.autoquest = State end) -- TODO: Also enable it on auto-quests. 
 misco:CreateButton("export stats", function() local StatCache = require(game.ReplicatedStorage.ClientStatCache)writefile("Stats_"..sleepyapi.nickname..".json", StatCache:Encode()) end)
-misco:CreateButton("fullbright", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fullbright.lua"))()end)
-misco:CreateButton("boost fps", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
+misco:CreateButton("fullbright", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fullbright.lua"))()end)
+misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
 -- misco:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end) -- ?: Does this even work?
 
 
@@ -761,12 +761,12 @@ misco:CreateButton("boost fps", function() loadstring(game:HttpGet(getgenv().sle
 -- raresettings:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
 -- raresettings:CreateButton("Add Token To Rares List", function()
 --     table.insert(getgenv().Player.rares, rarename)
---     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
+--     game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Rares List D",true):Destroy()
 --     raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
 -- end)
 -- raresettings:CreateButton("Remove Token From Rares List", function()
 --     table.remove(getgenv().Player.rares, sleepyapi.tablefind(getgenv().Player.rares, rarename))
---     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
+--     game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Rares List D",true):Destroy()
 --     raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
 -- end)
 -- raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
@@ -774,14 +774,14 @@ misco:CreateButton("boost fps", function() loadstring(game:HttpGet(getgenv().sle
 -- fieldsettings:CreateDropdown("Best Red Field", temptable.redfields, function(Option) getgenv().Player.bestfields.red = Option end)
 -- fieldsettings:CreateDropdown("Best Blue Field", temptable.bluefields, function(Option) getgenv().Player.bestfields.blue = Option end)
 -- fieldsettings:CreateDropdown("Field", fieldstable, function(Option) temptable.blackfield = Option end)
--- fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().Player.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
--- fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().Player.blacklistedfields, sleepyapi.tablefind(getgenv().Player.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().Player.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().Player.blacklistedfields, sleepyapi.tablefind(getgenv().Player.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
 -- fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end)
 -- aqs:CreateDropdown("Do NPC Quests", {'All Quests', 'Bucko Bee', 'Brown Bear', 'Riley Bee', 'Polar Bear'}, function(Option) getgenv().Player.vars.npcprefer = Option end)
 -- aqs:CreateToggle("Teleport To NPC", nil, function(State) getgenv().Player.toggles.tptonpc = State end)
 -- pts:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
--- pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().Player.priority, rarename) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
--- pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().Player.priority, sleepyapi.tablefind(getgenv().Player.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
+-- pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().Player.priority, rarename) game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
+-- pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().Player.priority, sleepyapi.tablefind(getgenv().Player.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
 -- pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end)
 
 -- TODO: Move listeners into modules.
@@ -916,7 +916,7 @@ task.spawn(function() while task.wait() do
                 if not getgenv().Player.toggles.donotcollectTab_otherSectionokens and done then gettoken() end
                 if not getgenv().Player.toggles.farmflower then getflower() end
             end
-        elseif tonumber(pollenpercentage) >= tonumber(getgenv().Player.vars.convertat) then
+        elseif tonumber(pollenpercentage) >= tonumber(getgenv().Player.vars.convertat) then -- TODO: Add convert & types.
             temptable.tokensfarm = false
             sleepyapi.tween(2, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
             task.wait(2)
@@ -1185,7 +1185,7 @@ end end)
 
 hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) end end
 
-if _G.autoload then if isfile("sleepy/BSS_".._G.autoload..".json") then getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_".._G.autoload..".json")) end end
+if getgenv().autoload then if isfile("sleepy/BSS_"..getgenv().autoload..".json") then getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..getgenv().autoload..".json")) end end
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
 for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end

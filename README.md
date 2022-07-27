@@ -2,7 +2,7 @@
 *an afk hub for overnight gains*
 ### 🧵
 ```lua
-loadstring(game:HttpGet(getgenv().sleepy.repository.."/loader.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/loader.lua"))()
 ```
 ### 🎮
 - [🐝 Bee Swarm Simulator](https://www.roblox.com/games/1537690962)

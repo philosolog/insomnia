@@ -4,7 +4,8 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
-_G.windowname = HttpService:GenerateGUID(false) -- TODO: Account for multiple windows.
+
+getgenv().windowname = HttpService:GenerateGUID(false) -- TODO: Account for multiple windows.
 
 local function MakeDraggable(ClickObject, Object)
 	local Dragging = nil
@@ -56,7 +57,7 @@ function Library:CreateWindow(Config, Parent)
 	end
 	]]
 	
-	Screen.Name = _G.windowname
+	Screen.Name = getgenv().windowname
 	Screen.Parent = Parent
 	Topbar.WindowName.Text = Config.WindowName
 
