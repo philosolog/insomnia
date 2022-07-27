@@ -9,6 +9,11 @@
 -- coroutine.wrap(TDAH_fake_script)()
 local Player = game.Players.LocalPlayer
 
+-- ?: Do I put getgenv() classes before the script?
+getgenv().start_time = tick()
+getgenv().sleepy = {
+	repository = "https://raw.githubusercontent.com/philosolog/sleepy-pbe/main"
+}
 repeat
 	task.wait()
 until Player.Character
