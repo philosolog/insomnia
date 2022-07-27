@@ -670,7 +670,6 @@ collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgen
 collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().Player.toggles.freeantpass = State end)
 collectTab_puffshroomsSection:CreateToggle("farm", nil, function(State) getgenv().Player.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
 collectTab_plantersSection:CreateToggle("replant", nil, function(State) getgenv().Player.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
-
 collectTab_sproutsSection:CreateToggle("farm", nil, function(State) getgenv().Player.toggles.farmsprouts = State end)
 collectTab_boostersSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.autoboosters = State end) -- TODO: Add keybinding.
 collectTab_boostersSection:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().Player.dispensesettings.white = not getgenv().Player.dispensesettings.white end)
