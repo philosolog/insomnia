@@ -174,7 +174,7 @@ antpart.Size = Vector3.new(128, 1, 50)
 antpart.Transparency = 1
 antpart.CanCollide = false
 
-getgenv().Player = nil -- TODO: Make a better "new GUI" feature to allow for multiple GUIs.
+-- getgenv().Player = nil -- TODO: Make a better "new GUI" feature to allow for multiple GUIs.
 getgenv().Player = {
     rares = {},
     priority = {},
