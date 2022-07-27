@@ -256,7 +256,7 @@ getgenv().Player = {
         blue = false
     }
 }
-local defaultsleepy = sleepy
+local defaultsleepy = getgenv().Player
 
 function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
 function farm(trying)
