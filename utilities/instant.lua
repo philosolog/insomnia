@@ -30,6 +30,6 @@ eventWhenBackpackFull.Event:Connect(function() --fill in the event
   
   local chosenItem
   for i, v in pairs(bss:getInventory()) do --require BSS api script first
-    if Item.ItemAmountHere > 0 then chosenItem == Item end
+    if Item.ItemAmountHere > 0 then chosenItem = Item end
   end
 end)
