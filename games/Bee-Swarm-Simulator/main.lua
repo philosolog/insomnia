@@ -910,8 +910,8 @@ task.spawn(function() while task.wait() do
                     end
                 end
                 if (fieldposition-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > temptable.magnitude then
-                    sleepyapi.tween(0, fieldpos)
-                    task.wait(0)
+                    sleepyapi.tween(0.25, fieldpos)
+                    task.wait(2)
                     if getgenv().Player.toggles.autosprinkler then makesprinklers() end
                 end
                 getprioritytokens()
