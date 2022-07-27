@@ -284,7 +284,7 @@ local sleepy = {
         path:ComputeAsync(Root.Position, target)
         local waypoints = path:GetWaypoints()
         for i, waypoint in ipairs(waypoints) do
-            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:walkTo(waypoint.Position) -- !
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(waypoint.Position) -- !: It used to utilize ":MoveTo()".
 			task.wait()
             --game:GetService("Players").LocalPlayer.Character.Humanoid.MoveToFinished:wait()
             if waypoint.Action == Enum.PathWaypointAction.Jump then
