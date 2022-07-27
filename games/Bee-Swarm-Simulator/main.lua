@@ -174,6 +174,7 @@ antpart.Size = Vector3.new(128, 1, 50)
 antpart.Transparency = 1
 antpart.CanCollide = false
 
+getgenv().Player = nil -- TODO: Make a better "new GUI" feature to allow for multiple GUIs.
 getgenv().Player = {
     rares = {},
     priority = {},
@@ -618,6 +619,7 @@ local elapsedtime = information:CreateLabel("⌛: 0") -- TODO: Create labels for
 local gainedhoneylabel = information:CreateLabel("🍯: 0")
 local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
+	getgenv().Player = nil
 	game:GetService("CoreGui"):FindFirstChild(getgenv().windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
 local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
@@ -1103,7 +1105,7 @@ task.spawn(function() while task.wait(.1) do
         end
     end
 end end)
-task.spawn(function() while task.wait(1) do
+task.spawn(function() while task.wait(0.25) do
     temptable.runningfor = temptable.runningfor + 1
     temptable.honeycurrent = statsget().Totals.Honey
     if getgenv().Player.toggles.honeystorm then game.ReplicatedStorage.Events.ToyEvent:FireServer("Honeystorm") end
@@ -1194,6 +1196,6 @@ hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = ga
 
 if getgenv().autoload then if isfile("sleepy/BSS_"..getgenv().autoload..".json") then getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..getgenv().autoload..".json")) end end
 
-for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
-for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
+for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.75 and 0.75 or part.Transparency task.wait() end end
+for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.75 and 0.75 or part.Transparency task.wait() end end
 for i,v in next, workspace.Decorations.Misc:GetDescendants() do if v.Parent.Name == "Mushroom" then v.CanCollide = false v.Transparency = 0.75 end end
