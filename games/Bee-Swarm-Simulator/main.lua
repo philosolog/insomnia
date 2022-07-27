@@ -440,7 +440,7 @@ function collectplanters()
         end
     end
 end
-function getprioritytokens()
+function getprioritytokens() -- TODO: Make this a module. Work on a better priority system.
     task.wait()
     if temptable.running == false then
         for e,r in next, game:GetService("Workspace").Collectibles:GetChildren() do
