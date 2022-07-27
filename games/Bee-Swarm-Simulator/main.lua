@@ -1,7 +1,7 @@
 -- TODO: Simplify ":GetService()" calls.
-local sleepyapi = loadstring(game:HttpGet(getgenv().github_repository.."/API/sleepyapi.lua"))()
-local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/bracketv3.lua")
-local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/games/Bee-Swarm-Simulator/bssapi.lua")
+local sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
+local library = sleepyapi.returncode(getgenv().sleepy.repository.."/API/bracketv3.lua")
+local bssapi = sleepyapi.returncode(getgenv().sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
 
 if not isfolder("sleepy") then makefolder("sleepy") end
 
@@ -174,7 +174,7 @@ antpart.Size = Vector3.new(128, 1, 50)
 antpart.Transparency = 1
 antpart.CanCollide = false
 
-getgenv().sleepy = {
+getgenv().Player = {
     rares = {},
     priority = {},
     bestfields = {
@@ -260,43 +260,43 @@ local defaultsleepy = sleepy
 
 function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
 function farm(trying)
-    if getgenv().sleepy.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().sleepy.vars.farmspeed end
+    if getgenv().Player.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().Player.vars.farmspeed end
     sleepyapi.humanoid():MoveTo(trying.Position) 
     repeat task.wait() until (trying.Position-sleepyapi.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying) or not temptable.running
 end
 function disableall()
-    if getgenv().sleepy.toggles.autofarm and not temptable.converting then
+    if getgenv().Player.toggles.autofarm and not temptable.converting then
         temptable.cache.autofarm = true
-        getgenv().sleepy.toggles.autofarm = false
+        getgenv().Player.toggles.autofarm = false
     end
-    if getgenv().sleepy.toggles.killmondo and not temptable.started.mondo then
-        getgenv().sleepy.toggles.killmondo = false
+    if getgenv().Player.toggles.killmondo and not temptable.started.mondo then
+        getgenv().Player.toggles.killmondo = false
         temptable.cache.killmondo = true
     end
-    if getgenv().sleepy.toggles.killvicious and not temptable.started.vicious then
-        getgenv().sleepy.toggles.killvicious = false
+    if getgenv().Player.toggles.killvicious and not temptable.started.vicious then
+        getgenv().Player.toggles.killvicious = false
         temptable.cache.vicious = true
     end
-    if getgenv().sleepy.toggles.killwindy and not temptable.started.windy then
-        getgenv().sleepy.toggles.killwindy = false
+    if getgenv().Player.toggles.killwindy and not temptable.started.windy then
+        getgenv().Player.toggles.killwindy = false
         temptable.cache.windy = true
     end
 end
 function enableall()
     if temptable.cache.autofarm then
-        getgenv().sleepy.toggles.autofarm = true
+        getgenv().Player.toggles.autofarm = true
         temptable.cache.autofarm = false
     end
     if temptable.cache.killmondo then
-        getgenv().sleepy.toggles.killmondo = true
+        getgenv().Player.toggles.killmondo = true
         temptable.cache.killmondo = false
     end
     if temptable.cache.vicious then
-        getgenv().sleepy.toggles.killvicious = true
+        getgenv().Player.toggles.killvicious = true
         temptable.cache.vicious = false
     end
     if temptable.cache.windy then
-        getgenv().sleepy.toggles.killwindy = true
+        getgenv().Player.toggles.killwindy = true
         temptable.cache.windy = false
     end
 end
@@ -396,7 +396,7 @@ function farmant()
     temptable.oldtool = rtsg()['EquippedCollector']
     game.ReplicatedStorage.Events.ItemPackageEvent:InvokeServer("Equip",{["Mute"] = true,["Type"] = "Spark Staff",["Category"] = "Collector"})
     game.ReplicatedStorage.Events.ToyEvent:FireServer("Ant Challenge")
-    getgenv().sleepy.toggles.autodig = true
+    getgenv().Player.toggles.autodig = true
     acl = CFrame.new(127, 48, 547)
     acr = CFrame.new(65, 48, 534)
     task.wait(1)
@@ -444,7 +444,7 @@ function getprioritytokens()
         for e,r in next, game:GetService("Workspace").Collectibles:GetChildren() do
             if r:FindFirstChildOfClass("Decal") then
                 local aaaaaaaa = string.split(r:FindFirstChildOfClass("Decal").Texture, 'rbxassetid://')[2]
-                if aaaaaaaa ~= nil and sleepyapi.findvalue(getgenv().sleepy.priority, aaaaaaaa) then
+                if aaaaaaaa ~= nil and sleepyapi.findvalue(getgenv().Player.priority, aaaaaaaa) then
                     if r.Name == game.Players.LocalPlayer.Name and not r:FindFirstChild("got it") or tonumber((r.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) <= temptable.magnitude/1.4 and not r:FindFirstChild("got it") then
                         farm(r) local val = Instance.new("IntValue",r) val.Name = "got it" break
                     end
@@ -516,8 +516,8 @@ function getflower()
     flowerrrr = flowertable[math.random(#flowertable)]
     if tonumber((flowerrrr-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) <= temptable.magnitude/1.4 and tonumber((flowerrrr-fieldposition).magnitude) <= temptable.magnitude/1.4 then 
         if temptable.running == false then 
-            if getgenv().sleepy.toggles.loopfarmspeed then 
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().sleepy.vars.farmspeed 
+            if getgenv().Player.toggles.loopfarmspeed then 
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().Player.vars.farmspeed 
             end 
             sleepyapi.walkTo(flowerrrr) 
         end 
@@ -588,7 +588,7 @@ function makequests()
             image = v.Platform.AlertPos.AlertGui.ImageLabel
             button = game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.ActivateButton.MouseButton1Click
             if image.ImageTransparency == 0 then
-                if getgenv().sleepy.toggles.tptonpc then
+                if getgenv().Player.toggles.tptonpc then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Platform.Position.X, v.Platform.Position.Y+3, v.Platform.Position.Z)
                     task.wait(1)
                 else
@@ -620,7 +620,7 @@ local uisection = hometab:CreateSection("ui")
 local gui_killer = uisection:CreateButton("kill gui ⚠️", function()
 	game:GetService("CoreGui"):FindFirstChild(_G.windowname).Enabled = false -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
-local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
+local rejoiner = uisection:CreateButton("rejoin game", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/rejoiner.lua"))()end) -- TODO: Add keybind compatibility.
 local uitoggle = uisection:CreateToggle("visibility", nil, function(State) Window:Toggle(State) end) uitoggle:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key) Config.Keybind = Enum.KeyCode[Key] end) uitoggle:SetState(true)
 local homeWindow_configSection = hometab:CreateSection("config")
 
@@ -628,15 +628,15 @@ information:CreateLabel("⚠️ = experimental")
 information:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
-homeWindow_configSection:CreateButton("load", function() getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
+homeWindow_configSection:CreateButton("load", function() getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
 homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
-homeWindow_configSection:CreateButton("reset", function() getgenv().sleepy = defaultsleepy end)
+homeWindow_configSection:CreateButton("reset", function() getgenv().Player = defaultsleepy end)
 
 -- *: collect
 local collectTab = Window:CreateTab("collect")
 local collectTab_farmSection = collectTab:CreateSection("farm")
-local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().sleepy.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
-local autocollectTab_otherSectionoggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().sleepy.toggles.autofarm = State end) autocollectTab_otherSectionoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().Player.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
+local autocollectTab_otherSectionoggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionoggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
 local collectTab_itemsSection = collectTab:CreateSection("items")
 local collectTab_puffshroomsSection = collectTab:CreateSection("puffshrooms")
 local collectTab_plantersSection = collectTab:CreateSection("planters")
@@ -645,45 +645,45 @@ local collectTab_boostersSection = collectTab:CreateSection("boosters")
 local collectTab_dispensersSection = collectTab:CreateSection("dispensers")
 local collectTab_otherSection = collectTab:CreateSection("other")
 
-collectTab_farmSection:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().sleepy.vars.convertat = Value end)
--- collectTab_farmSection:CreateToggle("quests ⚙", nil, function(State) getgenv().sleepy.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
-collectTab_farmSection:CreateToggle("dig", nil, function(State) getgenv().sleepy.toggles.autodig = State end)
-collectTab_farmSection:CreateToggle("sprinkler", nil, function(State) getgenv().sleepy.toggles.autosprinkler = State end)
-collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) getgenv().sleepy.toggles.donotcollectTab_otherSectionokens = State end) -- TODO: Make this customizable.
-collectTab_farmSection:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().sleepy.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
-collectTab_farmSection:CreateToggle("bubbles", nil, function(State) getgenv().sleepy.toggles.farmbubbles = State end)
-collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().sleepy.toggles.farmflame = State end)
-collectTab_farmSection:CreateToggle("precise targets", nil, function(State) getgenv().sleepy.toggles.collectcrosshairs = State end)
-collectTab_farmSection:CreateToggle("fuzzy bombs", nil, function(State) getgenv().sleepy.toggles.farmfuzzy = State end)
-collectTab_farmSection:CreateToggle("balloons", nil, function(State) getgenv().sleepy.toggles.farmunderballoons = State end)
-collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) getgenv().sleepy.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
-collectTab_farmSection:CreateToggle("clouds", nil, function(State) getgenv().sleepy.toggles.farmclouds = State end)
-collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().sleepy.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
-collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().sleepy.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
-collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgenv().sleepy.toggles.clock = State end)
-collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().sleepy.toggles.freeantpass = State end)
-collectTab_puffshroomsSection:CreateToggle("puffshrooms", nil, function(State) getgenv().sleepy.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
-collectTab_plantersSection:CreateToggle("planters", nil, function(State) getgenv().sleepy.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
-collectTab_sproutsSection:CreateToggle("sprouts", nil, function(State) getgenv().sleepy.toggles.farmsprouts = State end)
-collectTab_boostersSection:CreateToggle("active", nil, function(State) getgenv().sleepy.toggles.autoboosters = State end) -- TODO: Add keybinding.
-collectTab_boostersSection:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().sleepy.dispensesettings.white = not getgenv().sleepy.dispensesettings.white end)
-collectTab_boostersSection:CreateToggle("Blue Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.blue = not getgenv().sleepy.dispensesettings.blue end)
-collectTab_boostersSection:CreateToggle("Red Field Booster", nil,  function(State) getgenv().sleepy.dispensesettings.red = not getgenv().sleepy.dispensesettings.red end)
-collectTab_dispensersSection:CreateToggle("active", nil, function(State) getgenv().sleepy.toggles.autodispense = State end) -- TODO: Allow list-adding of dispensers and keybinding.
-collectTab_dispensersSection:CreateToggle("Royal Jelly Dispenser", nil, function(State) getgenv().sleepy.dispensesettings.rj = not getgenv().sleepy.dispensesettings.rj end)
-collectTab_dispensersSection:CreateToggle("Blueberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.blub = not getgenv().sleepy.dispensesettings.blub end)
-collectTab_dispensersSection:CreateToggle("Strawberry Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.straw = not getgenv().sleepy.dispensesettings.straw end)
-collectTab_dispensersSection:CreateToggle("Treat Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.treat = not getgenv().sleepy.dispensesettings.treat end)
-collectTab_dispensersSection:CreateToggle("Coconut Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.coconut = not getgenv().sleepy.dispensesettings.coconut end)
-collectTab_dispensersSection:CreateToggle("Glue Dispenser", nil,  function(State) getgenv().sleepy.dispensesettings.glue = not getgenv().sleepy.dispensesettings.glue end)
-collectTab_otherSection:CreateToggle("honeystorm", nil, function(State) getgenv().sleepy.toggles.honeystorm = State end)
---collectTab_otherSection:CreateToggle("Auto Gingerbread Bears", nil, function(State) getgenv().sleepy.toggles.collectgingerbreads = State end)
---collectTab_otherSection:CreateToggle("Auto Samovar", nil, function(State) getgenv().sleepy.toggles.autosamovar = State end)
---collectTab_otherSection:CreateToggle("Auto Stockings", nil, function(State) getgenv().sleepy.toggles.autostockings = State end)
---collectTab_otherSection:CreateToggle("Auto Honey Candles", nil, function(State) getgenv().sleepy.toggles.autocandles = State end)
---collectTab_otherSection:CreateToggle("Auto Beesmas Feast", nil, function(State) getgenv().sleepy.toggles.autofeast = State end)
---collectTab_otherSection:CreateToggle("Auto Onett's Lid Art", nil, function(State) getgenv().sleepy.toggles.autoonettart = State end)
---collectTab_otherSection:CreateToggle("snowflakes ⚠️", nil, function(State) getgenv().sleepy.toggles.farmsnowflakes = State end)
+collectTab_farmSection:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().Player.vars.convertat = Value end)
+-- collectTab_farmSection:CreateToggle("quests ⚙", nil, function(State) getgenv().Player.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
+collectTab_farmSection:CreateToggle("dig", nil, function(State) getgenv().Player.toggles.autodig = State end)
+collectTab_farmSection:CreateToggle("sprinkler", nil, function(State) getgenv().Player.toggles.autosprinkler = State end)
+collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) getgenv().Player.toggles.donotcollectTab_otherSectionokens = State end) -- TODO: Make this customizable.
+collectTab_farmSection:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().Player.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
+collectTab_farmSection:CreateToggle("bubbles", nil, function(State) getgenv().Player.toggles.farmbubbles = State end)
+collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().Player.toggles.farmflame = State end)
+collectTab_farmSection:CreateToggle("precise targets", nil, function(State) getgenv().Player.toggles.collectcrosshairs = State end)
+collectTab_farmSection:CreateToggle("fuzzy bombs", nil, function(State) getgenv().Player.toggles.farmfuzzy = State end)
+collectTab_farmSection:CreateToggle("balloons", nil, function(State) getgenv().Player.toggles.farmunderballoons = State end)
+collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) getgenv().Player.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
+collectTab_farmSection:CreateToggle("clouds", nil, function(State) getgenv().Player.toggles.farmclouds = State end)
+collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().Player.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
+collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().Player.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
+collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgenv().Player.toggles.clock = State end)
+collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().Player.toggles.freeantpass = State end)
+collectTab_puffshroomsSection:CreateToggle("puffshrooms", nil, function(State) getgenv().Player.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
+collectTab_plantersSection:CreateToggle("planters", nil, function(State) getgenv().Player.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
+collectTab_sproutsSection:CreateToggle("sprouts", nil, function(State) getgenv().Player.toggles.farmsprouts = State end)
+collectTab_boostersSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.autoboosters = State end) -- TODO: Add keybinding.
+collectTab_boostersSection:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().Player.dispensesettings.white = not getgenv().Player.dispensesettings.white end)
+collectTab_boostersSection:CreateToggle("Blue Field Booster", nil,  function(State) getgenv().Player.dispensesettings.blue = not getgenv().Player.dispensesettings.blue end)
+collectTab_boostersSection:CreateToggle("Red Field Booster", nil,  function(State) getgenv().Player.dispensesettings.red = not getgenv().Player.dispensesettings.red end)
+collectTab_dispensersSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.autodispense = State end) -- TODO: Allow list-adding of dispensers and keybinding.
+collectTab_dispensersSection:CreateToggle("Royal Jelly Dispenser", nil, function(State) getgenv().Player.dispensesettings.rj = not getgenv().Player.dispensesettings.rj end)
+collectTab_dispensersSection:CreateToggle("Blueberry Dispenser", nil,  function(State) getgenv().Player.dispensesettings.blub = not getgenv().Player.dispensesettings.blub end)
+collectTab_dispensersSection:CreateToggle("Strawberry Dispenser", nil,  function(State) getgenv().Player.dispensesettings.straw = not getgenv().Player.dispensesettings.straw end)
+collectTab_dispensersSection:CreateToggle("Treat Dispenser", nil,  function(State) getgenv().Player.dispensesettings.treat = not getgenv().Player.dispensesettings.treat end)
+collectTab_dispensersSection:CreateToggle("Coconut Dispenser", nil,  function(State) getgenv().Player.dispensesettings.coconut = not getgenv().Player.dispensesettings.coconut end)
+collectTab_dispensersSection:CreateToggle("Glue Dispenser", nil,  function(State) getgenv().Player.dispensesettings.glue = not getgenv().Player.dispensesettings.glue end)
+collectTab_otherSection:CreateToggle("honeystorm", nil, function(State) getgenv().Player.toggles.honeystorm = State end)
+--collectTab_otherSection:CreateToggle("Auto Gingerbread Bears", nil, function(State) getgenv().Player.toggles.collectgingerbreads = State end)
+--collectTab_otherSection:CreateToggle("Auto Samovar", nil, function(State) getgenv().Player.toggles.autosamovar = State end)
+--collectTab_otherSection:CreateToggle("Auto Stockings", nil, function(State) getgenv().Player.toggles.autostockings = State end)
+--collectTab_otherSection:CreateToggle("Auto Honey Candles", nil, function(State) getgenv().Player.toggles.autocandles = State end)
+--collectTab_otherSection:CreateToggle("Auto Beesmas Feast", nil, function(State) getgenv().Player.toggles.autofeast = State end)
+--collectTab_otherSection:CreateToggle("Auto Onett's Lid Art", nil, function(State) getgenv().Player.toggles.autoonettart = State end)
+--collectTab_otherSection:CreateToggle("snowflakes ⚠️", nil, function(State) getgenv().Player.toggles.farmsnowflakes = State end)
 
 -- * battle
 local combtab = Window:CreateTab("battle")
@@ -692,14 +692,14 @@ local amks = combtab:CreateSection("mobs")
 
 mobkill:CreateToggle("Coconut Crab", nil, function(State) if State then sleepyapi.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 107.91863250732, 467.86791992188) end end)
 mobkill:CreateToggle("Stump Snail", nil, function(State) fd = game.Workspace.FlowerZones['Stump Field'] if State then sleepyapi.humanoidrootpart().CFrame = CFrame.new(fd.Position.X, fd.Position.Y-6, fd.Position.Z) else sleepyapi.humanoidrootpart().CFrame = CFrame.new(fd.Position.X, fd.Position.Y+2, fd.Position.Z) end end)
-mobkill:CreateToggle("Mondo Chick", nil, function(State) getgenv().sleepy.toggles.killmondo = State end)
-mobkill:CreateToggle("Rogue Vicious Bee", nil, function(State) getgenv().sleepy.toggles.killvicious = State end)
-mobkill:CreateToggle("Wild Windy Bee", nil, function(State) getgenv().sleepy.toggles.killwindy = State end)
--- TODO: mobkill:CreateToggle("Auto Ant", nil, function(State) getgenv().sleepy.toggles.autoant = State end):AddToolTip("You Need Spark Stuff 😋; Goes to Ant Challenge after pollen converting")
+mobkill:CreateToggle("Mondo Chick", nil, function(State) getgenv().Player.toggles.killmondo = State end)
+mobkill:CreateToggle("Rogue Vicious Bee", nil, function(State) getgenv().Player.toggles.killvicious = State end)
+mobkill:CreateToggle("Wild Windy Bee", nil, function(State) getgenv().Player.toggles.killwindy = State end)
+-- TODO: mobkill:CreateToggle("Auto Ant", nil, function(State) getgenv().Player.toggles.autoant = State end):AddToolTip("You Need Spark Stuff 😋; Goes to Ant Challenge after pollen converting")
 -- TODO: Add a Commando Chick autofarm.
-amks:CreateToggle("battle points", nil, function(State) getgenv().sleepy.toggles.autokillmobs = State end):AddToolTip("farms after x conversions")
-amks:CreateTextBox('farm after x conversions', 'default = 3', true, function(Value) getgenv().sleepy.vars.monstertimer = tonumber(Value) end)
-amks:CreateToggle("avoid mobs", nil, function(State) getgenv().sleepy.toggles.avoidmobs = State end)
+amks:CreateToggle("battle points", nil, function(State) getgenv().Player.toggles.autokillmobs = State end):AddToolTip("farms after x conversions")
+amks:CreateTextBox('farm after x conversions', 'default = 3', true, function(Value) getgenv().Player.vars.monstertimer = tonumber(Value) end)
+amks:CreateToggle("avoid mobs", nil, function(State) getgenv().Player.toggles.avoidmobs = State end)
 
 -- *: items
 local itemsTab = Window:CreateTab("items")
@@ -731,16 +731,16 @@ miscc:CreateButton("Ant Challenge semi-godmode ⚠️", function() sleepyapi.twe
 miscc:CreateTextBox("glider speed", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Speed = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 miscc:CreateTextBox("glider slope", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Float = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 -- TODO: Make WS and JP keybindable.
-miscc:CreateToggle("loop walkspeed", nil, function(State) getgenv().sleepy.toggles.loopspeed = State end)
-miscc:CreateSlider("walkspeed", 0, 120, 70, false, function(Value) getgenv().sleepy.vars.walkspeed = Value end)
-miscc:CreateToggle("loop jumppower", nil, function(State) getgenv().sleepy.toggles.loopjump = State end)
-miscc:CreateSlider("jumppower", 0, 120, 70, false, function(Value) getgenv().sleepy.vars.jumppower = Value end)
+miscc:CreateToggle("loop walkspeed", nil, function(State) getgenv().Player.toggles.loopspeed = State end)
+miscc:CreateSlider("walkspeed", 0, 120, 70, false, function(Value) getgenv().Player.vars.walkspeed = Value end)
+miscc:CreateToggle("loop jumppower", nil, function(State) getgenv().Player.toggles.loopjump = State end)
+miscc:CreateSlider("jumppower", 0, 120, 70, false, function(Value) getgenv().Player.vars.jumppower = Value end)
 miscc:CreateToggle("float", nil, function(State) temptable.float = State end)
-miscc:CreateToggle("godmode", nil, function(State) getgenv().sleepy.toggles.godmode = State if State then bssapi:Godmode(true) else bssapi:Godmode(false) end end)
-miscc:CreateToggle("skip dialogue", nil, function(State) getgenv().sleepy.toggles.autoquest = State end) -- TODO: Also enable it on auto-quests. 
+miscc:CreateToggle("godmode", nil, function(State) getgenv().Player.toggles.godmode = State if State then bssapi:Godmode(true) else bssapi:Godmode(false) end end)
+miscc:CreateToggle("skip dialogue", nil, function(State) getgenv().Player.toggles.autoquest = State end) -- TODO: Also enable it on auto-quests. 
 misco:CreateButton("export stats", function() local StatCache = require(game.ReplicatedStorage.ClientStatCache)writefile("Stats_"..sleepyapi.nickname..".json", StatCache:Encode()) end)
-misco:CreateButton("fullbright", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fullbright.lua"))()end)
-misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
+misco:CreateButton("fullbright", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fullbright.lua"))()end)
+misco:CreateButton("boost fps", function() loadstring(game:HttpGet(getgenv().sleepy.repository.."/utilities/fps-booster.lua"))()end) -- TODO: Display tooltip on effects with synx built-in fpsunlocker. Also display what the feature may do to the game. Create settings for toggling specific objects.
 -- misco:CreateButton("invisibility", function(State) sleepyapi.teleport(CFrame.new(0,0,0)) wait(1) if game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso') then Root = game.Players.LocalPlayer.Character.LowerTorso.Root:Clone() game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() Root.Parent = game.Players.LocalPlayer.Character.LowerTorso sleepyapi.teleport(game:GetService("Players").LocalPlayer.SpawnPos.Value) end end) -- ?: Does this even work?
 
 
@@ -755,51 +755,51 @@ misco:CreateButton("boost fps", function() loadstring(game:HttpGet("https://raw.
 -- local aqs = setttab:CreateSection("Auto Quest Settings") -- TODO: Fix this feature.
 -- local pts = setttab:CreateSection("Autofarm Priority Tokens") -- TODO: Create an ordered-list/dropdown for selecting token priority?
 
--- farmsettings:CreateTextBox("Autofarming Walkspeed", "Default Value = 60", true, function(Value) getgenv().sleepy.vars.farmspeed = Value end)
--- farmsettings:CreateToggle("^ Loop Speed On Autofarming",nil, function(State) getgenv().sleepy.toggles.loopfarmspeed = State end)
--- farmsettings:CreateToggle("Don't Walk In Field",nil, function(State) getgenv().sleepy.toggles.farmflower = State end) -- ?: What does this do?
+-- farmsettings:CreateTextBox("Autofarming Walkspeed", "Default Value = 60", true, function(Value) getgenv().Player.vars.farmspeed = Value end)
+-- farmsettings:CreateToggle("^ Loop Speed On Autofarming",nil, function(State) getgenv().Player.toggles.loopfarmspeed = State end)
+-- farmsettings:CreateToggle("Don't Walk In Field",nil, function(State) getgenv().Player.toggles.farmflower = State end) -- ?: What does this do?
 -- raresettings:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
 -- raresettings:CreateButton("Add Token To Rares List", function()
---     table.insert(getgenv().sleepy.rares, rarename)
+--     table.insert(getgenv().Player.rares, rarename)
 --     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
---     raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
+--     raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
 -- end)
 -- raresettings:CreateButton("Remove Token From Rares List", function()
---     table.remove(getgenv().sleepy.rares, sleepyapi.tablefind(getgenv().sleepy.rares, rarename))
+--     table.remove(getgenv().Player.rares, sleepyapi.tablefind(getgenv().Player.rares, rarename))
 --     game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Rares List D",true):Destroy()
---     raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
+--     raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
 -- end)
--- raresettings:CreateDropdown("Rares List", getgenv().sleepy.rares, function(Option) end)
--- fieldsettings:CreateDropdown("Best White Field", temptable.whitefields, function(Option) getgenv().sleepy.bestfields.white = Option end)
--- fieldsettings:CreateDropdown("Best Red Field", temptable.redfields, function(Option) getgenv().sleepy.bestfields.red = Option end)
--- fieldsettings:CreateDropdown("Best Blue Field", temptable.bluefields, function(Option) getgenv().sleepy.bestfields.blue = Option end)
+-- raresettings:CreateDropdown("Rares List", getgenv().Player.rares, function(Option) end)
+-- fieldsettings:CreateDropdown("Best White Field", temptable.whitefields, function(Option) getgenv().Player.bestfields.white = Option end)
+-- fieldsettings:CreateDropdown("Best Red Field", temptable.redfields, function(Option) getgenv().Player.bestfields.red = Option end)
+-- fieldsettings:CreateDropdown("Best Blue Field", temptable.bluefields, function(Option) getgenv().Player.bestfields.blue = Option end)
 -- fieldsettings:CreateDropdown("Field", fieldstable, function(Option) temptable.blackfield = Option end)
--- fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().sleepy.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
--- fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().sleepy.blacklistedfields, sleepyapi.tablefind(getgenv().sleepy.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end) end)
--- fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().sleepy.blacklistedfields, function(Option) end)
--- aqs:CreateDropdown("Do NPC Quests", {'All Quests', 'Bucko Bee', 'Brown Bear', 'Riley Bee', 'Polar Bear'}, function(Option) getgenv().sleepy.vars.npcprefer = Option end)
--- aqs:CreateToggle("Teleport To NPC", nil, function(State) getgenv().sleepy.toggles.tptonpc = State end)
+-- fieldsettings:CreateButton("Add Field To Blacklist", function() table.insert(getgenv().Player.blacklistedfields, temptable.blackfield) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateButton("Remove Field From Blacklist", function() table.remove(getgenv().Player.blacklistedfields, sleepyapi.tablefind(getgenv().Player.blacklistedfields, temptable.blackfield)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Blacklisted Fields D",true):Destroy() fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end) end)
+-- fieldsettings:CreateDropdown("Blacklisted Fields", getgenv().Player.blacklistedfields, function(Option) end)
+-- aqs:CreateDropdown("Do NPC Quests", {'All Quests', 'Bucko Bee', 'Brown Bear', 'Riley Bee', 'Polar Bear'}, function(Option) getgenv().Player.vars.npcprefer = Option end)
+-- aqs:CreateToggle("Teleport To NPC", nil, function(State) getgenv().Player.toggles.tptonpc = State end)
 -- pts:CreateTextBox("Asset ID", 'rbxassetid', false, function(Value) rarename = Value end)
--- pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().sleepy.priority, rarename) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
--- pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().sleepy.priority, sleepyapi.tablefind(getgenv().sleepy.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end) end)
--- pts:CreateDropdown("Priority List", getgenv().sleepy.priority, function(Option) end)
+-- pts:CreateButton("Add Token To Priority List", function() table.insert(getgenv().Player.priority, rarename) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
+-- pts:CreateButton("Remove Token From Priority List", function() table.remove(getgenv().Player.priority, sleepyapi.tablefind(getgenv().Player.priority, rarename)) game:GetService("CoreGui"):FindFirstChild(_G.windowname).Main:FindFirstChild("Priority List D",true):Destroy() pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end) end)
+-- pts:CreateDropdown("Priority List", getgenv().Player.priority, function(Option) end)
 
 -- TODO: Move listeners into modules.
 task.spawn(function() while task.wait() do
-    if getgenv().sleepy.toggles.autofarm then
-        --if getgenv().sleepy.toggles.farmcoco then getcoco() end
-        --if getgenv().sleepy.toggles.collectcrosshairs then getcrosshairs() end
-        if getgenv().sleepy.toggles.farmflame then getflame() end
-        if getgenv().sleepy.toggles.farmfuzzy then getfuzzy() end
+    if getgenv().Player.toggles.autofarm then
+        --if getgenv().Player.toggles.farmcoco then getcoco() end
+        --if getgenv().Player.toggles.collectcrosshairs then getcrosshairs() end
+        if getgenv().Player.toggles.farmflame then getflame() end
+        if getgenv().Player.toggles.farmfuzzy then getfuzzy() end
     end
 end end)
 game.Workspace.Particles.ChildAdded:Connect(function(v)
     if not temptable.started.vicious and not temptable.started.ant then
-        if v.Name == "WarningDisk" and not temptable.started.vicious and getgenv().sleepy.toggles.autofarm and not temptable.started.ant and getgenv().sleepy.toggles.farmcoco and (v.Position-sleepyapi.humanoidrootpart().Position).magnitude < temptable.magnitude and not temptable.converting then
+        if v.Name == "WarningDisk" and not temptable.started.vicious and getgenv().Player.toggles.autofarm and not temptable.started.ant and getgenv().Player.toggles.farmcoco and (v.Position-sleepyapi.humanoidrootpart().Position).magnitude < temptable.magnitude and not temptable.converting then
             table.insert(temptable.coconuts, v)
             getcoco(v)
             gettoken()
-        elseif v.Name == "Crosshair" and v ~= nil and v.BrickColor ~= BrickColor.new("Forest green") and not temptable.started.ant and v.BrickColor ~= BrickColor.new("Flint") and (v.Position-sleepyapi.humanoidrootpart().Position).magnitude < temptable.magnitude and getgenv().sleepy.toggles.autofarm and getgenv().sleepy.toggles.collectcrosshairs and not temptable.converting then
+        elseif v.Name == "Crosshair" and v ~= nil and v.BrickColor ~= BrickColor.new("Forest green") and not temptable.started.ant and v.BrickColor ~= BrickColor.new("Flint") and (v.Position-sleepyapi.humanoidrootpart().Position).magnitude < temptable.magnitude and getgenv().Player.toggles.autofarm and getgenv().Player.toggles.collectcrosshairs and not temptable.converting then
             if #temptable.crosshairs <= 3 then
                 table.insert(temptable.crosshairs, v)
                 getcrosshairs(v)
@@ -809,34 +809,34 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
     end
 end)
 task.spawn(function() while task.wait() do
-    if getgenv().sleepy.toggles.autofarm then
+    if getgenv().Player.toggles.autofarm then
         temptable.magnitude = 70
         if game.Players.LocalPlayer.Character:FindFirstChild("ProgressLabel",true) then
         local pollenprglbl = game.Players.LocalPlayer.Character:FindFirstChild("ProgressLabel",true)
         maxpollen = tonumber(pollenprglbl.Text:match("%d+$"))
         local pollencount = game.Players.LocalPlayer.CoreStats.Pollen.Value
         pollenpercentage = pollencount/maxpollen*100
-        fieldselected = game:GetService("Workspace").FlowerZones[getgenv().sleepy.vars.field]
-        if getgenv().sleepy.toggles.autodoquest and game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Menus.Children.Quests.Content:FindFirstChild("Frame") then
+        fieldselected = game:GetService("Workspace").FlowerZones[getgenv().Player.vars.field]
+        if getgenv().Player.toggles.autodoquest and game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Menus.Children.Quests.Content:FindFirstChild("Frame") then
             for i,v in next, game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Menus.Children.Quests:GetDescendants() do
                 if v.Name == "Description" then
-                    if string.match(v.Parent.Parent.TitleBar.Text, getgenv().sleepy.vars.npcprefer) or getgenv().sleepy.vars.npcprefer == "All Quests" and not string.find(v.Text, "Puffshroom") then
+                    if string.match(v.Parent.Parent.TitleBar.Text, getgenv().Player.vars.npcprefer) or getgenv().Player.vars.npcprefer == "All Quests" and not string.find(v.Text, "Puffshroom") then
                         pollentypes = {'White Pollen', "Red Pollen", "Blue Pollen", "Blue Flowers", "Red Flowers", "White Flowers"}
                         text = v.Text
-                        if sleepyapi.returnvalue(fieldstable, text) and not string.find(v.Text, "Complete!") and not sleepyapi.findvalue(getgenv().sleepy.blacklistedfields, sleepyapi.returnvalue(fieldstable, text)) then
+                        if sleepyapi.returnvalue(fieldstable, text) and not string.find(v.Text, "Complete!") and not sleepyapi.findvalue(getgenv().Player.blacklistedfields, sleepyapi.returnvalue(fieldstable, text)) then
                             d = sleepyapi.returnvalue(fieldstable, text)
                             fieldselected = game:GetService("Workspace").FlowerZones[d]
                             break
                         elseif sleepyapi.returnvalue(pollentypes, text) and not string.find(v.Text, 'Complete!') then
                             d = sleepyapi.returnvalue(pollentypes, text)
                             if d == "Blue Flowers" or d == "Blue Pollen" then
-                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().sleepy.bestfields.blue]
+                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().Player.bestfields.blue]
                                 break
                             elseif d == "White Flowers" or d == "White Pollen" then
-                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().sleepy.bestfields.white]
+                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().Player.bestfields.white]
                                 break
                             elseif d == "Red Flowers" or d == "Red Pollen" then
-                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().sleepy.bestfields.red]
+                                fieldselected = game:GetService("Workspace").FlowerZones[getgenv().Player.bestfields.red]
                                 break
                             end
                         end
@@ -844,15 +844,15 @@ task.spawn(function() while task.wait() do
                 end
             end
         else
-            fieldselected = game:GetService("Workspace").FlowerZones[getgenv().sleepy.vars.field]
+            fieldselected = game:GetService("Workspace").FlowerZones[getgenv().Player.vars.field]
         end
         fieldpos = CFrame.new(fieldselected.Position.X, fieldselected.Position.Y+3, fieldselected.Position.Z)
         fieldposition = fieldselected.Position
-        if temptable.sprouts.detected and temptable.sprouts.coords and getgenv().sleepy.toggles.farmsprouts then
+        if temptable.sprouts.detected and temptable.sprouts.coords and getgenv().Player.toggles.farmsprouts then
             fieldposition = temptable.sprouts.coords.Position
             fieldpos = temptable.sprouts.coords
         end
-        if getgenv().sleepy.toggles.farmpuffshrooms and game.Workspace.Happenings.Puffshrooms:FindFirstChildOfClass("Model") then 
+        if getgenv().Player.toggles.farmpuffshrooms and game.Workspace.Happenings.Puffshrooms:FindFirstChildOfClass("Model") then 
             if sleepyapi.partwithnamepart("Mythic", game.Workspace.Happenings.Puffshrooms) then
                 temptable.magnitude = 25 
                 fieldpos = sleepyapi.partwithnamepart("Mythic", game.Workspace.Happenings.Puffshrooms):FindFirstChild("Puffball Stem").CFrame
@@ -875,15 +875,15 @@ task.spawn(function() while task.wait() do
                 fieldposition = fieldpos.Position
             end
         end
-        if tonumber(pollenpercentage) < tonumber(getgenv().sleepy.vars.convertat) then
+        if tonumber(pollenpercentage) < tonumber(getgenv().Player.vars.convertat) then
             if not temptable.tokensfarm then
                 sleepyapi.tween(2, fieldpos)
                 task.wait(2)
                 temptable.tokensfarm = true
-                if getgenv().sleepy.toggles.autosprinkler then makesprinklers() end
+                if getgenv().Player.toggles.autosprinkler then makesprinklers() end
             else
-                if getgenv().sleepy.toggles.killmondo then
-                    while getgenv().sleepy.toggles.killmondo and game.Workspace.Monsters:FindFirstChild("Mondo Chick (Lvl 8)") and not temptable.started.vicious and not temptable.started.monsters do
+                if getgenv().Player.toggles.killmondo then
+                    while getgenv().Player.toggles.killmondo and game.Workspace.Monsters:FindFirstChild("Mondo Chick (Lvl 8)") and not temptable.started.vicious and not temptable.started.monsters do
                         temptable.started.mondo = true
                         while game.Workspace.Monsters:FindFirstChild("Mondo Chick (Lvl 8)") do
                             disableall()
@@ -905,18 +905,18 @@ task.spawn(function() while task.wait() do
                 if (fieldposition-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > temptable.magnitude then
                     sleepyapi.tween(2, fieldpos)
                     task.wait(2)
-                    if getgenv().sleepy.toggles.autosprinkler then makesprinklers() end
+                    if getgenv().Player.toggles.autosprinkler then makesprinklers() end
                 end
                 getprioritytokens()
-                if getgenv().sleepy.toggles.avoidmobs then avoidmob() end
-                if getgenv().sleepy.toggles.farmclosestleaf then closestleaf() end
-                if getgenv().sleepy.toggles.farmbubbles then getbubble() end
-                if getgenv().sleepy.toggles.farmclouds then getcloud() end
-                if getgenv().sleepy.toggles.farmunderballoons then getballoons() end
-                if not getgenv().sleepy.toggles.donotcollectTab_otherSectionokens and done then gettoken() end
-                if not getgenv().sleepy.toggles.farmflower then getflower() end
+                if getgenv().Player.toggles.avoidmobs then avoidmob() end
+                if getgenv().Player.toggles.farmclosestleaf then closestleaf() end
+                if getgenv().Player.toggles.farmbubbles then getbubble() end
+                if getgenv().Player.toggles.farmclouds then getcloud() end
+                if getgenv().Player.toggles.farmunderballoons then getballoons() end
+                if not getgenv().Player.toggles.donotcollectTab_otherSectionokens and done then gettoken() end
+                if not getgenv().Player.toggles.farmflower then getflower() end
             end
-        elseif tonumber(pollenpercentage) >= tonumber(getgenv().sleepy.vars.convertat) then
+        elseif tonumber(pollenpercentage) >= tonumber(getgenv().Player.vars.convertat) then
             temptable.tokensfarm = false
             sleepyapi.tween(2, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
             task.wait(2)
@@ -924,21 +924,21 @@ task.spawn(function() while task.wait() do
             repeat
                 converthoney()
             until game.Players.LocalPlayer.CoreStats.Pollen.Value == 0
-            if getgenv().sleepy.toggles.convertballoons and gethiveballoon() then
+            if getgenv().Player.toggles.convertballoons and gethiveballoon() then
                 task.wait(6)
                 repeat
                     task.wait()
                     converthoney()
-                until gethiveballoon() == false or not getgenv().sleepy.toggles.convertballoons
+                until gethiveballoon() == false or not getgenv().Player.toggles.convertballoons
             end
             temptable.converting = false
             temptable.act = temptable.act + 1
             task.wait(6)
-            if getgenv().sleepy.toggles.autoant and not game:GetService("Workspace").Toys["Ant Challenge"].Busy.Value and rtsg().Eggs.AntPass > 0 then farmant() end
-            if getgenv().sleepy.toggles.autoquest then makequests() end
-            if getgenv().sleepy.toggles.autoplanters then collectplanters() end
-            if getgenv().sleepy.toggles.autokillmobs then 
-                if temptable.act >= getgenv().sleepy.vars.monstertimer then
+            if getgenv().Player.toggles.autoant and not game:GetService("Workspace").Toys["Ant Challenge"].Busy.Value and rtsg().Eggs.AntPass > 0 then farmant() end
+            if getgenv().Player.toggles.autoquest then makequests() end
+            if getgenv().Player.toggles.autoplanters then collectplanters() end
+            if getgenv().Player.toggles.autokillmobs then 
+                if temptable.act >= getgenv().Player.vars.monstertimer then
                     temptable.started.monsters = true
                     temptable.act = 0
                     killmobs() 
@@ -950,7 +950,7 @@ task.spawn(function() while task.wait() do
 end end end)
 task.spawn(function()
     while task.wait(1) do
-		if getgenv().sleepy.toggles.killvicious and temptable.detected.vicious and temptable.converting == false and not temptable.started.monsters then
+		if getgenv().Player.toggles.killvicious and temptable.detected.vicious and temptable.converting == false and not temptable.started.monsters then
             temptable.started.vicious = true
             disableall()
 			local vichumanoid = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
@@ -964,7 +964,7 @@ task.spawn(function()
 			end
 			for i,v in next, game.workspace.Particles:GetChildren() do
 				for x in string.gmatch(v.Name, "Vicious") do
-                    while getgenv().sleepy.toggles.killvicious and temptable.detected.vicious do task.wait() if string.find(v.Name, "Vicious") then
+                    while getgenv().Player.toggles.killvicious and temptable.detected.vicious do task.wait() if string.find(v.Name, "Vicious") then
                         for i=1, 4 do temptable.float = true vichumanoid.CFrame = CFrame.new(v.Position.x+10, v.Position.y, v.Position.z) task.wait(.3)
                         end
                     end end
@@ -978,11 +978,11 @@ task.spawn(function()
 	end
 end)
 task.spawn(function() while task.wait() do
-    if getgenv().sleepy.toggles.killwindy and temptable.detected.windy and not temptable.converting and not temptable.started.vicious and not temptable.started.mondo and not temptable.started.monsters then
+    if getgenv().Player.toggles.killwindy and temptable.detected.windy and not temptable.converting and not temptable.started.vicious and not temptable.started.mondo and not temptable.started.monsters then
         temptable.started.windy = true
         wlvl = "" aw = false awb = false -- some variable for autowindy, yk?
         disableall()
-        while getgenv().sleepy.toggles.killwindy and temptable.detected.windy do
+        while getgenv().Player.toggles.killwindy and temptable.detected.windy do
             if not aw then
                 for i,v in pairs(workspace.Monsters:GetChildren()) do
                     if string.find(v.Name, "Windy") then wlvl = v.Name aw = true -- we found windy!
@@ -1010,9 +1010,9 @@ task.spawn(function() while task.wait() do
     end
 end end)
 task.spawn(function() while task.wait(0.001) do
-    if getgenv().sleepy.toggles.traincrab then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-259, 111.8, 496.4) * CFrame.fromEulerAnglesXYZ(0, 110, 90) temptable.float = true temptable.float = false end
-    if getgenv().sleepy.toggles.farmrares then for k,v in next, game.workspace.Collectibles:GetChildren() do if v.CFrame.YVector.Y == 1 then if v.Transparency == 0 then decal = v:FindFirstChildOfClass("Decal") for e,r in next, getgenv().sleepy.rares do if decal.Texture == r or decal.Texture == "rbxassetid://"..r then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame break end end end end end end
-    if getgenv().sleepy.toggles.autodig then workspace.NPCs.Onett.Onett["Porcelain Dipper"].ClickEvent:FireServer() if game.Players.LocalPlayer then if game.Players.LocalPlayer.Character then if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) then clickevent = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) or nil end end end if clickevent then clickevent:FireServer() end end end
+    if getgenv().Player.toggles.traincrab then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-259, 111.8, 496.4) * CFrame.fromEulerAnglesXYZ(0, 110, 90) temptable.float = true temptable.float = false end
+    if getgenv().Player.toggles.farmrares then for k,v in next, game.workspace.Collectibles:GetChildren() do if v.CFrame.YVector.Y == 1 then if v.Transparency == 0 then decal = v:FindFirstChildOfClass("Decal") for e,r in next, getgenv().Player.rares do if decal.Texture == r or decal.Texture == "rbxassetid://"..r then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame break end end end end end end
+    if getgenv().Player.toggles.autodig then workspace.NPCs.Onett.Onett["Porcelain Dipper"].ClickEvent:FireServer() if game.Players.LocalPlayer then if game.Players.LocalPlayer.Character then if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) then clickevent = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) or nil end end end if clickevent then clickevent:FireServer() end end end
 end end)
 game:GetService("Workspace").Particles.Folder2.ChildAdded:Connect(function(child)
     if child.Name == "Sprout" then
@@ -1049,7 +1049,7 @@ game:GetService("Workspace").NPCBees.ChildRemoved:Connect(function(v)
 end)
 task.spawn(function() while task.wait(.1) do
     if not temptable.converting then
-        if getgenv().sleepy.toggles.autosamovar then
+        if getgenv().Player.toggles.autosamovar then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Samovar")
             platformm = game:GetService("Workspace").Toys.Samovar.Platform
             for i,v in pairs(game.Workspace.Collectibles:GetChildren()) do
@@ -1058,7 +1058,7 @@ task.spawn(function() while task.wait(.1) do
                 end
             end
         end
-        if getgenv().sleepy.toggles.autostockings then
+        if getgenv().Player.toggles.autostockings then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Stockings")
             platformm = game:GetService("Workspace").Toys.Stockings.Platform
             for i,v in pairs(game.Workspace.Collectibles:GetChildren()) do
@@ -1067,7 +1067,7 @@ task.spawn(function() while task.wait(.1) do
                 end
             end
         end
-        if getgenv().sleepy.toggles.autoonettart then
+        if getgenv().Player.toggles.autoonettart then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Onett's Lid Art")
             platformm = game:GetService("Workspace").Toys["Onett's Lid Art"].Platform
             for i,v in pairs(game.Workspace.Collectibles:GetChildren()) do
@@ -1076,7 +1076,7 @@ task.spawn(function() while task.wait(.1) do
                 end
             end
         end
-        if getgenv().sleepy.toggles.autocandles then
+        if getgenv().Player.toggles.autocandles then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Honeyday Candles")
             platformm = game:GetService("Workspace").Toys["Honeyday Candles"].Platform
             for i,v in pairs(game.Workspace.Collectibles:GetChildren()) do
@@ -1085,7 +1085,7 @@ task.spawn(function() while task.wait(.1) do
                 end
             end
         end
-        if getgenv().sleepy.toggles.autofeast then
+        if getgenv().Player.toggles.autofeast then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Beesmas Feast")
             platformm = game:GetService("Workspace").Toys["Beesmas Feast"].Platform
             for i,v in pairs(game.Workspace.Collectibles:GetChildren()) do
@@ -1099,23 +1099,23 @@ end end)
 task.spawn(function() while task.wait(1) do
     temptable.runningfor = temptable.runningfor + 1
     temptable.honeycurrent = statsget().Totals.Honey
-    if getgenv().sleepy.toggles.honeystorm then game.ReplicatedStorage.Events.ToyEvent:FireServer("Honeystorm") end
-    if getgenv().sleepy.toggles.collectgingerbreads then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Gingerbread House") end
-    if getgenv().sleepy.toggles.autodispense then
-        if getgenv().sleepy.dispensesettings.rj then local A_1 = "Free Royal Jelly Dispenser" local Event = game:GetService("ReplicatedStorage").Events.ToyEvent Event:FireServer(A_1) end
-        if getgenv().sleepy.dispensesettings.blub then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Blueberry Dispenser") end
-        if getgenv().sleepy.dispensesettings.straw then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Strawberry Dispenser") end
-        if getgenv().sleepy.dispensesettings.treat then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Treat Dispenser") end
-        if getgenv().sleepy.dispensesettings.coconut then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Coconut Dispenser") end
-        if getgenv().sleepy.dispensesettings.glue then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Glue Dispenser") end
+    if getgenv().Player.toggles.honeystorm then game.ReplicatedStorage.Events.ToyEvent:FireServer("Honeystorm") end
+    if getgenv().Player.toggles.collectgingerbreads then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Gingerbread House") end
+    if getgenv().Player.toggles.autodispense then
+        if getgenv().Player.dispensesettings.rj then local A_1 = "Free Royal Jelly Dispenser" local Event = game:GetService("ReplicatedStorage").Events.ToyEvent Event:FireServer(A_1) end
+        if getgenv().Player.dispensesettings.blub then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Blueberry Dispenser") end
+        if getgenv().Player.dispensesettings.straw then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Strawberry Dispenser") end
+        if getgenv().Player.dispensesettings.treat then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Treat Dispenser") end
+        if getgenv().Player.dispensesettings.coconut then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Coconut Dispenser") end
+        if getgenv().Player.dispensesettings.glue then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Glue Dispenser") end
     end
-    if getgenv().sleepy.toggles.autoboosters then 
-        if getgenv().sleepy.dispensesettings.white then game.ReplicatedStorage.Events.ToyEvent:FireServer("Field Booster") end
-        if getgenv().sleepy.dispensesettings.red then game.ReplicatedStorage.Events.ToyEvent:FireServer("Red Field Booster") end
-        if getgenv().sleepy.dispensesettings.blue then game.ReplicatedStorage.Events.ToyEvent:FireServer("Blue Field Booster") end
+    if getgenv().Player.toggles.autoboosters then 
+        if getgenv().Player.dispensesettings.white then game.ReplicatedStorage.Events.ToyEvent:FireServer("Field Booster") end
+        if getgenv().Player.dispensesettings.red then game.ReplicatedStorage.Events.ToyEvent:FireServer("Red Field Booster") end
+        if getgenv().Player.dispensesettings.blue then game.ReplicatedStorage.Events.ToyEvent:FireServer("Blue Field Booster") end
     end
-    if getgenv().sleepy.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
-    if getgenv().sleepy.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
+    if getgenv().Player.toggles.clock then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Wealth Clock") end
+    if getgenv().Player.toggles.freeantpass then game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser") end
     -- TODO: Format the time into days, etc...
 	local deltatime = math.floor(tick() - getgenv().start_time)
 
@@ -1123,9 +1123,9 @@ task.spawn(function() while task.wait(1) do
 	gainedhoneylabel:UpdateText("🍯: "..sleepyapi.suffixstring(temptable.honeycurrent - temptable.honeystart))
 end end)
 game:GetService('RunService').Heartbeat:connect(function() 
-    if getgenv().sleepy.toggles.autoquest then firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.NPC.ButtonOverlay.MouseButton1Click) end
-    if getgenv().sleepy.toggles.loopspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().sleepy.vars.walkspeed end
-    if getgenv().sleepy.toggles.loopjump then game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().sleepy.vars.jumppower end
+    if getgenv().Player.toggles.autoquest then firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.NPC.ButtonOverlay.MouseButton1Click) end
+    if getgenv().Player.toggles.loopspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().Player.vars.walkspeed end
+    if getgenv().Player.toggles.loopjump then game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().Player.vars.jumppower end
 end)
 game:GetService('RunService').Heartbeat:connect(function()
     for i,v in next, game.Players.LocalPlayer.PlayerGui.ScreenGui:WaitForChild("MinigameLayer"):GetChildren() do for k,q in next, v:WaitForChild("GuiGrid"):GetDescendants() do if q.Name == "ObjContent" or q.Name == "ObjImage" then q.Visible = true end end end
@@ -1139,7 +1139,7 @@ local vu = game:GetService("VirtualUser") -- TODO: Move this anti-afk into a mod
 game:GetService("Players").LocalPlayer.Idled:connect(function() vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)task.wait(1)vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 task.spawn(function()while task.wait() do
-    if getgenv().sleepy.toggles.farmsnowflakes then
+    if getgenv().Player.toggles.farmsnowflakes then
         task.wait(3)
         for i,v in next, temptable.tokenpath:GetChildren() do
             if v:FindFirstChildOfClass("Decal") and v:FindFirstChildOfClass("Decal").Texture == "rbxassetid://6087969886" and v.Transparency == 0 then
@@ -1152,16 +1152,16 @@ end end)
 game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
     humanoid = char:WaitForChild("Humanoid")
     humanoid.Died:Connect(function()
-        if getgenv().sleepy.toggles.autofarm then
+        if getgenv().Player.toggles.autofarm then
             temptable.dead = true
-            getgenv().sleepy.toggles.autofarm = false
+            getgenv().Player.toggles.autofarm = false
             temptable.converting = false
             temptable.collectTab_otherSectionoken = false
         end
         if temptable.dead then
             task.wait(25)
             temptable.dead = false
-            getgenv().sleepy.toggles.autofarm = true local player = game.Players.LocalPlayer
+            getgenv().Player.toggles.autofarm = true local player = game.Players.LocalPlayer
             temptable.converting = false
             temptable.tokensfarm = true
         end
@@ -1185,7 +1185,7 @@ end end)
 
 hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) end end
 
-if _G.autoload then if isfile("sleepy/BSS_".._G.autoload..".json") then getgenv().sleepy = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_".._G.autoload..".json")) end end
+if _G.autoload then if isfile("sleepy/BSS_".._G.autoload..".json") then getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_".._G.autoload..".json")) end end
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
 for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
