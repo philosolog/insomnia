@@ -636,7 +636,7 @@ homeWindow_configSection:CreateButton("reset", function() getgenv().Player = def
 local collectTab = Window:CreateTab("collect")
 local collectTab_farmSection = collectTab:CreateSection("farm")
 local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().Player.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
-local autocollectTab_otherSectionToggle = collectTab_farmSection:CreateToggle("autofarm ⚙", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionToggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local autocollectTab_otherSectionToggle = collectTab_farmSection:CreateToggle("autofarm", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionToggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
 local collectTab_itemsSection = collectTab:CreateSection("items")
 local collectTab_puffshroomsSection = collectTab:CreateSection("puffshrooms")
 local collectTab_plantersSection = collectTab:CreateSection("planters")
