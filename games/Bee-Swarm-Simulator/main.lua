@@ -479,7 +479,7 @@ function converthoney()
     task.wait(0)
     if temptable.converting then
         if game.Players.LocalPlayer.PlayerGui.ScreenGui.ActivateButton.TextBox.Text ~= "Stop Making Honey" and game.Players.LocalPlayer.PlayerGui.ScreenGui.ActivateButton.BackgroundColor3 ~= Color3.new(201, 39, 28) or (game:GetService("Players").LocalPlayer.SpawnPos.Value.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 10 then
-            sleepyapi.tween(1, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
+            sleepyapi.tween(0, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
             task.wait(.9)
             if game.Players.LocalPlayer.PlayerGui.ScreenGui.ActivateButton.TextBox.Text ~= "Stop Making Honey" and game.Players.LocalPlayer.PlayerGui.ScreenGui.ActivateButton.BackgroundColor3 ~= Color3.new(201, 39, 28) or (game:GetService("Players").LocalPlayer.SpawnPos.Value.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 10 then game:GetService("ReplicatedStorage").Events.PlayerHiveCommand:FireServer("ToggleHoneyMaking") end
             task.wait(.1)
@@ -734,7 +734,7 @@ local misctab = Window:CreateTab("misc")
 local miscc = misctab:CreateSection("character")
 local misco = misctab:CreateSection("other")
 
-miscc:CreateButton("Ant Challenge semi-godmode ⚠️", function() sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(1) game.ReplicatedStorage.Events.ToyEvent:FireServer("Ant Challenge") game.Players.LocalPlayer.Character.HumanoidRootPart.Position = Vector3.new(93.4228, 42.3983, 553.128) task.wait(2) game.Players.LocalPlayer.Character.Humanoid.Name = 1 local l = game.Players.LocalPlayer.Character["1"]:Clone() l.Parent = game.Players.LocalPlayer.Character l.Name = "Humanoid" task.wait() game.Players.LocalPlayer.Character["1"]:Destroy() sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(8) sleepyapi.tween(1, CFrame.new(93.4228, 32.3983, 553.128)) end)
+miscc:CreateButton("Ant Challenge semi-godmode ⚠️", function() sleepyapi.tween(0, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(1) game.ReplicatedStorage.Events.ToyEvent:FireServer("Ant Challenge") game.Players.LocalPlayer.Character.HumanoidRootPart.Position = Vector3.new(93.4228, 42.3983, 553.128) task.wait(2) game.Players.LocalPlayer.Character.Humanoid.Name = 1 local l = game.Players.LocalPlayer.Character["1"]:Clone() l.Parent = game.Players.LocalPlayer.Character l.Name = "Humanoid" task.wait() game.Players.LocalPlayer.Character["1"]:Destroy() sleepyapi.tween(0, CFrame.new(93.4228, 32.3983, 553.128)) task.wait(8) sleepyapi.tween(0, CFrame.new(93.4228, 32.3983, 553.128)) end)
 -- TODO: For GSs, add a preset value in the textbox. (find BSS default values)
 miscc:CreateTextBox("glider speed", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Speed = Value setupvalue(st, st[1]'Glider', glidersTable) end)
 miscc:CreateTextBox("glider slope", "", true, function(Value) local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() stats.EquippedParachute = "Glider" local module = require(game:GetService("ReplicatedStorage").Parachutes) local st = module.GetStat local glidersTable = getupvalues(st) glidersTable[1]["Glider"].Float = Value setupvalue(st, st[1]'Glider', glidersTable) end)
@@ -886,7 +886,7 @@ task.spawn(function() while task.wait() do
         end
         if tonumber(pollenpercentage) < tonumber(getgenv().Player.vars.convertat) then
             if not temptable.tokensfarm then
-                sleepyapi.tween(2, fieldpos)
+                sleepyapi.tween(0, fieldpos)
                 task.wait(2)
                 temptable.tokensfarm = true
                 if getgenv().Player.toggles.autosprinkler then makesprinklers() end
@@ -898,21 +898,21 @@ task.spawn(function() while task.wait() do
                             disableall()
                             game:GetService("Workspace").Map.Ground.HighBlock.CanCollide = false 
                             mondopition = game.Workspace.Monsters["Mondo Chick (Lvl 8)"].Head.Position
-                            sleepyapi.tween(1, CFrame.new(mondopition.x, mondopition.y - 60, mondopition.z))
+                            sleepyapi.tween(0, CFrame.new(mondopition.x, mondopition.y - 60, mondopition.z))
                             task.wait(1)
                             temptable.float = true
                         end
-                        task.wait(.5) game:GetService("Workspace").Map.Ground.HighBlock.CanCollide = true temptable.float = false sleepyapi.tween(.5, CFrame.new(73.2, 176.35, -167)) task.wait(1)
+                        task.wait(.5) game:GetService("Workspace").Map.Ground.HighBlock.CanCollide = true temptable.float = false sleepyapi.tween(0, CFrame.new(73.2, 176.35, -167)) task.wait(1)
                         for i = 0, 50 do 
                             gettoken(CFrame.new(73.2, 176.35, -167).Position) 
                         end 
                         enableall() 
-                        sleepyapi.tween(2, fieldpos) 
+                        sleepyapi.tween(0, fieldpos) 
                         temptable.started.mondo = false
                     end
                 end
                 if (fieldposition-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > temptable.magnitude then
-                    sleepyapi.tween(0.25, fieldpos)
+                    sleepyapi.tween(0, fieldpos)
                     task.wait(2)
                     if getgenv().Player.toggles.autosprinkler then makesprinklers() end
                 end
@@ -927,7 +927,7 @@ task.spawn(function() while task.wait() do
             end
         elseif tonumber(pollenpercentage) >= tonumber(getgenv().Player.vars.convertat) then -- TODO: Add convert & types.
             temptable.tokensfarm = false
-            sleepyapi.tween(2, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
+            sleepyapi.tween(0, game:GetService("Players").LocalPlayer.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
             task.wait(2)
             temptable.converting = true
             repeat
@@ -966,8 +966,8 @@ task.spawn(function()
 			for i,v in next, game.workspace.Particles:GetChildren() do
 				for x in string.gmatch(v.Name, "Vicious") do
 					if string.find(v.Name, "Vicious") then
-						sleepyapi.tween(1,CFrame.new(v.Position.x, v.Position.y, v.Position.z)) task.wait(1)
-						sleepyapi.tween(0.5, CFrame.new(v.Position.x, v.Position.y, v.Position.z)) task.wait(.5)
+						sleepyapi.tween(0,CFrame.new(v.Position.x, v.Position.y, v.Position.z)) task.wait(1)
+						sleepyapi.tween(0, CFrame.new(v.Position.x, v.Position.y, v.Position.z)) task.wait(.5)
 					end
 				end
 			end
@@ -1008,7 +1008,7 @@ task.spawn(function() while task.wait() do
                     end
                 end
             end
-            if not awb then sleepyapi.tween(1,temptable.gacf(temptable.windy, 5)) task.wait(1) awb = true end
+            if not awb then sleepyapi.tween(0,temptable.gacf(temptable.windy, 5)) task.wait(1) awb = true end
             if awb and temptable.windy.Name == "Windy" then
                 sleepyapi.humanoidrootpart().CFrame = temptable.gacf(temptable.windy, 25) temptable.float = true task.wait()
             end
