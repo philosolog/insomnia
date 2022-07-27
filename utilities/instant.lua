@@ -37,9 +37,11 @@ eventWhenBackpackFull.Event:Connect(function() --fill in the event
   if not sleepy.toggles.doautoinstantconvert then return end
   
   local chosenItem
-  for i, v in pairs(bss:getInventory()) do --require BSS api script first
-    if Item.ItemAmountHere > 0 then chosenItem == Item end
-  end
+  	for i, v in pairs(bss:getInventory()) do --require BSS api script first
+		if Item.ItemAmountHere > 0 then 
+			chosenItem = Item 
+		end
+	end
 end)
 
 --below is a script reference to use

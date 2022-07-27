@@ -1,5 +1,5 @@
 -- TODO: Simplify ":GetService()" calls.
-local sleepyapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/sleepyapi.lua"))()
+local sleepyapi = loadstring(game:HttpGet(getgenv().github_repository.."/API/sleepyapi.lua"))()
 local library = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/API/bracketv3.lua")
 local bssapi = sleepyapi.returncode("https://raw.githubusercontent.com/philosolog/sleepy-pbe/main/games/Bee-Swarm-Simulator/bssapi.lua")
 

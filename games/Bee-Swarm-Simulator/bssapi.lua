@@ -11,7 +11,7 @@ end
 function bsslib:GetCooldown(mob)
     local cd = workspace.MonsterSpawners
     if cd:FindFirstChild(mob) then
-        cd = cd:FindFirstChildOfClass("Attachment"):FindFirstChild("TimerGui") or v:FindFirstChild("Attachment").TimerGui
+        cd = cd:FindFirstChildOfClass("Attachment"):FindFirstChild("TimerGui") or cd:FindFirstChild("Attachment").TimerGui
         if cd.TimerLabel.Visible == false then
             return false
         else 
