@@ -631,7 +631,7 @@ information:CreateButton("discord server", function() setclipboard("https://disc
 -- TODO: Add auto-loading of configs.
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
 homeWindow_configSection:CreateButton("load", function() getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/BSS_"..temptable.configname..".json")) end)
-homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(sleepy)) end)
+homeWindow_configSection:CreateButton("save", function() writefile("sleepy/BSS_"..temptable.configname..".json",game:service'HttpService':JSONEncode(getgenv().Player)) end)
 homeWindow_configSection:CreateButton("reset", function() getgenv().Player = defaultsleepy end)
 
 -- *: collect
