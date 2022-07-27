@@ -262,10 +262,10 @@ local defaultsleepy = getgenv().Player
 function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
 function farm(trying)
     if getgenv().Player.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().Player.vars.farmspeed end
-    sleepyapi.humanoid():MoveTo(trying.Position) 
+    sleepyapi.humanoid():walkTo(trying.Position) 
     repeat task.wait() until (trying.Position-sleepyapi.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying) or not temptable.running
 end
-function disableall()
+function disableall() -- TODO: Make this a module. Rework the logic of this disable-all function.
     if getgenv().Player.toggles.autofarm and not temptable.converting then
         temptable.cache.autofarm = true
         getgenv().Player.toggles.autofarm = false
@@ -301,7 +301,7 @@ function enableall()
         temptable.cache.windy = false
     end
 end
-function gettoken(v3)
+function gettoken(v3) -- TODO: Move this to a token-collecting module.
     if not v3 then
         v3 = fieldposition
     end
