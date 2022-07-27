@@ -507,7 +507,7 @@ function getballoons()
         if v:FindFirstChild("BalloonRoot") and v:FindFirstChild("PlayerName") then
             if v:FindFirstChild("PlayerName").Value == game.Players.LocalPlayer.Name then
                 if tonumber((v.BalloonRoot.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
-                    sleepyapi.walkTo(v.BalloonRoot.Position)
+                    sleepyapi.humanoid():MoveTo(v.BalloonRoot.Position)
                 end
             end
         end
