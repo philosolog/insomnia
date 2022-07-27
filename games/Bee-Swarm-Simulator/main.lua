@@ -535,7 +535,7 @@ end
 function getcoco(v)
     if temptable.coconut then repeat task.wait() until not temptable.coconut end
     temptable.coconut = true
-    sleepyapi.tween(.1, v.CFrame)
+    sleepyapi.tween(0, v.CFrame)
     repeat task.wait() sleepyapi.walkTo(v.Position) until not v.Parent
     task.wait(.1)
     temptable.coconut = false
@@ -593,7 +593,7 @@ function makequests()
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Platform.Position.X, v.Platform.Position.Y+3, v.Platform.Position.Z)
                     task.wait(1)
                 else
-                    sleepyapi.tween(2,CFrame.new(v.Platform.Position.X, v.Platform.Position.Y+3, v.Platform.Position.Z))
+                    sleepyapi.tween(0,CFrame.new(v.Platform.Position.X, v.Platform.Position.Y+3, v.Platform.Position.Z))
                     task.wait(3)
                 end
                 for b,z in next, getconnections(button) do    z.Function()    end
