@@ -637,6 +637,7 @@ local collectTab = Window:CreateTab("collect")
 local collectTab_farmSection = collectTab:CreateSection("farm")
 local fielddropdown = collectTab_farmSection:CreateDropdown("field", fieldstable, function(String) getgenv().Player.vars.field = String end) fielddropdown:SetOption(fieldstable[8])
 local autocollectTab_otherSectionToggle = collectTab_farmSection:CreateToggle("autofarm", nil, function(State) getgenv().Player.toggles.autofarm = State end) autocollectTab_otherSectionToggle:CreateKeybind("KeypadTwo", function(Key) end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
+local collectTab_convertSection = collectTab:CreateSection("convert")
 local collectTab_itemsSection = collectTab:CreateSection("items")
 local collectTab_puffshroomsSection = collectTab:CreateSection("puffshrooms")
 local collectTab_plantersSection = collectTab:CreateSection("planters")
@@ -645,8 +646,7 @@ local collectTab_boostersSection = collectTab:CreateSection("boosters")
 local collectTab_dispensersSection = collectTab:CreateSection("dispensers")
 local collectTab_otherSection = collectTab:CreateSection("other")
 
-collectTab_farmSection:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().Player.vars.convertat = Value end)
--- collectTab_farmSection:CreateToggle("quests ⚙", nil, function(State) getgenv().Player.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
+collectTab_farmSection:CreateToggle("quests ⚙", nil, function(State) getgenv().Player.toggles.autodoquest = State end) -- TODO: Fix this feature. Add compatibility to other non-field quests. (kill mobs, use items). Maybe put this feature in autofarm settings?
 collectTab_farmSection:CreateToggle("dig", nil, function(State) getgenv().Player.toggles.autodig = State end)
 collectTab_farmSection:CreateToggle("sprinkler", nil, function(State) getgenv().Player.toggles.autosprinkler = State end)
 collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) getgenv().Player.toggles.donotcollectTab_otherSectionokens = State end) -- TODO: Make this customizable.
@@ -656,15 +656,18 @@ collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().Pla
 collectTab_farmSection:CreateToggle("precise targets", nil, function(State) getgenv().Player.toggles.collectcrosshairs = State end)
 collectTab_farmSection:CreateToggle("fuzzy bombs", nil, function(State) getgenv().Player.toggles.farmfuzzy = State end)
 collectTab_farmSection:CreateToggle("balloons", nil, function(State) getgenv().Player.toggles.farmunderballoons = State end)
-collectTab_farmSection:CreateToggle("convert hive balloon",nil, function(State) getgenv().Player.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
 collectTab_farmSection:CreateToggle("clouds", nil, function(State) getgenv().Player.toggles.farmclouds = State end)
-collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().Player.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
+collectTab_convertSection:CreateToggle("active", nil, function(State) end) -- TODO
+collectTab_convertSection:CreateSlider("% until convert", 0, 100, 100, false, function(Value) getgenv().Player.vars.convertat = Value end)
+collectTab_convertSection:CreateToggle("use ant passes", nil, function(State) end) -- TODO
+collectTab_convertSection:CreateToggle("use tickets", nil, function(State) end) -- TODO
+collectTab_convertSection:CreateToggle("hive balloon",nil, function(State) getgenv().Player.toggles.convertballoons = State end) -- TODO: Check if it is possible to accelerate balloon growth when autofarming. (in sync with SSA)
 collectTab_farmSection:CreateToggle("leaves", nil, function(State) getgenv().Player.toggles.farmclosestleaf = State end) -- TODO: Create a setting for distances. (close, far leaves)
 collectTab_itemsSection:CreateToggle("wealth clock", nil, function(State) getgenv().Player.toggles.clock = State end)
 collectTab_itemsSection:CreateToggle("ant passes", nil, function(State) getgenv().Player.toggles.freeantpass = State end)
-collectTab_puffshroomsSection:CreateToggle("puffshrooms", nil, function(State) getgenv().Player.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
-collectTab_plantersSection:CreateToggle("planters", nil, function(State) getgenv().Player.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
-collectTab_sproutsSection:CreateToggle("sprouts", nil, function(State) getgenv().Player.toggles.farmsprouts = State end)
+collectTab_puffshroomsSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.farmpuffshrooms = State end) -- TODO: Create better puffshroom autofarm AI.
+collectTab_plantersSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.autoplanters = State end):AddToolTip("replants planters at 100%") -- TODO: Account for planter rotation.
+collectTab_sproutsSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.farmsprouts = State end)
 collectTab_boostersSection:CreateToggle("active", nil, function(State) getgenv().Player.toggles.autoboosters = State end) -- TODO: Add keybinding.
 collectTab_boostersSection:CreateToggle("Mountain Top Booster", nil,  function(State) getgenv().Player.dispensesettings.white = not getgenv().Player.dispensesettings.white end)
 collectTab_boostersSection:CreateToggle("Blue Field Booster", nil,  function(State) getgenv().Player.dispensesettings.blue = not getgenv().Player.dispensesettings.blue end)
@@ -676,6 +679,7 @@ collectTab_dispensersSection:CreateToggle("Strawberry Dispenser", nil,  function
 collectTab_dispensersSection:CreateToggle("Treat Dispenser", nil,  function(State) getgenv().Player.dispensesettings.treat = not getgenv().Player.dispensesettings.treat end)
 collectTab_dispensersSection:CreateToggle("Coconut Dispenser", nil,  function(State) getgenv().Player.dispensesettings.coconut = not getgenv().Player.dispensesettings.coconut end)
 collectTab_dispensersSection:CreateToggle("Glue Dispenser", nil,  function(State) getgenv().Player.dispensesettings.glue = not getgenv().Player.dispensesettings.glue end)
+collectTab_otherSection:CreateToggle("coconuts/meteors", nil, function(State) getgenv().Player.toggles.farmcoco = State end) -- TODO: Create a separate toggle for meteors.
 collectTab_otherSection:CreateToggle("honeystorm", nil, function(State) getgenv().Player.toggles.honeystorm = State end)
 --collectTab_otherSection:CreateToggle("Auto Gingerbread Bears", nil, function(State) getgenv().Player.toggles.collectgingerbreads = State end)
 --collectTab_otherSection:CreateToggle("Auto Samovar", nil, function(State) getgenv().Player.toggles.autosamovar = State end)
