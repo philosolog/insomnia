@@ -1,4 +1,4 @@
-local ts = game:GetService("TeleportService")
-local p = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+local Player = game:GetService("Players").LocalPlayer
 
-ts:Teleport(game.PlaceId, p)
+TeleportService:Teleport(game.PlaceId, Player)

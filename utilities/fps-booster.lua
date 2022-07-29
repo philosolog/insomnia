@@ -1,9 +1,9 @@
-if getgenv().fpsBoosted == true then return end getgenv().fpsBoosted = true -- dont save to vars orelse you'll be unable to do future fps boosts -- mb
-local lighting = game:GetService("Lighting")
+-- if getgenv().fpsBoosted == true then return end getgenv().fpsBoosted = true -- dont save to vars orelse you'll be unable to do future fps boosts -- mb
+local Lighting = game:GetService("Lighting")
 
 if sethiddenproperty then sethiddenproperty(game:GetService("Lighting"), "Technology", Enum.Technology.Compatibility) end
-lighting.ShadowSoftness = 0 -- not useful when the lighting technology already is compatibility, but might as well
-lighting.GlobalShadows = false
+Lighting.ShadowSoftness = 0 -- not useful when the lighting technology already is compatibility, but might as well
+Lighting.GlobalShadows = false
 
 local beesFolder = workspace:WaitForChild("Bees")
 --local coinsFolder = workspace:WaitForChild("Collectibles")
