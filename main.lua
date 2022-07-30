@@ -9,19 +9,15 @@ getgenv().sleepy = {
 }
 
 local sleepy = getgenv().sleepy
+local sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
 local Player = game.Players.LocalPlayer
 
 if not isfolder("sleepy") then 
 	makefolder("sleepy")
 end
 if sleepy.loaded == true then
-	return warn("sleepy is already loaded") -- TODO: Notify the player that sleepy is already loaded.
+	return sleepyapi.log("sleepy has loaded") -- TODO: Notify the player that sleepy is already loaded.
 end
-
-pcall(function()
-	warn("loading sleepy v"..sleepy.version, "\nscript:", script, "Debug Info;")
-	print(debug.traceback())
-end)
 
 sleepy.loaded = true
 sleepy.current_time = time()
@@ -50,5 +46,4 @@ if isfile("sleepy/discord.txt") == false then
 		writefile("sleepy/discord.txt", "https://discord.com/aVgrSFCHpu")
 	})
 end
-
 -- TODO: Create dynamic links for githubusercontent references.
