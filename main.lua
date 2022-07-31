@@ -9,7 +9,8 @@ getgenv().sleepy = {
 }
 
 local sleepy = getgenv().sleepy
-local sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
+sleepy.sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
+local sleepyapi = sleepy.sleepyapi
 local Player = game.Players.LocalPlayer
 
 if not isfolder("sleepy") then 
@@ -22,9 +23,7 @@ end
 sleepy.loaded = true
 sleepy.current_time = time()
 
-repeat
-	task.wait()
-until Player.Character
+if not Player.Character then Player.CharacterAdded:Wait() end
 
 if game:HttpGet(sleepy.repository.."/"..game.PlaceId) then
     if not isfolder("sleepy/"..game.PlaceId.."/configurations") then  -- TODO: Keep accessible user-based presets.
@@ -34,7 +33,7 @@ if game:HttpGet(sleepy.repository.."/"..game.PlaceId) then
 	loadstring(game:HttpGet(sleepy.repository.."/games/"..game.PlaceId.."/main.lua"))()
 end
 if isfile("sleepy/discord.txt") == false then 
-	(syn and syn.request or http_request)({
+	sleepyapi.request({
 		Url = "http://127.0.0.1:6463/rpc?v=1",
 		Method = "POST",
 		Headers = {["Content-Type"] = "application/json", ["Origin"] = "https://discord.com"},

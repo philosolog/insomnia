@@ -1,4 +1,4 @@
--- if getgenv().fpsBoosted == true then return end getgenv().fpsBoosted = true -- dont save to vars orelse you'll be unable to do future fps boosts -- mb
+if getgenv().fpsBoosted == true then return end getgenv().fpsBoosted = true -- dont save to config files orelse you'll be unable to do future fps boosts -- mb
 local Lighting = game:GetService("Lighting")
 
 if sethiddenproperty then sethiddenproperty(game:GetService("Lighting"), "Technology", Enum.Technology.Compatibility) end
@@ -59,7 +59,7 @@ end
 
 for i, v in pairs(workspace:GetDescendants()) do
     performanceObj(v)
-    if i%200 == 0 then task.wait() end -- ?: What is "i%200" and waiting supposed to do?
+    if i%200 == 0 then task.wait() end -- ?: What is "i%200" and waiting supposed to do? -- allow player to still play the game without a sudden lag spike, u can remove if u want
 end
 
 workspace.DescendantAdded:Connect(performanceObj)

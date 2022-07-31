@@ -83,5 +83,6 @@ end
 sleepyapi.log = function(message)
 	game.GetService("TestService"):Message(message, nil, nil)
 end
+sleepyapi.request = request or (syn and syn.request) or http_request
 
 return sleepyapi

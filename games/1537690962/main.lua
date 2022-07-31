@@ -1,47 +1,52 @@
-local sleepyapi = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
-local bracketv3 = sleepyapi.returncode(getgenv().sleepy.repository.."/API/bracketv3.lua")
-local bssapi = sleepyapi.returncode(getgenv().sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
-local RetrievePlayerStats = game:GetService("ReplicatedStorage").Events.RetrievePlayerStats
 local sleepy = getgenv().sleepy
-function rtsg()
-	tab = game.ReplicatedStorage.Events.RetrievePlayerStats:InvokeServer() 
+local sleepyapi = loadstring(game:HttpGet(sleepy.repository.."/API/sleepyapi.lua"))()
+local bracketv3 = sleepyapi.returncode(sleepy.repository.."/API/bracketv3.lua")
+local bssapi = sleepyapi.returncode(sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
+local RetrievePlayerStats = game:GetService("ReplicatedStorage").Events.RetrievePlayerStats
+local default_configuration = sleepy.configuration
 
-	return tab 
-end
-function maskequip(mask) local ohString1 = "Equip" local ohTable2 = { ["Mute"] = false, ["Type"] = mask, ["Category"] = "Accessory"} game:GetService("ReplicatedStorage").Events.ItemPackageEvent:InvokeServer(ohString1, ohTable2) end
-for i,v in next, game:GetService("Workspace").MonsterSpawners:GetDescendants() do if v.Name == "TimerAttachment" then v.Name = "Attachment" end end
-for i,v in next, game:GetService("Workspace").MonsterSpawners:GetChildren() do if v.Name == "RoseBush" then v.Name = "ScorpionBush" elseif v.Name == "RoseBush2" then v.Name = "ScorpionBush2" end end
-for i,v in next, game:GetService("Workspace").FlowerZones:GetChildren() do if v:FindFirstChild("ColorGroup") then if v:FindFirstChild("ColorGroup").Value == "Red" then table.insert(temptable.redfields, v.Name) elseif v:FindFirstChild("ColorGroup").Value == "Blue" then table.insert(temptable.bluefields, v.Name) end else table.insert(temptable.whitefields, v.Name) end end
-local flowertable = {}
-for _,z in next, game:GetService("Workspace").Flowers:GetChildren() do table.insert(flowertable, z.Position) end
-local masktable = {}
-for _,v in next, game:GetService("ReplicatedStorage").Accessories:GetChildren() do if string.match(v.Name, "Mask") then table.insert(masktable, v.Name) end end
-local collectorstable = {}
-for _,v in next, getupvalues(require(game:GetService("ReplicatedStorage").Collectors).Exists) do for e,r in next, v do table.insert(collectorstable, e) end end
-local fieldstable = {}
-for _,v in next, game:GetService("Workspace").FlowerZones:GetChildren() do table.insert(fieldstable, v.Name) end
-local toystable = {}
-for _,v in next, game:GetService("Workspace").Toys:GetChildren() do table.insert(toystable, v.Name) end
-local spawnerstable = {}
-for _,v in next, game:GetService("Workspace").MonsterSpawners:GetChildren() do table.insert(spawnerstable, v.Name) end
-local accesoriestable = {}
-for _,v in next, game:GetService("ReplicatedStorage").Accessories:GetChildren() do if v.Name ~= "UpdateMeter" then table.insert(accesoriestable, v.Name) end end
-for i,v in pairs(getupvalues(require(game:GetService("ReplicatedStorage").PlanterTypes).GetTypes)) do for e,z in pairs(v) do table.insert(temptable.allplanters, e) end end
-local statsTable = RetrievePlayerStats:InvokeServer()
-local specialchar = (utf8 and utf8.char and utf8.char(9492)) or "\226\148\148"
-table.sort(fieldstable)
-table.sort(accesoriestable)
-table.sort(toystable)
-table.sort(spawnerstable)
-table.sort(masktable)
-table.sort(temptable.allplanters)
-table.sort(collectorstable)
+local toggleEvent, varEvent = Instance.new("BindableEvent"), Instance.new("BindableEvent")
 
+getgenv().Player = {
+	toggles = {},
+	vars = {}
+}
+local proxyPlayer = {
+}
 
+--idk how to shorten these 2 metatables into one sory
+setmetatable(getgenv().Player.toggles, {
+	__newindex = function(_, ind, val) --first parameter is the table being affected (in this case its getgenv().Player)
+		proxyPlayer['toggles'][ind] = val
+		toggleEvent:Fire(val)
+		return
+	end,
+	__index = function(_, ind)
+		return proxyPlayer['toggles'][ind]
+	end
+})
+setmetatable(getgenv().Player.vars, {
+	__newindex = function(_, ind, val)
+		proxyPlayer['vars'][ind] = val
+		varEvent:Fire(val)
+		return
+	end,
+	__index = function(_, ind)
+		return proxyPlayer['vars'][ind]
+	end
+})
 
-local defaultsleepy = sleepy.configuration
+--[[
+--sample toggle
+ui.toggled:Connect("dogwater toggle", function(state)
+	getgenv().Player.toggles.dog = true
+end)
 
-function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
+--thing that acts upon toggle
+toggleEvent.Event:Connect(function(newState)
+	while true do print('gg') end
+end)
+]]
 
 -- *: sleepy
 local Config = { WindowName = "🌙 sleepy | v"..temptable.version, Color = Color3.fromRGB(255, 184, 65), Keybind = Enum.KeyCode.KeypadOne}
@@ -68,7 +73,7 @@ information:CreateButton("discord server", function() setclipboard("https://disc
 homeWindow_configSection:CreateTextBox("name", 'ex: autofarmconfig', false, function(Value) temptable.configname = Value end)
 homeWindow_configSection:CreateButton("load", function() getgenv().Player = game:service'HttpService':JSONDecode(readfile("sleepy/"..game.PlaceId.."/"..temptable.configname..".json")) end)
 homeWindow_configSection:CreateButton("save", function() writefile("sleepy/"..game.PlaceId.."/"..temptable.configname..".json",game:service'HttpService':JSONEncode(getgenv().Player)) end)
-homeWindow_configSection:CreateButton("reset", function() getgenv().Player = defaultsleepy end)
+homeWindow_configSection:CreateButton("reset", function() getgenv().Player = default_configuration end)
 
 -- *: collect
 local collectTab = Window:CreateTab("collect")
@@ -89,6 +94,7 @@ collectTab_farmSection:CreateToggle("dig", nil, function(State) getgenv().Player
 collectTab_farmSection:CreateToggle("sprinkler", nil, function(State) getgenv().Player.toggles.autosprinkler = State end)
 -- collectTab_farmSection:CreateToggle("don't collect tokens",nil, function(State) getgenv().Player.toggles.donotcollectTab_otherSectionokens = State end) -- TODO: Make this customizable.
 -- collectTab_farmSection:CreateToggle("rare tokens ⚠️", nil, function(State) getgenv().Player.toggles.farmrares = State end) -- TODO: Add settings to TP or walk to rares. Also, create a user-input list for types of tokens to collect and how.
+-- collectTab_farmSection:CreateLabel("Target objects:")
 -- collectTab_farmSection:CreateToggle("bubbles", nil, function(State) getgenv().Player.toggles.farmbubbles = State end)
 -- collectTab_farmSection:CreateToggle("flames", nil, function(State) getgenv().Player.toggles.farmflame = State end)
 -- collectTab_farmSection:CreateToggle("precise targets", nil, function(State) getgenv().Player.toggles.collectcrosshairs = State end)
