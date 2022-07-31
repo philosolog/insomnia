@@ -20,7 +20,9 @@ sleepygame = {
 
 local configuration = sleepygame.configuration
 
-if sleepy.autoload ~= false then
+if sleepy.autoload == false then
+	configuration = default_configuration
+else
 	if typeof(sleepy.autoload) == "string" then
 		if isfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json") then
 			configuration = HttpService:JSONDecode(readfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json"))
