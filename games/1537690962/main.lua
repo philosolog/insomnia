@@ -30,6 +30,7 @@ else
 			sleepyapi.notify("load configuration", temporary.configurationName.." does not exist")
 		end
 	else
+		sleepy.log(typeof(sleepy.autoload))
 		sleepyapi.notify("autoload", "invalid autoload string")
 	end
 end
