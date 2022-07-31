@@ -27,7 +27,7 @@ repeat -- !: Don't edit this... -- It doesn't load otherwise.. :\
 	task.wait()
 until Player.Character
 
-if game:HttpGet(sleepy.repository.."/"..game.PlaceId) then
+if game:HttpGet(sleepy.repository.."/games/"..game.PlaceId) then
     if not isfolder("sleepy/"..game.PlaceId.."/configurations") then  -- TODO: Keep accessible user-based presets.
 		makefolder("sleepy/"..game.PlaceId.."/configurations")
 	end
