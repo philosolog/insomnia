@@ -4,12 +4,8 @@ getgenv().sleepy = {
 	time = time or tick or (os and os.time) or warn("missing time function"),
 	repository = "https://raw.githubusercontent.com/philosolog/sleepy-pbe/main",
 	version = "1", -- TODO: Comment a repository-based version value?
-	sleepyapi = {
-		script = nil,
-	},
-	bracketv3 = {
-		script = nil,
-	},
+	sleepyapi = nil,
+	bracketv3 = nil,
 	loaded = false,
 	gameFolder = nil,
 	killed = false,
@@ -22,10 +18,10 @@ getgenv().sleepy = {
 local sleepy = getgenv().sleepy
 
 sleepy.game.autoload = shared.autoload or false
-sleepy.sleepyapi.script = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/sleepyapi.lua"))()
-sleepy.bracketv3.script = loadstring(game:HttpGet(getgenv().sleepy.repository.."/API/bracketv3.lua"))()
+sleepy.sleepyapi = loadstring(game:HttpGet(sleepy.repository.."/API/sleepyapi.lua"))()
+sleepy.bracketv3 = loadstring(game:HttpGet(sleepy.repository.."/API/bracketv3.lua"))()
 
-local sleepyapi = sleepy.sleepyapi.loadstring
+local sleepyapi = sleepy.sleepyapi
 local Player = game.Players.LocalPlayer
 
 if not isfolder("sleepy") then 

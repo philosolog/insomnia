@@ -1,4 +1,4 @@
-local sleepyapi = getgenv().sleepy.sleepyapi
+local sleepyapi
 
 sleepyapi.version = "1"
 sleepyapi.log = function(message)
