@@ -344,13 +344,15 @@ function Library:CreateWindow(Config, Parent)
 				local ToggleState = false
 
 				local function SetState(State)
-					if State then
-						Toggle.Toggle.BackgroundColor3 = Config.Color
-					elseif not State then
-						Toggle.Toggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
-					end
-					ToggleState = State
-					Callback(State)
+					pcall(function()
+						if State then
+							Toggle.Toggle.BackgroundColor3 = Config.Color
+						elseif not State then
+							Toggle.Toggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
+						end
+						ToggleState = State
+						Callback(State)
+					end)
 				end
 
 				Toggle.MouseButton1Click:Connect(function()
