@@ -8,7 +8,7 @@ local temporary = {
 	configurationName = nil,
 }
 local default_configuration = {
-
+	keybinds = {}
 }
 
 sleepygame = {
@@ -62,8 +62,9 @@ local homeWindow_configSection = homeTab:CreateSection("config")
 
 homeTab_infoTab:CreateLabel("⚠️ = experimental")
 homeTab_infoTab:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
-homeTab_uiSection_toggleuiToggle:CreateKeybind(tostring(windowConfiguration.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
-	windowConfiguration.Keybind = Enum.KeyCode[Key]
+homeTab_uiSection_toggleuiToggle:CreateKeybind(tostring(windowConfiguration.Keybind):gsub("Enum.KeyCode.", ""), function(key)
+	-- windowConfiguration.Keybind = Enum.KeyCode[key]
+	configuration.keybinds.homeTab_uiSection_toggleuiToggle = key
 end)
 homeTab_uiSection_toggleuiToggle:SetState(true)
 -- TODO: Add auto-loading of configs.
@@ -101,7 +102,7 @@ local collectTab_convertSection = collectTab:CreateSection("convert")
 
 -- collectTab_farmSection_fieldDropdown:SetOption(fieldTable[8])
 collectTab_farmSectionToggle:CreateKeybind("F2", function(key)
-	-- ?: What would "key" be?
+	configuration.keybinds.collectTab_farmSectionToggle = key
 end) -- TODO: Make "Best," "Rotate," and "Quests" field options.
 collectTab_farmSection:CreateToggle("quests", nil, function(state)
 	-- AUTOQUEST = state
