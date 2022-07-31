@@ -11,6 +11,48 @@ local default_configuration = {
 	keybinds = {}
 }
 
+-- local toggleEvent, varEvent = Instance.new("BindableEvent"), Instance.new("BindableEvent")
+-- getgenv().Player = {
+-- 	toggles = {},
+-- 	vars = {}
+-- }
+-- local proxyPlayer = {
+-- }
+
+-- --idk how to shorten these 2 metatables into one sory
+-- setmetatable(getgenv().Player.toggles, {
+-- 	__newindex = function(_, ind, val) --first parameter is the table being affected (in this case its getgenv().Player)
+-- 		proxyPlayer['toggles'][ind] = val
+-- 		toggleEvent:Fire(ind, val)
+-- 		return
+-- 	end,
+-- 	__index = function(_, ind)
+-- 		return proxyPlayer['toggles'][ind]
+-- 	end
+-- })
+-- setmetatable(getgenv().Player.vars, {
+-- 	__newindex = function(_, ind, val)
+-- 		proxyPlayer['vars'][ind] = val
+-- 		varEvent:Fire(ind, val)
+-- 		return
+-- 	end,
+-- 	__index = function(_, ind)
+-- 		return proxyPlayer['vars'][ind]
+-- 	end
+-- })
+
+--[[
+--sample toggle
+ui.toggled:Connect("dogwater toggle", function(state)
+	getgenv().Player.toggles.dog = true
+end)
+
+--thing that acts upon toggle
+toggleEvent.Event:Connect(function(newState)
+	while true do print('gg') end
+end)
+]]
+
 sleepygame = {
 	version = "1",
 	bssapi = loadstring(gameFolder.."/bssapi.lua"),
@@ -36,32 +78,34 @@ end
 -- *: sleepy
 local windowConfiguration = {
 	WindowName = "🌙 sleepy | v"..sleepygame.version,
-	Color = Color3.fromRGB(255, 184, 65),
+	Color = Color3.fromRGB(255, 191, 0),
 	Keybind = Enum.KeyCode.F1,
 }
 local window = bracketv3:CreateWindow(windowConfiguration, game:GetService("CoreGui"))
 
 -- *: home
 local homeTab = window:CreateTab("home")
-local homeTab_infoTab = homeTab:CreateSection("info")
-local homeTab_infoTab_creditsLabel = homeTab_infoTab:CreateLabel("by philosolog and definedM")
-local homeTab_infoTab_timeLabel = homeTab_infoTab:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
-local homeTab_infoTab_honeyLabel = homeTab_infoTab:CreateLabel("🍯: 0")
+local homeTab_infoSection = homeTab:CreateSection("info")
+local homeTab_infoSection_creditsLabel = homeTab_infoSection:CreateLabel("by philosolog and definedM")
+local homeTab_infoSection_timeLabel = homeTab_infoSection:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
+local homeTab_infoSection_honeyLabel = homeTab_infoSection:CreateLabel("🍯: 0")
 local homeTab_uiSection = homeTab:CreateSection("ui")
 local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui ⚠️", function()
 	sleepy.killed = true
-	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy() -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
-end) -- TODO: Add keybind compatibility.
+	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy()
+end)
 local homeTab_uiSection_rejoingameButton = homeTab_uiSection:CreateButton("rejoin game", function()
 	sleepyapi.utilities("rejoingame")
-end) -- TODO: Add keybind compatibility.
+end)
 local homeTab_uiSection_toggleuiToggle = homeTab_uiSection:CreateToggle("toggle ui", nil, function(state)
 	window:Toggle(state)
 end)
 local homeWindow_configSection = homeTab:CreateSection("config")
 
-homeTab_infoTab:CreateLabel("⚠️ = experimental")
-homeTab_infoTab:CreateButton("discord server", function() setclipboard("https://discord.gg/aVgrSFCHpu") end)
+homeTab_infoSection:CreateLabel("⚠️ = experimental")
+homeTab_infoSection:CreateButton("discord server", function()
+	setclipboard("https://discord.gg/aVgrSFCHpu")
+end)
 homeTab_uiSection_toggleuiToggle:CreateKeybind(tostring(windowConfiguration.Keybind):gsub("Enum.KeyCode.", ""), function(key)
 	-- windowConfiguration.Keybind = Enum.KeyCode[key]
 	configuration.keybinds.homeTab_uiSection_toggleuiToggle = key
@@ -92,10 +136,27 @@ end)
 -- *: collect
 local collectTab = window:CreateTab("collect")
 local collectTab_farmSection = collectTab:CreateSection("farm")
+
 -- local collectTab_farmSection_fieldDropdown = collectTab_farmSection:CreateDropdown("field", fieldTable, function(string)
 	-- SELECTEDFIELD = string
 -- end)
 local collectTab_farmSectionToggle = collectTab_farmSection:CreateToggle("autofarm", nil, function(state)
+	getgenv().Player.toggles.autofarm = state
+	if state then return end
+
+	sleepy.queueLoops[#sleepy.queueLoops+1] = function()
+		local farmCoroutine = coroutine.create(function()
+			
+		end)
+		coroutine.resume(farmCoroutine)
+		toggleEvent.Event:Connect(function(name, state)
+			if name ~= "autofarm" or state == true then return end
+			coroutine.yield(farmCoroutine)
+			toggleEvent.Event:Connect(function()
+				
+			end)
+		end)
+	end
 	-- AUTOFARM = state
 end)
 local collectTab_convertSection = collectTab:CreateSection("convert")

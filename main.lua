@@ -2,17 +2,19 @@
 -- TODO: Maybe look into not using getgenv() because it doesn't share variables across differently executed (not loadstring) scripts? -- Possibly use shared, _G, etc..?
 
 local HttpService = game:GetService("HttpService")
+local time = time or tick or (os and os.time) or warn("missing time function")
 
 getgenv().sleepy = {
-	time = time or tick or (os and os.time) or warn("missing time function"),
 	repository = "https://raw.githubusercontent.com/philosolog/sleepy-pbe/main",
 	version = "1", -- TODO: Comment a repository-based version value?
+
+	loaded = false,
+	killed = false,
 	sleepyapi = nil,
 	bracketv3 = nil,
-	loaded = false,
 	gameFolder = nil,
-	killed = false,
-	current_time = nil,
+	start_time = nil,
+	queueLoops = {},
 	sleepygame = {
 		autoload = false,
 		windowName = HttpService:GenerateGUID(false), -- TODO: Make compatibility for multiple GUI names.
@@ -55,17 +57,17 @@ if isfile("sleepy/discord.txt") == false then
 		Url = "http://127.0.0.1:6463/rpc?v=1",
 		Method = "POST",
 		Headers = {["Content-Type"] = "application/json", ["Origin"] = "https://discord.com"},
-		Body = game:GetService("HttpService"):JSONEncode({
+		Body = HttpService:JSONEncode({
 			cmd = "INVITE_BROWSER",
 			args = {code = "aVgrSFCHpu"},
-			nonce = game:GetService("HttpService"):GenerateGUID(false)	
+			nonce = HttpService:GenerateGUID(false)	
 		}),
 		writefile("sleepy/discord.txt", "https://discord.com/aVgrSFCHpu")
 	})
 end
 
 sleepy.loaded = true
-sleepy.current_time = time()
+sleepy.start_time = time()
 
 sleepyapi.notify("sleepy", "load success")
 -- TODO: Create dynamic links for githubusercontent references.
