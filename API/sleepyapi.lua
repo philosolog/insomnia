@@ -1,3 +1,4 @@
+local sleepy = getgenv().sleepy
 local sleepyapi = {}
 
 sleepyapi.version = "1"
@@ -89,5 +90,10 @@ sleepyapi.request = request or (syn and syn.request) or http_request
 -- sleepyapi.returncode = function(string) -- ?: Necessary?
 --     return loadstring(game:HttpGet(string))()
 -- end
+sleepyapi.utilities = function(name)
+	if game:HttpGet(sleepy.repository.."/utilities/"..name..".lua") then
+		return loadstring(game:HttpGet(sleepy.repository.."/utilities/"..name..".lua"))
+	end
+end
 
 return sleepyapi
