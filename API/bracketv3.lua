@@ -1,11 +1,7 @@
-local Library = {Toggle = true,FirstTab = nil,TabCount = 0,ColorTable = {}}
-
+local Library = {Toggle = true, FirstTab = nil, TabCount = 0, ColorTable = {}}
 local RunService = game:GetService("RunService")
-local HttpService = game:GetService("HttpService")
-local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
-
-getgenv().windowname = HttpService:GenerateGUID(false) -- TODO: Account for multiple windows.
+local windowName = getgenv().sleepy.game.windowName -- TODO: Account for multiple windows.
 
 local function MakeDraggable(ClickObject, Object)
 	local Dragging = nil
@@ -50,14 +46,13 @@ function Library:CreateWindow(Config, Parent)
 	local Topbar = Main.Topbar
 	local TContainer = Holder.TContainer
 	local TBContainer = Holder.TBContainer.Holder
-	--[[
+
 	-- TODO: Fix for exploits that dont have syn.protect_gui().
-	if syn and syn.protect_gui then
-		syn.protect_gui(Screen)
-	end
-	]]
+	-- if syn and syn.protect_gui then
+	-- 	syn.protect_gui(Screen)
+	-- end
 	
-	Screen.Name = getgenv().windowname
+	Screen.Name = windowName
 	Screen.Parent = Parent
 	Topbar.WindowName.Text = Config.WindowName
 

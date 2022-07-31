@@ -1,6 +1,10 @@
 local sleepyapi = getgenv().sleepy.sleepyapi
 
 sleepyapi.version = "1"
+sleepyapi.log = function(message)
+	-- game.GetService("TestService"):Message(message, nil, nil)
+	printconsole(message, 255, 184, 65)
+end
 sleepyapi.tween = function(time, position) -- ?: Does this tween with a time offset?
 	game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {CFrame = position}):Play()
 	task.wait(time)
@@ -15,10 +19,11 @@ sleepyapi.exists = function(object)
 end
 sleepyapi.notify = function(title, description, duration)
 	pcall(function()
+		sleepyapi.log(title..", "..description)
 		game.StarterGui:SetCore("SendNotification", {
-			Title = title;
-			Text = description;
-			Duration = duration;
+			Title = title or "sleepy";
+			Text = description or "";
+			Duration = duration or 1;
 		})
 	end)
 end
@@ -79,9 +84,6 @@ sleepyapi.pathfind = function(target)
 			Humanoid.Jump = true
 		end
 	end
-end
-sleepyapi.log = function(message)
-	game.GetService("TestService"):Message(message, nil, nil)
 end
 sleepyapi.request = request or (syn and syn.request) or http_request
 -- sleepyapi.returncode = function(string) -- ?: Necessary?
