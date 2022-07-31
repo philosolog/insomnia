@@ -1,12 +1,13 @@
+local sleepy = getgenv().sleepy
 local Library = {Toggle = true, FirstTab = nil, TabCount = 0, ColorTable = {}}
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
 repeat
 	task.wait()
-until getgenv().sleepy.sleepygame.windowName
+until sleepy.sleepygame.windowName
 
-local windowName = getgenv().sleepy.sleepygame.windowName -- TODO: Account for multiple windows.
+local windowName = sleepy.sleepygame.windowName -- TODO: Account for multiple windows.
 
 local function MakeDraggable(ClickObject, Object)
 	local Dragging = nil
@@ -156,6 +157,9 @@ function Library:CreateWindow(Config, Parent)
 	end
 
 	RunService.RenderStepped:Connect(function()
+		if sleepy.killed == true then 
+			return
+		end
 		if Library.Toggle then
 			Screen.ToolTip.Position = UDim2.new(0,UserInputService:GetMouseLocation().X + 10,0,UserInputService:GetMouseLocation().Y - 5)
 		end
@@ -680,6 +684,10 @@ function Library:CreateWindow(Config, Parent)
 				Colorpicker.MouseButton1Click:Connect(function()
 					if not Pallete.Visible then
 						ColorpickerRender = RunService.RenderStepped:Connect(function()
+							if sleepy.killed == true then 
+								return
+							end
+
 							Pallete.Position = UDim2.new(0,Colorpicker.Color.AbsolutePosition.X - 129,0,Colorpicker.Color.AbsolutePosition.Y + 52)
 						end)
 						Pallete.Visible = true
@@ -695,6 +703,10 @@ function Library:CreateWindow(Config, Parent)
                             ColorRender:Disconnect()
                         end
 						ColorRender = RunService.RenderStepped:Connect(function()
+							if sleepy.killed == true then 
+								return
+							end
+
 							local Mouse = UserInputService:GetMouseLocation()
 							local ColorX = math.clamp(Mouse.X - Pallete.GradientPallete.AbsolutePosition.X, 0, Pallete.GradientPallete.AbsoluteSize.X) / Pallete.GradientPallete.AbsoluteSize.X
                             local ColorY = math.clamp((Mouse.Y - 37) - Pallete.GradientPallete.AbsolutePosition.Y, 0, Pallete.GradientPallete.AbsoluteSize.Y) / Pallete.GradientPallete.AbsoluteSize.Y
@@ -720,6 +732,10 @@ function Library:CreateWindow(Config, Parent)
                             HueRender:Disconnect()
                         end
 						HueRender = RunService.RenderStepped:Connect(function()
+							if sleepy.killed == true then 
+								return
+							end
+							
 							local Mouse = UserInputService:GetMouseLocation()
 							local HueX = math.clamp(Mouse.X - Pallete.ColorSlider.AbsolutePosition.X, 0, Pallete.ColorSlider.AbsoluteSize.X) / Pallete.ColorSlider.AbsoluteSize.X
 							ColorTable.Hue = 1 - HueX
