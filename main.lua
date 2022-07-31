@@ -32,7 +32,7 @@ if game:HttpGet(tostring(sleepy.repository.."/games/"..game.PlaceId.."/main.lua"
 		makefolder("sleepy/"..game.PlaceId.."/configurations")
 	end
 
-	loadstring(game:HttpGet(tostring(sleepy.repository.."/games/"..game.PlaceId.."/main.lua")))()
+	loadstring(game:HttpGet(sleepy.repository.."/games/"..game.PlaceId.."/main.lua"))()
 end
 if isfile("sleepy/discord.txt") == false then 
 	sleepyapi.request({
