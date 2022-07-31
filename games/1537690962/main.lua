@@ -51,7 +51,7 @@ local homeTab_infoTab_honeyLabel = homeTab_infoTab:CreateLabel("🍯: 0")
 local homeTab_uiSection = homeTab:CreateSection("ui")
 local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui ⚠️", function()
 	sleepy.killed = true
-	game:GetService("CoreGui"):FindFirstChild(sleepy.windowName):Destroy() -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
+	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy() -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
 local homeTab_uiSection_rejoingameButton = homeTab_uiSection:CreateButton("rejoin game", function()
 	loadstring(game:HttpGet(utilities.."/rejoingame.lua"))()
@@ -96,7 +96,7 @@ local collectTab_farmSection = collectTab:CreateSection("farm")
 	-- SELECTEDFIELD = string
 -- end)
 local collectTab_farmSectionToggle = collectTab_farmSection:CreateToggle("autofarm", nil, function(state)
-	configuration.autofarm = state
+	-- AUTOFARM = state
 end)
 local collectTab_convertSection = collectTab:CreateSection("convert")
 

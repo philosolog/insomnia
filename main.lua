@@ -19,7 +19,7 @@ getgenv().sleepy = {
 
 local sleepy = getgenv().sleepy
 
-sleepy.sleepygame.autoload = getgenv().autoload or false -- TODO: Make compatible with shitploits that don't have "shared". Also, nest "autoload" into a sleepy table.
+sleepy.sleepygame.autoload = getgenv().autoload -- TODO: Make compatible with shitploits that don't have "shared". Also, nest "autoload" into a sleepy table.
 sleepy.sleepyapi = loadstring(game:HttpGet(sleepy.repository.."/API/sleepyapi.lua"))()
 sleepy.bracketv3 = loadstring(game:HttpGet(sleepy.repository.."/API/bracketv3.lua"))()
 
