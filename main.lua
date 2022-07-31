@@ -17,7 +17,7 @@ getgenv().sleepy = {
 
 local sleepy = getgenv().sleepy
 
-sleepy.game.autoload = shared.autoload or false
+sleepy.game.autoload = sleepy.temporary.autoload or false
 sleepy.sleepyapi = loadstring(game:HttpGet(sleepy.repository.."/API/sleepyapi.lua"))()
 sleepy.bracketv3 = loadstring(game:HttpGet(sleepy.repository.."/API/bracketv3.lua"))()
 
@@ -27,8 +27,8 @@ local Player = game.Players.LocalPlayer
 if not isfolder("sleepy") then 
 	makefolder("sleepy")
 end
-if sleepy.loaded == true then
-	return sleepyapi.log("sleepy has loaded") -- TODO: Notify the player that sleepy is already loaded.
+if sleepy.loaded == true then -- TODO: Reload the GUI through editing getgenv() variables.
+	return sleepyapi.notify("sleepy", "already loaded")
 end
 
 sleepy.loaded = true
