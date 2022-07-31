@@ -19,17 +19,16 @@ sleepygame = {
 
 local configuration = sleepygame.configuration
 
-if sleepy.autoload == false then
+if sleepy.sleepygame.autoload == false then
 	configuration = default_configuration
 else
-	if typeof(sleepy.autoload) == "string" then
+	if typeof(sleepy.sleepygame.autoload) == "string" then
 		if isfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json") then
 			configuration = HttpService:JSONDecode(readfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json"))
 		else
 			sleepyapi.notify("load configuration", temporary.configurationName.." does not exist")
 		end
 	else
-		sleepy.log(typeof(sleepy.autoload))
 		sleepyapi.notify("autoload", "invalid autoload string")
 	end
 end
