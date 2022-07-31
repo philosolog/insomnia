@@ -19,7 +19,7 @@ sleepygame = {
 
 local configuration = sleepygame.configuration
 
-if sleepy.sleepygame.autoload == false then
+if sleepy.sleepygame.autoload == false then -- TODO: Create an autoload toggle.
 	configuration = default_configuration
 else
 	if typeof(sleepy.sleepygame.autoload) == "string" then
