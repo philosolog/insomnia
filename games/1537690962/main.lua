@@ -1,7 +1,7 @@
 local sleepy = getgenv().sleepy
 local sleepyapi = loadstring(game:HttpGet(sleepy.repository.."/API/sleepyapi.lua"))()
-local bracketv3 = sleepyapi.returncode(sleepy.repository.."/API/bracketv3.lua")
-local bssapi = sleepyapi.returncode(sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
+local bracketv3 = loadstring(sleepy.repository.."/API/bracketv3.lua")
+local bssapi = loadstring(sleepy.repository.."/games/Bee-Swarm-Simulator/bssapi.lua")
 local RetrievePlayerStats = game:GetService("ReplicatedStorage").Events.RetrievePlayerStats
 local default_configuration = sleepy.configuration
 
