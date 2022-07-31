@@ -35,9 +35,6 @@ if sleepy.loaded == true then -- TODO: Reload the GUI through editing getgenv() 
 	return sleepyapi.notify("sleepy", "already loaded")
 end
 
-sleepy.loaded = true
-sleepy.current_time = time()
-
 sleepyapi.utilities("anti-afk")
 
 repeat -- !: Don't edit this... -- It doesn't load otherwise.. :\
@@ -66,4 +63,9 @@ if isfile("sleepy/discord.txt") == false then
 		writefile("sleepy/discord.txt", "https://discord.com/aVgrSFCHpu")
 	})
 end
+
+sleepy.loaded = true
+sleepy.current_time = time()
+
+sleepyapi.notify("sleepy", "load success")
 -- TODO: Create dynamic links for githubusercontent references.
