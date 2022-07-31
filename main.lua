@@ -23,7 +23,9 @@ end
 sleepy.loaded = true
 sleepy.current_time = time()
 
-if not Player.Character then Player.CharacterAdded:Wait() end
+repeat -- !: Don't edit this... -- It doesn't load otherwise.. :\
+	task.wait()
+until Player.Character
 
 if game:HttpGet(sleepy.repository.."/"..game.PlaceId) then
     if not isfolder("sleepy/"..game.PlaceId.."/configurations") then  -- TODO: Keep accessible user-based presets.
