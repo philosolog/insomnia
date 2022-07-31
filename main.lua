@@ -1,4 +1,5 @@
 -- TODO: Add compatibility for shitploits.
+local HttpService = game:GetService("HttpService")
 
 getgenv().sleepy = {
 	time = time or tick or (os and os.time) or warn("missing time function"),
@@ -11,7 +12,8 @@ getgenv().sleepy = {
 	killed = false,
 	current_time = nil,
 	sleepygame = {
-		autoload = false
+		autoload = false,
+		windowName = HttpService:GenerateGUID(false), -- TODO: Make compatibility for multiple GUI names.
 	},
 }
 

@@ -11,10 +11,10 @@ local temporary = {
 local default_configuration = {
 
 }
+
 sleepygame = {
 	version = "1",
 	bssapi = loadstring(gameFolder.."/bssapi.lua"),
-	windowName = HttpService:GenerateGUID(false),
 	configuration = nil,
 }
 
