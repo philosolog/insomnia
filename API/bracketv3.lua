@@ -344,7 +344,7 @@ function Library:CreateWindow(Config, Parent)
 				local ToggleState = false
 
 				local function SetState(State)
-					pcall(function()
+					pcall(function() -- TODO: Optimize this scuffed patch to erroneous logging of useless GUI toggle/keybind features.
 						if State then
 							Toggle.Toggle.BackgroundColor3 = Config.Color
 						elseif not State then
