@@ -1,7 +1,7 @@
 local Library = {Toggle = true, FirstTab = nil, TabCount = 0, ColorTable = {}}
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
-local windowName = getgenv().sleepy.game.windowName -- TODO: Account for multiple windows.
+local windowName = getgenv().sleepy.sleepygame.windowName -- TODO: Account for multiple windows.
 
 local function MakeDraggable(ClickObject, Object)
 	local Dragging = nil
