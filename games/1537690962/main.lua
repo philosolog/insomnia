@@ -53,7 +53,7 @@ local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui
 	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy() -- TODO: Use ":Destroy()";  -- Check paths if GUI object becomes nil.
 end) -- TODO: Add keybind compatibility.
 local homeTab_uiSection_rejoingameButton = homeTab_uiSection:CreateButton("rejoin game", function()
-	sleepy.utilities("rejoingame")
+	sleepyapi.utilities("rejoingame")
 end) -- TODO: Add keybind compatibility.
 local homeTab_uiSection_toggleuiToggle = homeTab_uiSection:CreateToggle("toggle ui", nil, function(state)
 	window:Toggle(state)

@@ -38,6 +38,8 @@ end
 sleepy.loaded = true
 sleepy.current_time = time()
 
+sleepyapi.utilities("anti-afk")
+
 repeat -- !: Don't edit this... -- It doesn't load otherwise.. :\
 	task.wait()
 until Player.Character
