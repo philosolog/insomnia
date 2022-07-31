@@ -1,4 +1,4 @@
-local sleepyapi
+local sleepyapi = {}
 
 sleepyapi.version = "1"
 sleepyapi.log = function(message)
