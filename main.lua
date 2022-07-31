@@ -1,4 +1,6 @@
 -- TODO: Add compatibility for shitploits.
+-- TODO: Maybe look into not using getgenv() because it doesn't share variables across differently executed (not loadstring) scripts? -- Possibly use shared, _G, etc..?
+
 local HttpService = game:GetService("HttpService")
 
 getgenv().sleepy = {
