@@ -96,6 +96,7 @@ local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui
 end)
 local homeTab_uiSection_rejoingameButton = homeTab_uiSection:CreateButton("rejoin game", function()
 	sleepyapi.utilities("rejoingame")
+	print(sleepy.repository.."/utilities/rejoingame.lua")
 	loadstring(game:HttpGet(sleepy.repository.."/utilities/rejoingame.lua"))
 end)
 local homeTab_uiSection_toggleuiToggle = homeTab_uiSection:CreateToggle("toggle ui", nil, function(state)
