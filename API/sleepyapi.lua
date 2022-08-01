@@ -91,9 +91,7 @@ sleepyapi.request = request or (syn and syn.request) or http_request
 --     return loadstring(game:HttpGet(string))()
 -- end
 sleepyapi.utilities = function(name)
-	if game:HttpGet(tostring(sleepy.repository.."/utilities/"..name..".lua")) then
-		loadstring(game:HttpGet(tostring(sleepy.repository.."/utilities/"..name..".lua")))
-	end
+	loadstring(game:HttpGet(sleepy.repository.."/utilities/"..name..".lua"))
 end
 
 return sleepyapi
