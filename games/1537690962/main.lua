@@ -67,6 +67,8 @@ else
 	if typeof(sleepy.sleepygame.autoload) == "string" then
 		if isfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json") then
 			configuration = HttpService:JSONDecode(readfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json"))
+			
+			sleepyapi.notify("autoload", temporary.configurationName.." loaded")
 		else
 			sleepyapi.notify("load configuration", temporary.configurationName.." does not exist")
 		end
@@ -76,20 +78,20 @@ else
 end
 
 -- *: sleepy
-local windowConfiguration = {
-	WindowName = "🌙 sleepy | v"..sleepygame.version,
-	Color = Color3.fromRGB(255, 191, 0),
-	Keybind = Enum.KeyCode.F1,
-}
-local window = bracketv3:CreateWindow(windowConfiguration, game:GetService("CoreGui"))
+local window = bracketv3:CreateWindow(
+	{
+		WindowName = "🌙 sleepy | v"..sleepygame.version,
+		Color = Color3.fromRGB(255, 191, 0),
+		Keybind = Enum.KeyCode.F1,
+	},
+	game:GetService("CoreGui")
+)
 
 -- *: home
 local homeTab = window:CreateTab("home")
 local homeTab_infoSection = homeTab:CreateSection("info")
-local homeTab_infoSection_creditsLabel = homeTab_infoSection:CreateLabel("by philosolog and definedM")
-local homeTab_infoSection_timeLabel = homeTab_infoSection:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
-local homeTab_infoSection_honeyLabel = homeTab_infoSection:CreateLabel("🍯: 0")
 local homeTab_uiSection = homeTab:CreateSection("ui")
+local homeTab_statisticsSection = homeTab:CreateSection("stats")
 local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui ⚠️", function()
 	sleepy.killed = true
 	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy()
@@ -102,6 +104,7 @@ local homeTab_uiSection_toggleuiToggle = homeTab_uiSection:CreateToggle("toggle 
 end)
 local homeWindow_configSection = homeTab:CreateSection("config")
 
+homeTab_infoSection:CreateLabel("by philosolog and definedM")
 homeTab_infoSection:CreateLabel("⚠️ = experimental")
 homeTab_infoSection:CreateButton("discord server", function()
 	setclipboard("https://discord.gg/aVgrSFCHpu")
@@ -115,6 +118,8 @@ homeTab_uiSection_toggleuiToggle:SetState(true)
 homeWindow_configSection:CreateTextBox("name", 'ex: sleepyautofarm', false, function(value)
 	temporary.configurationName = value
 end)
+homeTab_statisticsSection:CreateLabel("⌛: 0") -- TODO: Create labels for the last elapsed time between hive conversions.
+homeTab_statisticsSection:CreateLabel("🍯: 0")
 homeWindow_configSection:CreateButton("load", function()
 	if isfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json") then
 		configuration = HttpService:JSONDecode(readfile("sleepy/"..game.PlaceId.."/"..temporary.configurationName..".json"))
@@ -141,22 +146,22 @@ local collectTab_farmSection = collectTab:CreateSection("farm")
 	-- SELECTEDFIELD = string
 -- end)
 local collectTab_farmSectionToggle = collectTab_farmSection:CreateToggle("autofarm", nil, function(state)
-	getgenv().Player.toggles.autofarm = state
-	if state then return end
+	-- getgenv().Player.toggles.autofarm = state
+	-- if state then return end
 
-	sleepy.queueLoops[#sleepy.queueLoops+1] = function()
-		local farmCoroutine = coroutine.create(function()
+	-- sleepy.queueLoops[#sleepy.queueLoops+1] = function()
+	-- 	local farmCoroutine = coroutine.create(function()
 			
-		end)
-		coroutine.resume(farmCoroutine)
-		toggleEvent.Event:Connect(function(name, state)
-			if name ~= "autofarm" or state == true then return end
-			coroutine.yield(farmCoroutine)
-			toggleEvent.Event:Connect(function()
+	-- 	end)
+	-- 	coroutine.resume(farmCoroutine)
+	-- 	toggleEvent.Event:Connect(function(name, state)
+	-- 		if name ~= "autofarm" or state == true then return end
+	-- 		coroutine.yield(farmCoroutine)
+	-- 		toggleEvent.Event:Connect(function()
 				
-			end)
-		end)
-	end
+	-- 		end)
+	-- 	end)
+	-- end
 	-- AUTOFARM = state
 end)
 local collectTab_convertSection = collectTab:CreateSection("convert")

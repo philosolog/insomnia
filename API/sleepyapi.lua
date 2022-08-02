@@ -10,8 +10,8 @@ sleepyapi.tween = function(time, position) -- ?: Does this tween with a time off
 	game:GetService("TweenService"):Create(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {CFrame = position}):Play()
 	task.wait(time)
 end
-sleepyapi.approach = function(position) -- walk to position (not pathfinding) -- TODO: Rework this; it used to be ":MoveTo()"
-	game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(v3) + Vector3.new(0, 2, 0))
+sleepyapi.approach = function(position) -- TODO: Rework this; it used to be ":MoveTo()"
+	game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(v3) + Vector3.new(0, game:GetService("Players").LocalPlayer.Character.Humanoid.HipHeight, 0)) -- ?: Is this optimal usage of "HipHeight"?
 end
 sleepyapi.exists = function(object)
 	if object ~= nil then
@@ -87,9 +87,6 @@ sleepyapi.pathfind = function(target)
 	end
 end
 sleepyapi.request = request or (syn and syn.request) or http_request
--- sleepyapi.returncode = function(string) -- ?: Necessary?
---     return loadstring(game:HttpGet(string))()
--- end
 sleepyapi.utilities = function(name)
 	if game:HttpGet(sleepy.repository.."/utilities/"..name..".lua") then
 		return loadstring(game:HttpGet(sleepy.repository.."/utilities/"..name..".lua"))()
