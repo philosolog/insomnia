@@ -78,14 +78,12 @@ else
 end
 
 -- *: sleepy
-local window = bracketv3:CreateWindow(
-	{
-		WindowName = "🌙 sleepy | v"..sleepygame.version,
-		Color = Color3.fromRGB(255, 191, 0),
-		Keybind = Enum.KeyCode.F1,
-	},
-	game:GetService("CoreGui")
-)
+local windowConfiguration = {
+	WindowName = "🌙 sleepy | v"..sleepygame.version,
+	Color = Color3.fromRGB(255, 191, 0),
+	Keybind = Enum.KeyCode.F1,
+}
+local window = bracketv3:CreateWindow(windowConfiguration, game:GetService("CoreGui"))
 
 -- *: home
 local homeTab = window:CreateTab("home")
