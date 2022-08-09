@@ -1,35 +1,9 @@
 getgenv().paused = false
-getgenv().killed = false
-
-local queue = {}
-local storage = {
-	["autofarm"] = function()
-        printconsole("autofarming")
-        
-        task.wait(1)
-	end,
-    ["sprout"] = function()
-        printconsole("killing sprout")
-        
-        task.wait(1)
-    end,
-} -- TODO: Add this to sleepyapi.
-local function addaction(name, index)
-    if storage[name] then
-        if index == nil then
-            index = #queue + 1
-        end
-        
-        table.insert(queue, index, {name, storage[name]})
-    end
-end -- TODO: Add this to sleepyapi.
-local function removeaction(name)
-    for index, value in pairs(queue) do
-        if value[1] == name then
-            table.remove(queue, table.find(queue, value))
-        end
-    end
-end -- TODO: Add this to sleepyapi.
+local sleepy = getgenv().sleepy
+local sleepyapi = sleepy.sleepyapi
+local sleepygame = sleepy.sleepygame
+local killed = sleepygame.killed
+local queue = 
 local handler = coroutine.wrap(function()
     while task.wait() do
         if getgenv().paused == false then
@@ -46,11 +20,12 @@ local handler = coroutine.wrap(function()
 end) -- ?: Is it possible to run this whole thing without a coroutine?
 
 handler()
-addaction("autofarm")
-addaction("sprout")
-task.wait(2)
-removeaction("autofarm")
-task.wait(2)
-getgenv().paused = true
-getgenv().killed = true
-printconsole("killed lol")
+
+-- addaction("autofarm")
+-- addaction("sprout")
+-- task.wait(2)
+-- removeaction("autofarm")
+-- task.wait(2)
+-- getgenv().paused = true
+-- getgenv().killed = true
+-- printconsole("killed lol")

@@ -1,5 +1,7 @@
 local sleepy = getgenv().sleepy
 local sleepyapi = {}
+local sleepygame = sleepy.sleepygame
+local queue = sleepygame.queue
 
 sleepyapi.version = "1"
 sleepyapi.log = function(message)
@@ -91,6 +93,34 @@ sleepyapi.utilities = function(name)
 	if game:HttpGet(sleepy.repository.."/utilities/"..name..".lua") then
 		return loadstring(game:HttpGet(sleepy.repository.."/utilities/"..name..".lua"))()
 	end
+end
+sleepyapi.stored_events = {
+	["autofarm"] = function()
+        printconsole("autofarming")
+        
+        task.wait(1)
+	end,
+    ["sprout"] = function()
+        printconsole("killing sprout")
+        
+        task.wait(1)
+    end,
+}
+sleepyapi.addaction = function(name, index)
+    if sleepyapi.stored_events[name] then
+        if index == nil then
+            index = #queue + 1
+        end
+        
+        table.insert(queue, index, {name, sleepyapi.stored_events[name]})
+    end
+end
+sleepyapi.removeaction = function(name)
+    for index, value in pairs(queue) do
+        if value[1] == name then
+            table.remove(queue, table.find(queue, value))
+        end
+    end
 end
 
 return sleepyapi
