@@ -100,7 +100,9 @@ end)
 local homeTab_uiSection = homeTab:CreateSection("ui")
 local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui ⚠️", function()
 	sleepy.killed = true
+
 	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy()
+	sleepyapi.notify("sleepy", "gui killed")
 end)
 local homeTab_uiSection_rejoingameButton = homeTab_uiSection:CreateButton("rejoin game", function()
 	sleepyapi.utilities("rejoingame")
