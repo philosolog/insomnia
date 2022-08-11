@@ -98,7 +98,7 @@ homeTab_infoSection:CreateButton("discord server", function()
 end)
 
 local homeTab_uiSection = homeTab:CreateSection("ui")
-local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui ⚠️", function()
+local homeTab_uiSection_killguiButton = homeTab_uiSection:CreateButton("kill gui", function()
 	sleepy.killed = true
 
 	game:GetService("CoreGui"):FindFirstChild(sleepy.sleepygame.windowName):Destroy()
