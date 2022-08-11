@@ -16,6 +16,7 @@ getgenv().sleepy = {
 	sleepygame = {
 		autoload = false,
 		windowName = HttpService:GenerateGUID(false), -- TODO: Make compatibility for multiple GUI names.
+		paused = false,
 	},
 }
 

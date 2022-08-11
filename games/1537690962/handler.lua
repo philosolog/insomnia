@@ -1,17 +1,15 @@
-getgenv().paused = false
-local sleepy = getgenv().sleepy
-local sleepyapi = sleepy.sleepyapi
-local sleepygame = sleepy.sleepygame
-local killed = sleepygame.killed
-local queue = 
 local handler = coroutine.wrap(function()
     while task.wait() do
-        if getgenv().paused == false then
-            if queue[1] then
-                queue[1][2]()
+		local sleepy = getgenv().sleepy
+		local sleepyapi = sleepy.sleepyapi
+		local sleepygame = sleepy.sleepygame
+
+        if sleepygame.paused == false then
+            if sleepygame.queue[1] then
+                sleepygame.queue[1][2]()
             end
         end
-		if getgenv().killed == true then
+		if sleepygame.killed == true then
 			break
 		end
     end
