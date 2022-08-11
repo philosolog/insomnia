@@ -59,6 +59,8 @@ sleepygame = {
 	handler = loadstring(gameFolder.."/handler.lua"),
 	configuration = nil,
 	queue = {},
+	paused = false,
+	
 }
 
 local configuration = sleepygame.configuration

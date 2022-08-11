@@ -9,7 +9,7 @@ local handler = coroutine.wrap(function()
                 sleepygame.queue[1][2]()
             end
         end
-		if sleepygame.killed == true then
+		if sleepy.killed == true then
 			break
 		end
     end
