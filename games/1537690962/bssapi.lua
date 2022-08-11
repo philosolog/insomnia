@@ -1,5 +1,5 @@
 local bsslib = {}
-
+-- TODO: Beautify & add more game-specific functions. (utility manager, etc..)
 function bsslib:getInventory()
     return game.ReplicatedStorage.Events.RetrievePlayerStats:InvokeServer().Eggs
 end

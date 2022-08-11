@@ -60,7 +60,7 @@ sleepygame = {
 	configuration = nil,
 	queue = {},
 	paused = false,
-	
+
 }
 
 local configuration = sleepygame.configuration
